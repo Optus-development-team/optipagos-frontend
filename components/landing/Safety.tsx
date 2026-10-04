@@ -1,0 +1,63 @@
+import { Burst, Heart, Swirl } from "@/components/doodles";
+import { DoodleIcon, type DoodleIconName } from "@/components/icons";
+import { NotchCard } from "@/components/ui/NotchCard";
+
+const points: Array<{ icon: DoodleIconName; title: string; text: string }> = [
+  {
+    icon: "fingerprint",
+    title: "Tu huella es la llave",
+    text: "Cada envío se confirma con tu huella o tu rostro. Sin ti, no sale nada.",
+  },
+  {
+    icon: "lock",
+    title: "Nadie más la abre",
+    text: "Tu billetera es tuya de verdad: ni siquiera nosotros podemos mover tu dinero.",
+  },
+  {
+    icon: "key",
+    title: "Te la llevas cuando quieras",
+    text: "Si un día quieres irte, te llevas tu billetera completa. Sin letra chica.",
+  },
+];
+
+export function Safety() {
+  return (
+    <section id="seguridad" className="scroll-mt-8">
+      <NotchCard
+        corner="tl"
+        tone="ink"
+        notch={[92, 92]}
+        chip={
+          <span className="chip-tile tone-honey">
+            <DoodleIcon name="shield" className="h-11 w-11" />
+          </span>
+        }
+      >
+        <div className="relative px-6 pb-10 pt-8 sm:px-12 sm:pb-12">
+          <Swirl className="absolute right-6 top-6 hidden h-16 w-16 text-ink-500 sm:block" />
+          <Heart className="absolute bottom-6 right-10 hidden h-7 w-7 rotate-12 text-honey md:block" />
+
+          <div className="pl-[88px] sm:pl-[72px]">
+            <p className="hand text-2xl text-honey">tranquilo</p>
+            <h2 className="display text-5xl sm:text-7xl">Solo tú mueves tu dinero</h2>
+          </div>
+
+          <ul className="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">
+            {points.map((point) => (
+              <li key={point.title} className="relative">
+                <span className="grid h-20 w-20 place-items-center rounded-full bg-cream text-ink">
+                  <DoodleIcon name={point.icon} className="h-11 w-11" />
+                </span>
+                <h3 className="display mt-4 flex items-center gap-2 text-4xl">
+                  {point.title}
+                  <Burst className="h-6 w-6 flex-none -scale-x-100 text-honey" />
+                </h3>
+                <p className="mt-2 text-lg leading-snug text-ink-100">{point.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </NotchCard>
+    </section>
+  );
+}

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Optipagos · frontend
 
-## Getting Started
+Sitio de **Optipagos** (una marca de Optus): la página pública y la página de confirmación que
+se abre desde WhatsApp. Es la puerta de entrada de todo el producto; el backend
+([`optipagos-backend`](../proyectos/optus/optipagos-backend)) solo expone la API.
 
-First, run the development server:
+| Ruta | Qué es |
+| --- | --- |
+| `/` | Página principal: qué es Optipagos, cómo funciona y preguntas frecuentes. |
+| `/w/<token>` | Página de confirmación que el bot envía por WhatsApp: crear la billetera, confirmar un envío o mostrar la clave, siempre con la huella o el rostro del teléfono. |
+| `/api/v1/*` | No vive aquí: se reenvía tal cual a `optipagos-backend` (API de la página de confirmación, webhook de WhatsApp y callback de Google). |
+
+## Puesta en marcha
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # número de WhatsApp y URL del backend
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Para producción (o para probar con el teléfono): `npm run build && npm start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`BACKEND_URL` se lee al compilar. El backend debe tener `PUBLIC_BASE_URL` apuntando a la URL
+pública de este sitio: de ahí salen los enlaces `/w/<token>` y el origen que aceptan las
+passkeys. La huella/rostro solo funciona en un contexto seguro (`https://` o `localhost`), así
+que desde otro dispositivo hay que entrar por un dominio con https (por ejemplo, un túnel).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Diseño
 
-## Learn More
+Las referencias están en `assets/inspo/`:
 
-To learn more about Next.js, take a look at the following resources:
+- **Paleta** (`color_palette.jpg`): Indigo Dye `#00416A` y Eggshell `#F0EAD6`. El resto de
+  tonos (tintes del índigo, cremas, miel, ocre, arcilla, musgo) se derivan de esos dos y están
+  declarados como tokens en `app/globals.css`.
+- **Formas** (`shapes.jpg`): tarjetas con una esquina recortada donde encaja una ficha
+  (`components/ui/NotchCard.tsx`), píldoras con contorno y títulos condensados.
+- **Componentes** (`components_designs.jpg`): botones, avisos, fichas y tarjetas, reinterpretados
+  con trazo de rotulador.
+- **Doodle**: los contornos pasan por un filtro SVG (`#doodle`, en `app/layout.tsx`) que los hace
+  temblar como un dibujo a mano; los garabatos decorativos están en `components/doodles`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tipografías (Google Fonts, vía `next/font`): **Baumans** para el logo, **Bebas Neue** para
+títulos, **DM Sans** para texto y **Patrick Hand** para las notas a mano.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Iconos: [`doodle-icons`](https://github.com/svatsa159/react-doodle-icons) para los ilustrados
+(`components/icons.tsx`, solo desde Server Components) y Material Icons (`react-icons/md`) para
+los pequeños de interfaz. Sin emojis.
 
-## Deploy on Vercel
+## Página de confirmación y seguridad
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/w/<token>` es el único lugar donde la clave de la billetera existe sin cifrar: en la memoria
+del navegador y durante lo que dura una firma. Por eso `proxy.ts` la sirve con una CSP estricta
+con nonce, sin terceros, sin caché y con `Referrer-Policy: no-referrer`. La lógica está en
+`lib/signer/` (passkeys con PRF, sobre cifrado de la clave) y `components/signer/Signer.tsx`.
