@@ -2,13 +2,13 @@
 
 Sitio de **Optipagos** (una marca de Optus): la página pública y la página de confirmación que
 se abre desde WhatsApp. Es la puerta de entrada de todo el producto; el backend
-([`optipagos-backend`](../proyectos/optus/optipagos-backend)) solo expone la API.
+(`optipagos-backend`) solo expone la API.
 
 | Ruta | Qué es |
 | --- | --- |
 | `/` | Página principal: qué es Optipagos, cómo funciona y preguntas frecuentes. |
 | `/w/<token>` | Página de confirmación que el bot envía por WhatsApp: crear la billetera, confirmar un envío o mostrar la clave, siempre con la huella o el rostro del teléfono. |
-| `/api/v1/*` | No vive aquí: se reenvía tal cual a `optipagos-backend` (API de la página de confirmación, webhook de WhatsApp y callback de Google). |
+| `/api/v1/{actions,auth,webhooks}/*` | No vive aquí: se reenvía tal cual a `optipagos-backend` (API de la página de confirmación, vínculo con Google y webhook de WhatsApp). El resto de la API del backend no se publica. |
 
 ## Puesta en marcha
 
