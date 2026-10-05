@@ -1,6 +1,7 @@
 import { Burst, Heart, Swirl } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
+import { Reveal } from "@/components/ui/Reveal";
 
 const points: Array<{ icon: DoodleIconName; title: string; text: string }> = [
   {
@@ -23,19 +24,20 @@ const points: Array<{ icon: DoodleIconName; title: string; text: string }> = [
 export function Safety() {
   return (
     <section id="seguridad" className="scroll-mt-8">
+      <Reveal effect="pop">
       <NotchCard
         corner="tl"
         tone="ink"
         notch={[92, 92]}
         chip={
-          <span className="chip-tile tone-honey">
-            <DoodleIcon name="shield" className="h-11 w-11" />
+          <span className="chip-tile tone-honey boil">
+            <DoodleIcon name="shield" className="h-11 w-11 animate-sway" />
           </span>
         }
       >
         <div className="relative px-6 pb-10 pt-8 sm:px-12 sm:pb-12">
-          <Swirl className="absolute right-6 top-6 hidden h-16 w-16 text-ink-500 sm:block" />
-          <Heart className="absolute bottom-6 right-10 hidden h-7 w-7 rotate-12 text-honey md:block" />
+          <Swirl className="absolute right-6 top-6 hidden h-16 w-16 animate-spin-slow text-ink-500 sm:block" />
+          <Heart className="absolute bottom-6 right-10 hidden h-7 w-7 rotate-12 animate-hop text-honey md:block" />
 
           <div className="pl-[88px] sm:pl-[72px]">
             <p className="hand text-2xl text-honey">tranquilo</p>
@@ -43,8 +45,12 @@ export function Safety() {
           </div>
 
           <ul className="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">
-            {points.map((point) => (
-              <li key={point.title} className="relative">
+            {points.map((point, index) => (
+              <li
+                key={point.title}
+                className="relative animate-float [animation-duration:7s]"
+                style={{ animationDelay: `${index * -2.3}s` }}
+              >
                 <span className="grid h-20 w-20 place-items-center rounded-full bg-cream text-ink">
                   <DoodleIcon name={point.icon} className="h-11 w-11" />
                 </span>
@@ -58,6 +64,7 @@ export function Safety() {
           </ul>
         </div>
       </NotchCard>
+      </Reveal>
     </section>
   );
 }

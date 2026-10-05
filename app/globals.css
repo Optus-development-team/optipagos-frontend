@@ -502,3 +502,388 @@ body {
     transition: none !important;
   }
 }
+
+/* ═══════════════════════════════ Movimiento ═══════════════════════════════
+ * Todo se mueve despacio y poco, como un dibujo que respira: garabatos que flotan,
+ * trazos que se dibujan, tarjetas que llegan con un saltito. Con "reducir movimiento"
+ * activado nada de esto corre (ver la regla al final del archivo).
+ */
+
+@theme {
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-twinkle: twinkle 2.6s ease-in-out infinite;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-hop: hop 2.4s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+  --animate-rise: rise 0.55s cubic-bezier(0.2, 1.1, 0.35, 1) both;
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-1.4deg) translateY(0);
+    }
+    50% {
+      transform: rotate(1.4deg) translateY(-3px);
+    }
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.72) rotate(18deg);
+      opacity: 0.55;
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(14px);
+    }
+  }
+  @keyframes hop {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    40% {
+      transform: translateY(-9px) rotate(-4deg);
+    }
+    60% {
+      transform: translateY(-9px) rotate(4deg);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@keyframes draw-stroke {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes celebrate-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.2) rotate(0deg);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--fly-x), var(--fly-y)) scale(1) rotate(var(--fly-r));
+  }
+}
+@keyframes page-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-16px) rotate(-0.7deg);
+    filter: blur(2px);
+  }
+}
+@keyframes page-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(26px) rotate(0.9deg) scale(0.985);
+  }
+}
+
+/* ── Transición entre páginas (React <ViewTransition>) ────────────────────── */
+::view-transition-old(.page-exit) {
+  animation: 190ms ease-in both page-leave;
+  transform-origin: 50% 0;
+}
+::view-transition-new(.page-enter) {
+  animation: 420ms cubic-bezier(0.2, 1.15, 0.35, 1) 130ms both page-arrive;
+  transform-origin: 50% 0;
+}
+
+@layer components {
+  /* ── Aparición al hacer scroll (components/ui/Reveal) ───────────────────── */
+  .reveal {
+    transition:
+      opacity 0.6s ease,
+      transform 0.7s cubic-bezier(0.2, 1.15, 0.35, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal[data-reveal="out"] {
+    opacity: 0;
+  }
+  .reveal-up[data-reveal="out"] {
+    transform: translateY(34px);
+  }
+  .reveal-pop[data-reveal="out"] {
+    transform: scale(0.9) rotate(-2deg);
+  }
+  .reveal-left[data-reveal="out"] {
+    transform: translateX(-40px) rotate(-1.5deg);
+  }
+  .reveal-right[data-reveal="out"] {
+    transform: translateX(40px) rotate(1.5deg);
+  }
+  .reveal-tilt[data-reveal="out"] {
+    transform: translateY(28px) rotate(3deg);
+  }
+
+  /* ── Trazo que se dibuja ────────────────────────────────────────────────── */
+  /* Requiere pathLength="1" en los trazos (los garabatos de components/doodles lo traen). */
+  .draw path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: draw-stroke 1.1s ease-out var(--draw-delay, 0.2s) backwards;
+  }
+  .reveal[data-reveal="out"] .draw path {
+    animation: none;
+    stroke-dashoffset: 1;
+  }
+  .reveal[data-reveal="in"] .draw path {
+    animation: draw-stroke 1.1s ease-out var(--draw-delay, 0.25s) backwards;
+  }
+
+  /* ── Línea que hierve: el contorno se redibuja como en una animación a mano ─ */
+  .boil::before,
+  .boil > .notch-bg {
+    filter: url(#doodle-boil);
+  }
+  .notch.boil > .notch-bg {
+    filter: drop-shadow(2px 0 0 var(--line)) drop-shadow(-2px 0 0 var(--line))
+      drop-shadow(0 2px 0 var(--line)) drop-shadow(0 -2px 0 var(--line)) url(#doodle-boil);
+  }
+  @media (hover: hover) {
+    .doodle-box.lively:hover::before,
+    a.chip-tile:hover::before,
+    .btn:hover {
+      filter: url(#doodle-boil);
+    }
+    .lively {
+      transition: transform 0.25s cubic-bezier(0.2, 1.3, 0.4, 1);
+    }
+    .lively:hover {
+      transform: translateY(-5px) rotate(-0.8deg);
+    }
+    .lively:hover .lively-icon {
+      animation: hop 0.9s cubic-bezier(0.3, 0, 0.2, 1);
+    }
+  }
+
+  /* ── Cinta deslizante ───────────────────────────────────────────────────── */
+  .marquee {
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 36s) linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  .marquee-group {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+
+  /* ── Burbujas del chat que van llegando ─────────────────────────────────── */
+  .chat-in > * {
+    animation: rise 0.55s cubic-bezier(0.2, 1.1, 0.35, 1) both;
+  }
+  .chat-in > *:nth-child(1) {
+    animation-delay: 0.5s;
+  }
+  .chat-in > *:nth-child(2) {
+    animation-delay: 1.2s;
+  }
+  .chat-in > *:nth-child(3) {
+    animation-delay: 1.9s;
+  }
+  .chat-in > *:nth-child(4) {
+    animation-delay: 2.7s;
+  }
+  .chat-in > *:nth-child(5) {
+    animation-delay: 3.4s;
+  }
+
+  /* ── Estallido de celebración ───────────────────────────────────────────── */
+  .celebrate {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .celebrate-piece {
+    position: absolute;
+    left: -14px;
+    top: -14px;
+    width: 28px;
+    height: 28px;
+    opacity: 0;
+    color: var(--color-ochre);
+    animation: celebrate-fly 1.3s cubic-bezier(0.15, 0.7, 0.3, 1) 0.25s both;
+  }
+  .celebrate-1 {
+    --fly-x: -130px;
+    --fly-y: -90px;
+    --fly-r: -40deg;
+  }
+  .celebrate-2 {
+    --fly-x: 120px;
+    --fly-y: -110px;
+    --fly-r: 60deg;
+    color: var(--color-ink-500);
+    animation-delay: 0.32s;
+  }
+  .celebrate-3 {
+    --fly-x: -150px;
+    --fly-y: 30px;
+    --fly-r: -25deg;
+    color: var(--color-clay);
+    animation-delay: 0.38s;
+  }
+  .celebrate-4 {
+    --fly-x: 150px;
+    --fly-y: 20px;
+    --fly-r: 35deg;
+    animation-delay: 0.3s;
+  }
+  .celebrate-5 {
+    --fly-x: -50px;
+    --fly-y: -150px;
+    --fly-r: 20deg;
+    color: var(--color-ink);
+    animation-delay: 0.42s;
+  }
+  .celebrate-6 {
+    --fly-x: 60px;
+    --fly-y: 110px;
+    --fly-r: -60deg;
+    color: var(--color-moss);
+    animation-delay: 0.36s;
+  }
+
+  /* ── Preguntas que se abren con suavidad ────────────────────────────────── */
+  details[open] > .details-body {
+    animation: rise 0.4s cubic-bezier(0.2, 1.1, 0.35, 1) both;
+  }
+
+  /* ── Texto legal ────────────────────────────────────────────────────────── */
+  .prose-doodle h2 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 2.1rem;
+    line-height: 1;
+    margin-top: 2.6rem;
+    scroll-margin-top: 1.5rem;
+  }
+  .prose-doodle h3 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 1.4rem;
+  }
+  .prose-doodle p,
+  .prose-doodle li {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+  .prose-doodle p {
+    margin-top: 0.8rem;
+  }
+  .prose-doodle ul {
+    margin-top: 0.7rem;
+    padding-left: 1.3rem;
+    list-style: none;
+  }
+  .prose-doodle li {
+    position: relative;
+    margin-top: 0.35rem;
+  }
+  .prose-doodle li::before {
+    content: "";
+    position: absolute;
+    left: -1.15rem;
+    top: 0.62em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 60% 40% 55% 45%;
+    background: var(--color-honey);
+  }
+  .prose-doodle a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
+}
+
+/* Sin movimiento para quien lo pide: todo queda visible y quieto. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-reveal="out"] {
+    opacity: 1;
+    transform: none;
+  }
+  .draw path,
+  .reveal[data-reveal="out"] .draw path {
+    stroke-dashoffset: 0;
+  }
+  .boil::before,
+  .boil > .notch-bg {
+    filter: url(#doodle);
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+@layer components {
+  /* Enlace de navegación: un subrayado que se dibuja al pasar */
+  .nav-link {
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--color-honey);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+}

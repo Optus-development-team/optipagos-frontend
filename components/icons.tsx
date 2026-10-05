@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-import { ECommerce, Finance, HandGestures, Interfaces } from "doodle-icons";
+import { ECommerce, Files, Finance, HandGestures, Interfaces, Logos } from "doodle-icons";
 
 /**
  * Iconos doodle (https://github.com/svatsa159/react-doodle-icons, paquete `doodle-icons`).
@@ -39,6 +39,16 @@ const ICONS = {
   wave: HandGestures.WaveRight,
   thumbs: HandGestures.ThumbsUp,
   ok: HandGestures.Ok,
+  mail: Interfaces.Mail,
+  home: Interfaces.Home,
+  link: Interfaces.Link,
+  doc: Interfaces.Doc,
+  contract: Files.FileContract,
+  instagram: Logos.Instagram,
+  facebook: Logos.Facebook,
+  twitter: Logos.Twitter,
+  linkedin: Logos.Linkedin,
+  whatsapp: Logos.Whatsapp,
 } as const;
 
 export type DoodleIconName = keyof typeof ICONS;

@@ -8,9 +8,19 @@ import { DoodleIcon } from "@/components/icons";
 import { Signer, type SignerIcons } from "@/components/signer/Signer";
 import { site } from "@/lib/site";
 
+const description = "Abre este enlace en tu teléfono para confirmar con tu huella o tu rostro.";
+
 export const metadata: Metadata = {
   title: "Confirma con tu huella",
+  description,
   robots: { index: false, follow: false },
+  // Vista previa del enlace cuando llega por chat: nunca incluye datos de la operación.
+  openGraph: {
+    title: "Confirma con tu huella · Optipagos",
+    description,
+    images: [{ url: "/media/whatsapp/confirmar-envio.png", width: 1200, height: 630 }],
+  },
+  twitter: { card: "summary_large_image", images: ["/media/whatsapp/confirmar-envio.png"] },
 };
 
 // Los iconos doodle se dibujan aquí, en el servidor, y viajan ya listos al componente cliente.

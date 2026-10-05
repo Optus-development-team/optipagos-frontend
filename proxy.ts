@@ -8,13 +8,15 @@ import { NextResponse, type NextRequest } from "next/server";
 export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const dev = process.env.NODE_ENV === "development";
+  // Con la API en su propio dominio, la página la llama directamente.
+  const api = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/+$/, "");
   const csp = [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${dev ? " 'unsafe-eval'" : ""}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
-    `connect-src 'self'${dev ? " ws: wss:" : ""}`,
+    `connect-src 'self'${api ? ` ${new URL(api).origin}` : ""}${dev ? " ws: wss:" : ""}`,
     "object-src 'none'",
     "base-uri 'none'",
     "form-action 'self'",

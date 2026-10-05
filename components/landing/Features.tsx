@@ -3,6 +3,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { Coin, PaperPlane, Sparkle, Sun } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
+import { Reveal } from "@/components/ui/Reveal";
 
 interface Feature {
   icon: DoodleIconName;
@@ -56,7 +57,7 @@ const features: Feature[] = [
 export function Features() {
   return (
     <section id="que-puedes-hacer" className="scroll-mt-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <Reveal className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="hand text-2xl text-ink-600">qué puedes hacer</p>
           <h2 className="display text-6xl sm:text-7xl">Todo desde el chat</h2>
@@ -65,20 +66,25 @@ export function Features() {
           Escribe como le escribirías a un amigo. Estos son algunos mensajes que Optipagos
           entiende.
         </p>
-      </div>
+      </Reveal>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {features.map((feature) => (
-          <NotchCard
+        {features.map((feature, index) => (
+          <Reveal
             key={feature.title}
+            effect={index % 2 === 0 ? "left" : "right"}
+            delay={(index % 2) * 120}
+          >
+          <NotchCard
             corner={feature.corner}
             tone={feature.tone}
             notch={[84, 84]}
+            className="lively h-full"
             chip={
               <span
                 className={`chip-tile ${feature.tone === "ink" ? "tone-honey" : feature.tone === "honey" ? "tone-ink" : ""}`}
               >
-                {feature.doodle}
+                <span className="lively-icon block">{feature.doodle}</span>
               </span>
             }
           >
@@ -98,6 +104,7 @@ export function Features() {
               </div>
             </div>
           </NotchCard>
+          </Reveal>
         ))}
       </div>
     </section>

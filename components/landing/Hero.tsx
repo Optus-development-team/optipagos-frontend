@@ -5,12 +5,6 @@ import { DoodleIcon } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { site } from "@/lib/site";
 
-/** "+591 77379190" a partir de los dígitos configurados. */
-function prettyNumber(digits: string): string {
-  if (!digits) return "en WhatsApp";
-  return digits.startsWith("591") ? `+591 ${digits.slice(3)}` : `+${digits}`;
-}
-
 export function Hero() {
   return (
     <section className="grid items-stretch gap-6 pt-2 lg:grid-cols-[1.12fr_0.88fr]">
@@ -18,10 +12,11 @@ export function Hero() {
       <NotchCard
         corner="tr"
         notch={[96, 96]}
+        className="animate-rise"
         chip={
           <a
             href={site.whatsappUrl()}
-            className="chip-tile tone-honey"
+            className="chip-tile tone-honey boil"
             aria-label="Abrir Optipagos en WhatsApp"
           >
             <MdArrowOutward className="h-9 w-9" aria-hidden="true" />
@@ -30,15 +25,15 @@ export function Hero() {
       >
         <div className="flex h-full flex-col px-6 pb-8 pt-7 sm:px-10 sm:pb-10 sm:pt-9">
           <div className="flex min-h-[64px] flex-wrap content-start items-start gap-2 pr-[88px]">
-            <span className="pill">Sin instalar nada</span>
-            <span className="pill honey">Desde tu WhatsApp</span>
+            <span className="pill animate-sway">Sin instalar nada</span>
+            <span className="pill honey animate-sway [animation-delay:-3s]">Desde tu WhatsApp</span>
           </div>
 
           <h1 className="display mt-6 text-[clamp(3.6rem,11vw,7rem)]">
             Tu plata viaja por{" "}
             <span className="relative inline-block whitespace-nowrap">
               WhatsApp
-              <Underline className="text-honey" />
+              <Underline className="draw text-honey [--draw-delay:0.7s]" />
             </span>
           </h1>
 
@@ -58,7 +53,7 @@ export function Hero() {
           </div>
 
           <p className="hand mt-7 flex items-end gap-2 text-2xl text-ink-600">
-            <CurlyArrow className="h-12 w-14 -rotate-[100deg] -scale-x-100 text-ochre" />
+            <CurlyArrow className="draw h-12 w-14 -rotate-[100deg] -scale-x-100 text-ochre [--draw-delay:1.4s]" />
             <span className="-rotate-2">solo escribe «hola»</span>
           </p>
         </div>
@@ -69,15 +64,20 @@ export function Hero() {
         corner="bl"
         tone="ink"
         notch={[188, 68]}
-        chip={<span className="chip-tile px-2 text-xl">{prettyNumber(site.whatsappNumber)}</span>}
+        className="animate-rise [animation-delay:0.15s]"
+        chip={
+          <span className="chip-tile px-2 text-xl">
+            {site.whatsappDisplay || "en WhatsApp"}
+          </span>
+        }
       >
         <div className="relative flex h-full flex-col px-5 pb-[92px] pt-7 sm:px-7">
-          <Sparkle className="absolute right-5 top-5 h-8 w-8 animate-wiggle text-honey" />
-          <Star className="absolute bottom-24 right-6 h-6 w-6 text-ink-300" />
-          <Heart className="absolute bottom-5 right-24 hidden h-6 w-6 -rotate-12 text-honey sm:block" />
+          <Sparkle className="absolute right-5 top-5 h-8 w-8 animate-twinkle text-honey" />
+          <Star className="absolute bottom-24 right-6 h-6 w-6 animate-twinkle text-ink-300 [animation-delay:-1.2s]" />
+          <Heart className="absolute bottom-5 right-24 hidden h-6 w-6 -rotate-12 animate-hop text-honey sm:block" />
 
           <div className="flex items-center gap-3">
-            <span className="grid h-14 w-14 flex-none place-items-center rounded-full bg-honey text-ink">
+            <span className="grid h-14 w-14 flex-none animate-float place-items-center rounded-full bg-honey text-ink">
               <OptipagosMark className="h-10 w-10" />
             </span>
             <div className="leading-tight">
@@ -86,7 +86,7 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-1 flex-col justify-center gap-3">
+          <div className="chat-in mt-6 flex flex-1 flex-col justify-center gap-3">
             <p className="bubble me">enviar 20 a +591 7123 4567</p>
             <p className="bubble flex items-center gap-2">
               <DoodleIcon name="fingerprint" className="h-7 w-5 flex-none" />
@@ -106,25 +106,15 @@ export function Hero() {
         </div>
       </NotchCard>
 
-      {/* Tira de etiquetas, como en la referencia de formas */}
-      <div className="flex flex-col items-center gap-4 lg:col-span-2">
-        <ul className="flex flex-wrap justify-center gap-2.5">
-          {["Rápido", "Simple", "Seguro", "Tuyo"].map((word) => (
-            <li key={word} className="pill text-xl">
-              {word}
-            </li>
-          ))}
-        </ul>
-        <p className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-center">
-          <strong>Ideal para:</strong>
-          {["Mandar plata a la familia", "Cobrar en tu negocio", "Dividir cuentas"].map((use) => (
-            <span key={use} className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
-              {use}
-            </span>
-          ))}
-        </p>
-      </div>
+      <p className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-center lg:col-span-2">
+        <strong>Ideal para:</strong>
+        {["Mandar plata a la familia", "Cobrar en tu negocio", "Dividir cuentas"].map((use) => (
+          <span key={use} className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
+            {use}
+          </span>
+        ))}
+      </p>
     </section>
   );
 }

@@ -11,7 +11,9 @@ import {
 } from "react";
 import { bytesToHex, hexToBytes } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import Link from "next/link";
 import { Scribble } from "@/components/doodles";
+import { Celebrate } from "@/components/ui/Celebrate";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { ApiError, signerApi } from "@/lib/signer/api";
 import { openKey, sealKey } from "@/lib/signer/envelope";
@@ -361,13 +363,20 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   if (view.type === "CREATE_WALLET") {
     if (view.wallet || view.status === "COMPLETED") {
       return (
-        <Card icon={icons.tick} title="¡Billetera lista!" eyebrow={name ? `Bien hecho, ${name}` : "Bien hecho"}>
-          <p className="text-lg leading-snug">
-            Ya puedes recibir y enviar dinero. Vuelve a WhatsApp y escribe{" "}
-            <strong className="hand text-xl">menu</strong> para empezar.
-          </p>
-          <BackToChat href={chatUrl} />
-        </Card>
+        <div className="relative">
+          <Celebrate />
+          <Card
+            icon={icons.tick}
+            title="¡Billetera lista!"
+            eyebrow={name ? `Bien hecho, ${name}` : "Bien hecho"}
+          >
+            <p className="text-lg leading-snug">
+              Ya puedes recibir y enviar dinero. Vuelve a WhatsApp: ahí te esperan los primeros
+              pasos.
+            </p>
+            <BackToChat href={chatUrl} />
+          </Card>
+        </div>
       );
     }
     if (view.status !== "PENDING") {
@@ -525,20 +534,22 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
       );
     }
     if (send.status === "CONFIRMED") {
-      const receipt = send.destinationExplorerUrl ?? send.explorerUrl;
       return (
-        <Card icon={icons.tick} title="¡Enviado!" eyebrow="Listo">
-          <div>
-            {amount}
-            <p className="mt-1 text-lg leading-snug">Ya le llegó a {recipient}.</p>
-          </div>
-          <BackToChat href={chatUrl} />
-          {receipt ? (
-            <a href={receipt} target="_blank" rel="noreferrer" className="link self-center">
-              Ver comprobante
-            </a>
-          ) : null}
-        </Card>
+        <div className="relative">
+          <Celebrate />
+          <Card icon={icons.tick} title="¡Enviado!" eyebrow="Listo">
+            <div>
+              {amount}
+              <p className="mt-1 text-lg leading-snug">Ya le llegó a {recipient}.</p>
+            </div>
+            {send.transferId ? (
+              <Link href={`/c/${send.transferId}`} className="btn btn-primary btn-block">
+                Ver comprobante
+              </Link>
+            ) : null}
+            <BackToChat href={chatUrl} primary={!send.transferId} />
+          </Card>
+        </div>
       );
     }
     if (send.status === "FAILED" || view.status === "FAILED") {

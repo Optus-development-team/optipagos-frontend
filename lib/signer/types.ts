@@ -19,6 +19,8 @@ export interface ActionView {
   explorerUrl: string;
   proofMessageTemplate?: string;
   send?: {
+    /** Id del movimiento: su comprobante está en /c/:transferId. */
+    transferId?: string;
     summary: { amount: string; recipient: string; network: string; fee: string };
     typedData: TypedDataJson | null;
     amount: string;

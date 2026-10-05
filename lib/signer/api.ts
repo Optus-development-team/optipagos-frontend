@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 import type { ActionView } from "./types";
 import type { ServerOptions } from "./webauthn";
 
@@ -13,11 +14,13 @@ export class ApiError extends Error {
 }
 
 /**
- * Cliente de la API de acciones (`/api/v1/actions/:token`). Las llamadas van al mismo origen:
- * Next las reenvía a optipagos-backend, así que no hay CORS ni terceros de por medio.
+ * Cliente de la API de acciones (`/api/v1/actions/:token`). Por defecto las llamadas van al
+ * mismo origen y Next las reenvía a optipagos-backend; si la API tiene dominio propio
+ * (NEXT_PUBLIC_API_URL), se llama ahí directamente y el backend lo permite por CORS.
  */
 export function signerApi(token: string) {
-  const base = `/api/v1/actions/${encodeURIComponent(token)}`;
+  const root = `${site.apiUrl}/api/v1`;
+  const base = `${root}/actions/${encodeURIComponent(token)}`;
 
   async function call<T>(path: string, body?: unknown): Promise<T> {
     const res = await fetch(`${base}${path}`, {
@@ -51,7 +54,7 @@ export function signerApi(token: string) {
     signTransfer: (payload: unknown) => call<ActionView>("/transfer", payload),
     exportKey: (payload: unknown) => call<{ ok: boolean }>("/export", payload),
     cancel: () => call<ActionView>("/cancel", {}),
-    googleUrl: () => `/api/v1/auth/google/start?token=${encodeURIComponent(token)}`,
+    googleUrl: () => `${root}/auth/google/start?token=${encodeURIComponent(token)}`,
   };
 }
 
