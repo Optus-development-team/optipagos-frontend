@@ -110,9 +110,10 @@ Con "reducir movimiento" activado en el sistema, nada se anima y todo queda visi
 - `npm run cards` abre `/tarjetas/<nombre>` en un navegador sin interfaz y guarda la captura en
   `assets/whatsapp/<nombre>.png`. La tarjeta `og` se copia además como vista previa del sitio
   (`app/opengraph-image.png` y `app/twitter-image.png`).
-- El backend las pide por `/media/whatsapp/<nombre>.png`, las sube una vez a WhatsApp y
-  reutiliza su media id. La respuesta lleva `ETag`: al volver a capturar, el backend lo nota y
-  sube la versión nueva.
+- Se sirven en `/media/whatsapp/<nombre>.png`. En los mensajes con botón de enlace, WhatsApp
+  toma la imagen directamente de esa URL pública (ahí Meta no admite media ids); en los de
+  botones de respuesta, el backend la sube una vez y reutiliza su media id. La respuesta lleva
+  `ETag`: al volver a capturar, el backend lo nota y sube la versión nueva.
 
 ```bash
 npm run build && npm start          # o npm run dev
@@ -121,8 +122,8 @@ npm run cards
 ```
 
 **Comprobantes**: `/c/<id>/imagen` dibuja el comprobante con los datos de
-`GET /api/v1/receipts/<id>`. El bot lo envía como imagen del mensaje "Envío completado" o
-"Recibiste dinero", y desde la página `/c/<id>` cualquiera puede compartirlo o descargarlo.
+`GET /api/v1/receipts/<id>`. WhatsApp la toma de esa URL pública como imagen del mensaje "Envío completado" o
+"Recibiste dinero" (por eso esta ruta debe ser accesible desde internet), y desde la página `/c/<id>` cualquiera puede compartirlo o descargarlo.
 
 ## SEO y vista previa de enlaces
 

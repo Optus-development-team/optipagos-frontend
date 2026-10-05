@@ -1,5 +1,11 @@
 # Cambios
 
+## 0.2.1 · 5 de octubre de 2026
+
+- Documentación: las imágenes de los mensajes con botón de enlace las toma WhatsApp de la URL
+  pública del sitio (`/media/whatsapp/…` y `/c/<id>/imagen`), que deben ser accesibles desde
+  internet.
+
 ## 0.2.0 · 5 de octubre de 2026
 
 - **Dominios**: preparado para `optipagos.optus.lat` (sitio) y `api.optipagos.optus.lat` (API).
