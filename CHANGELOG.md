@@ -1,5 +1,18 @@
 # Cambios
 
+## 0.3.0 · 6 de octubre de 2026
+
+- **Idiomas**: el sitio está en español e inglés. La portada y las páginas legales tienen su
+  versión en `/en` (`/en/privacy`, `/en/terms`), con selector de idioma, `hreflang` y sitemap
+  por idioma. La primera visita respeta el idioma del navegador y la elección se recuerda.
+- Las páginas de los enlaces personales (`/w/<token>` y `/c/<id>`) se muestran en el idioma de
+  la persona sin cambiar de dirección: los enlaces que envía el bot siguen siendo los mismos.
+- Los textos pasan a `i18n/dictionaries/` y los legales a `content/legal/`. La política de
+  privacidad menciona la cookie `lang`, que recuerda el idioma.
+- Estructura: `app/[lang]/` (sitio, estático por idioma) y `app/(app)/` (enlaces personales y
+  tarjetas). `proxy.ts` suma el enrutado de idiomas a las cabeceras de la página de firma, que
+  no cambian.
+
 ## 0.2.1 · 5 de octubre de 2026
 
 - Documentación: las imágenes de los mensajes con botón de enlace las toma WhatsApp de la URL
