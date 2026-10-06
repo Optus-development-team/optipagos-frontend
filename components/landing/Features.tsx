@@ -4,67 +4,35 @@ import { Coin, PaperPlane, Sparkle, Sun } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { Reveal } from "@/components/ui/Reveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-interface Feature {
+interface Look {
   icon: DoodleIconName;
-  title: string;
-  text: string;
-  examples: string[];
   tone: "ink" | "cream" | "honey";
   corner: "tr" | "tl" | "br" | "bl";
   doodle: ReactNode;
 }
 
-const features: Feature[] = [
-  {
-    icon: "send",
-    title: "Enviar",
-    text: "Manda dinero a otro número de WhatsApp en segundos, a cualquier hora.",
-    examples: ["enviar 10 a +591 7123 4567"],
-    tone: "ink",
-    corner: "tr",
-    doodle: <PaperPlane className="h-9 w-9" />,
-  },
-  {
-    icon: "cash",
-    title: "Cobrar",
-    text: "Crea un QR con el monto y compártelo. Te avisamos apenas te paguen.",
-    examples: ["cobrar 25 por almuerzo"],
-    tone: "cream",
-    corner: "tr",
-    doodle: <Coin className="h-9 w-9" />,
-  },
-  {
-    icon: "wallet",
-    title: "Recibir",
-    text: "Tu QR personal, siempre a mano, para que te envíen cuando quieran.",
-    examples: ["recibir"],
-    tone: "honey",
-    corner: "tr",
-    doodle: <Sun className="h-10 w-10" />,
-  },
-  {
-    icon: "list",
-    title: "Tu saldo",
-    text: "Mira cuánto tienes y todos tus movimientos, sin salir del chat.",
-    examples: ["saldo", "movimientos"],
-    tone: "cream",
-    corner: "tr",
-    doodle: <Sparkle className="h-9 w-9" />,
-  },
+// Aspecto de cada tarjeta; los textos vienen del diccionario, en el mismo orden.
+const looks: Look[] = [
+  { icon: "send", tone: "ink", corner: "tr", doodle: <PaperPlane className="h-9 w-9" /> },
+  { icon: "cash", tone: "cream", corner: "tr", doodle: <Coin className="h-9 w-9" /> },
+  { icon: "wallet", tone: "honey", corner: "tr", doodle: <Sun className="h-10 w-10" /> },
+  { icon: "list", tone: "cream", corner: "tr", doodle: <Sparkle className="h-9 w-9" /> },
 ];
 
-export function Features() {
+export function Features({ t, id }: { t: Dictionary["features"]; id: string }) {
+  const features = t.items.map((item, index) => ({ ...item, ...looks[index] }));
+
   return (
-    <section id="que-puedes-hacer" className="scroll-mt-8">
+    <section id={id} className="scroll-mt-8">
       <Reveal className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="hand text-2xl text-ink-600">qué puedes hacer</p>
-          <h2 className="display text-6xl sm:text-7xl">Todo desde el chat</h2>
+          <p className="hand text-2xl text-ink-600">{t.eyebrow}</p>
+          <h2 className="display text-6xl sm:text-7xl">{t.title}</h2>
         </div>
         <p className="max-w-sm text-lg leading-snug">
-          Escribe como le escribirías a un amigo. Estos son algunos mensajes que Optipagos
-          entiende.
+          {t.lead}
         </p>
       </Reveal>
 

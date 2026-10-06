@@ -5,12 +5,24 @@ import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { Reveal } from "@/components/ui/Reveal";
+import { fill, type Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 
 export interface LegalSection {
   id: string;
   title: string;
   body: ReactNode;
+}
+
+/** Una página legal completa en un idioma (ver content/legal). */
+export interface LegalDocument {
+  title: string;
+  description: string;
+  eyebrow: string;
+  /** Resumen en lenguaje llano, antes del texto completo. */
+  summary: string[];
+  updated: string;
+  sections: LegalSection[];
 }
 
 interface LegalPageProps {
@@ -23,6 +35,7 @@ interface LegalPageProps {
   sections: LegalSection[];
   /** La otra página legal, para enlazarla al final. */
   other: { href: string; label: string };
+  labels: Dictionary["legal"];
 }
 
 /** Marco común de las páginas legales: resumen, índice y texto, con el mismo trazo del sitio. */
@@ -34,6 +47,7 @@ export function LegalPage({
   updated,
   sections,
   other,
+  labels,
 }: LegalPageProps) {
   return (
     <PageTransition>
@@ -61,11 +75,11 @@ export function LegalPage({
                 </li>
               ))}
             </ul>
-            <p className="hand mt-6 text-lg opacity-70">Vigente desde el {updated}</p>
+            <p className="hand mt-6 text-lg opacity-70">{fill(labels.effective, { date: updated })}</p>
           </div>
         </NotchCard>
 
-        <nav aria-label="Contenido" className="mt-8 flex flex-wrap gap-2">
+        <nav aria-label={labels.contents} className="mt-8 flex flex-wrap gap-2">
           {sections.map((section) => (
             <a key={section.id} href={`#${section.id}`} className="pill hover:bg-honey">
               {section.title}
@@ -92,7 +106,7 @@ export function LegalPage({
             {other.label}
           </Link>
           <a href={site.whatsappUrl("Hola, tengo una consulta")} className="btn btn-primary">
-            Preguntar por WhatsApp
+            {labels.ask}
           </a>
         </div>
       </main>

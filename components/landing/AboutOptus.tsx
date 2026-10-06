@@ -3,10 +3,11 @@ import { OptusMark } from "@/components/brand/marks";
 import { Burst, Swirl } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { Reveal } from "@/components/ui/Reveal";
+import { fill, type Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 
 /** Quién está detrás: Optus, con sus redes y el enlace a optus.lat. */
-export function AboutOptus() {
+export function AboutOptus({ t }: { t: Dictionary["about"] }) {
   return (
     <section id="optus" className="scroll-mt-8">
       <Reveal effect="tilt">
@@ -18,11 +19,10 @@ export function AboutOptus() {
           </div>
 
           <div>
-            <p className="hand text-2xl text-ink-600">hecho con cariño por</p>
-            <h2 className="display text-5xl sm:text-6xl">La gente de Optus</h2>
+            <p className="hand text-2xl text-ink-600">{t.eyebrow}</p>
+            <h2 className="display text-5xl sm:text-6xl">{t.title}</h2>
             <p className="mt-3 max-w-xl text-lg leading-snug">
-              Optipagos es una marca perteneciente a Optus, un equipo boliviano que construye
-              herramientas para que los negocios y las personas hagan más con menos esfuerzo.
+              {t.text}
             </p>
             <ul className="mt-5 flex flex-wrap items-center gap-3">
               {site.optus.social.map((network) => (
@@ -31,7 +31,7 @@ export function AboutOptus() {
                     href={network.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${site.optus.name} en ${network.name}`}
+                    aria-label={fill(t.socialAria, { company: site.optus.name, network: network.name })}
                     title={network.name}
                     className="chip-tile !h-12 !w-12"
                   >
@@ -48,7 +48,7 @@ export function AboutOptus() {
             rel="noopener noreferrer"
             className="btn btn-honey justify-self-start md:justify-self-end"
           >
-            Visitar optus.lat
+            {t.visit}
             <MdArrowOutward className="h-5 w-5" aria-hidden="true" />
           </a>
         </div>

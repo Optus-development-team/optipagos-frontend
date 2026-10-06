@@ -4,37 +4,36 @@ import { Logo } from "@/components/brand/Logo";
 import { OptusMark } from "@/components/brand/marks";
 import { Squiggle } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
+import { href, type Locale } from "@/i18n/config";
+import { fill, type Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
-
-const product = [
-  { href: "/#como-funciona", label: "Cómo funciona" },
-  { href: "/#que-puedes-hacer", label: "Qué puedes hacer" },
-  { href: "/#seguridad", label: "Seguridad" },
-  { href: "/#preguntas", label: "Preguntas" },
-];
-
-const legal = [
-  { href: "/privacidad", label: "Política de privacidad" },
-  { href: "/terminos", label: "Términos de servicio" },
-];
+import { LangSwitch } from "./LangSwitch";
 
 /** Pie del sitio: navegación, páginas legales, contacto, redes y la marca madre. */
-export function SiteFooter() {
+export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+  const { nav, footer } = dict;
+  const home = href("home", locale);
+  const product = [nav.how, nav.features, nav.safety, nav.faq];
+  const legal = [
+    { href: href("privacy", locale), label: footer.privacy },
+    { href: href("terms", locale), label: footer.terms },
+  ];
+
   return (
     <footer className="mx-auto w-full max-w-6xl px-5 pb-10">
       <Squiggle className="draw mx-auto mb-10 h-5 w-40 text-ink-300" />
 
       <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
         <div>
-          <Link href="/" aria-label="Optipagos, inicio">
+          <Link href={home} aria-label={nav.home}>
             <Logo />
           </Link>
           <p className="mt-3 max-w-xs leading-snug opacity-80">
-            Tu billetera de dólares digitales dentro de WhatsApp. Simple, rápida y solo tuya.
+            {footer.tagline}
           </p>
           <a href={site.whatsappUrl()} className="btn btn-primary btn-sm mt-5">
             <DoodleIcon name="whatsapp" className="h-5 w-5" />
-            Escríbenos
+            {footer.write}
           </a>
         </div>
 
@@ -42,8 +41,8 @@ export function SiteFooter() {
           <h2 className="display text-2xl">Optipagos</h2>
           <ul className="mt-3 flex flex-col gap-2">
             {product.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="hover:underline hover:decoration-wavy">
+              <li key={item.id}>
+                <Link href={`${home}#${item.id}`} className="hover:underline hover:decoration-wavy">
                   {item.label}
                 </Link>
               </li>
@@ -51,8 +50,8 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        <nav aria-label="Legal y ayuda">
-          <h2 className="display text-2xl">Legal y ayuda</h2>
+        <nav aria-label={footer.legalTitle}>
+          <h2 className="display text-2xl">{footer.legalTitle}</h2>
           <ul className="mt-3 flex flex-col gap-2">
             {legal.map((item) => (
               <li key={item.href}>
@@ -73,7 +72,7 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <h2 className="display text-2xl">Síguenos</h2>
+          <h2 className="display text-2xl">{footer.follow}</h2>
           <ul className="mt-3 flex flex-wrap gap-3">
             {site.optus.social.map((network) => (
               <li key={network.name}>
@@ -81,7 +80,7 @@ export function SiteFooter() {
                   href={network.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${site.optus.name} en ${network.name}`}
+                  aria-label={fill(dict.about.socialAria, { company: site.optus.name, network: network.name })}
                   title={network.name}
                   className="chip-tile !h-12 !w-12"
                 >
@@ -96,7 +95,7 @@ export function SiteFooter() {
             rel="noopener noreferrer"
             className="link mt-5 inline-flex items-center gap-1"
           >
-            Conoce Optus
+            {footer.meetOptus}
             <MdArrowOutward className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
@@ -110,16 +109,19 @@ export function SiteFooter() {
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3"
-          aria-label="Ir a optus.lat"
+          aria-label={footer.goToOptus}
         >
           <OptusMark className="h-9 w-auto" />
           <span className="opacity-80">
-            Optipagos es una marca perteneciente a <strong>Optus</strong>.
+            {footer.brandLead} <strong>Optus</strong>.
           </span>
         </a>
-        <p className="hand text-base opacity-60">
-          © {new Date().getFullYear()} Optus · {site.optus.location}
-        </p>
+        <div className="flex items-center gap-4">
+          <LangSwitch locale={locale} label={nav.language} />
+          <p className="hand text-base opacity-60">
+            © {new Date().getFullYear()} Optus · {site.optus.location}
+          </p>
+        </div>
       </div>
     </footer>
   );

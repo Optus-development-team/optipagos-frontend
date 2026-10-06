@@ -10,6 +10,9 @@ import { ShareReceipt } from "@/components/receipt/ShareReceipt";
 import { Celebrate } from "@/components/ui/Celebrate";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { PageTransition } from "@/components/ui/PageTransition";
+import { href } from "@/i18n/config";
+import { fill, getDictionary } from "@/i18n/dictionaries";
+import { getRequestLocale } from "@/i18n/request";
 import { getReceipt } from "@/lib/backend";
 import { receiptDate, receiptTitle } from "@/lib/receipt/format";
 import { absoluteUrl, site } from "@/lib/site";
@@ -18,10 +21,18 @@ type Props = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
+  const locale = await getRequestLocale();
+  const { receipt: t } = await getDictionary(locale);
   const receipt = await getReceipt(id).catch(() => null);
-  if (!receipt) return { title: "Comprobante", robots: { index: false, follow: false } };
-  const { title } = receiptTitle(receipt);
-  const description = `${receipt.amount} ${receipt.currency} · de ${receipt.from} para ${receipt.to} · ${receiptDate(receipt)}`;
+  if (!receipt) return { title: t.metaTitle, robots: { index: false, follow: false } };
+  const { title } = receiptTitle(receipt, t.status);
+  const description = fill(t.summary, {
+    amount: receipt.amount,
+    currency: receipt.currency,
+    from: receipt.from,
+    to: receipt.to,
+    date: receiptDate(receipt, locale),
+  });
   const image = absoluteUrl(`/c/${receipt.id}/imagen`);
   return {
     title: `${title} · ${receipt.amount} ${receipt.currency}`,
@@ -32,7 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${title} · ${receipt.amount} ${receipt.currency}`,
       description,
       url: `/c/${receipt.id}`,
-      images: [{ url: image, width: 1200, height: 630, alt: `Comprobante ${receipt.reference}` }],
+      images: [
+        { url: image, width: 1200, height: 630, alt: fill(t.imageAlt, { reference: receipt.reference }) },
+      ],
     },
     twitter: { card: "summary_large_image", images: [image] },
   };
@@ -42,8 +55,11 @@ export default async function ReceiptPage({ params }: Props) {
   const { id } = await params;
   const receipt = await getReceipt(id);
   if (!receipt) notFound();
+  const locale = await getRequestLocale();
+  const dict = await getDictionary(locale);
+  const t = dict.receipt;
 
-  const { title, eyebrow } = receiptTitle(receipt);
+  const { title, eyebrow } = receiptTitle(receipt, t.status);
   const done = receipt.status === "CONFIRMED";
   const failed = receipt.status === "FAILED";
   const image = `/c/${receipt.id}/imagen`;
@@ -54,7 +70,7 @@ export default async function ReceiptPage({ params }: Props) {
       {receipt.status === "SUBMITTED" ? <AutoRefresh everyMs={4000} /> : null}
 
       <header className="flex items-center justify-between">
-        <Link href="/" aria-label="Optipagos, inicio">
+        <Link href={href("home", locale)} aria-label={dict.nav.home}>
           <Logo size="sm" />
         </Link>
         <Squiggle className="h-4 w-20 text-ink-400" />
@@ -90,24 +106,24 @@ export default async function ReceiptPage({ params }: Props) {
 
             <dl className="doodle-box tone-shell flat mt-5 flex flex-col gap-2 p-4 text-[0.98rem]">
               <div className="flex items-baseline justify-between gap-4">
-                <dt className="opacity-70">De</dt>
+                <dt className="opacity-70">{t.from}</dt>
                 <dd className="text-right font-bold [overflow-wrap:anywhere]">{receipt.from}</dd>
               </div>
               <hr className="dash-rule" />
               <div className="flex items-baseline justify-between gap-4">
-                <dt className="opacity-70">Para</dt>
+                <dt className="opacity-70">{t.to}</dt>
                 <dd className="text-right font-bold [overflow-wrap:anywhere]">{receipt.to}</dd>
               </div>
               <hr className="dash-rule" />
               <div className="flex items-baseline justify-between gap-4">
-                <dt className="opacity-70">Fecha</dt>
-                <dd className="text-right font-bold">{receiptDate(receipt)}</dd>
+                <dt className="opacity-70">{t.date}</dt>
+                <dd className="text-right font-bold">{receiptDate(receipt, locale)}</dd>
               </div>
               {receipt.memo ? (
                 <>
                   <hr className="dash-rule" />
                   <div className="flex items-baseline justify-between gap-4">
-                    <dt className="opacity-70">Concepto</dt>
+                    <dt className="opacity-70">{t.memo}</dt>
                     <dd className="text-right font-bold [overflow-wrap:anywhere]">{receipt.memo}</dd>
                   </div>
                 </>
@@ -116,20 +132,29 @@ export default async function ReceiptPage({ params }: Props) {
 
             <div className="mt-5 flex flex-col gap-3">
               {failed ? (
-                <p className="text-lg leading-snug">
-                  Este pago no se completó y no se movió dinero. Puedes intentarlo otra vez desde
-                  WhatsApp.
-                </p>
+                <p className="text-lg leading-snug">{t.failedText}</p>
               ) : (
                 <ShareReceipt
                   imageUrl={image}
-                  fileName={`comprobante-${receipt.reference}.png`}
-                  text={`${title}: ${receipt.amount} ${receipt.currency} de ${receipt.from} para ${receipt.to}.`}
+                  fileName={fill(t.fileName, { reference: receipt.reference })}
+                  text={fill(t.shareText, {
+                    title,
+                    amount: receipt.amount,
+                    currency: receipt.currency,
+                    from: receipt.from,
+                    to: receipt.to,
+                  })}
                   shareIcon={<DoodleIcon name="send" />}
+                  labels={{
+                    share: t.share,
+                    preparing: t.preparing,
+                    saved: t.saved,
+                    failed: t.shareFailed,
+                  }}
                 />
               )}
               <a href={site.chatUrl()} className="btn btn-block">
-                Volver a WhatsApp
+                {dict.common.backToChat}
               </a>
               {receipt.verifyUrl ? (
                 <a
@@ -138,7 +163,7 @@ export default async function ReceiptPage({ params }: Props) {
                   rel="noreferrer"
                   className="link self-center text-sm opacity-80"
                 >
-                  Verificar este pago
+                  {t.verify}
                 </a>
               ) : null}
             </div>
@@ -146,7 +171,7 @@ export default async function ReceiptPage({ params }: Props) {
         </NotchCard>
       </main>
 
-      <BrandFooter compact />
+      <BrandFooter lead={dict.footer.brandLead} compact />
     </PageTransition>
   );
 }

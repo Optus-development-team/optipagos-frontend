@@ -1,0 +1,331 @@
+/**
+ * Textos en español (idioma por defecto). en.ts debe tener exactamente la misma forma: el
+ * tipo `Dictionary` sale de este archivo.
+ *
+ * Los mensajes que la persona le escribe al bot («hola», «enviar 10 a…») van igual en todos
+ * los idiomas: son los que Optipagos entiende en el chat.
+ */
+const es = {
+  meta: {
+    tagline: "Tu plata viaja por WhatsApp",
+    description:
+      "Envía, recibe y cobra dólares digitales chateando por WhatsApp. Sin instalar nada y protegido con tu huella.",
+    keywords: [
+      "Optipagos",
+      "billetera en WhatsApp",
+      "enviar dinero por WhatsApp",
+      "dólares digitales",
+      "USDC Bolivia",
+      "cobrar con QR",
+      "pagos por WhatsApp",
+      "Optus",
+    ],
+  },
+  nav: {
+    home: "Optipagos, inicio",
+    sections: "Secciones",
+    how: { id: "como-funciona", label: "Cómo funciona" },
+    features: { id: "que-puedes-hacer", label: "Qué puedes hacer" },
+    safety: { id: "seguridad", label: "Seguridad" },
+    faq: { id: "preguntas", label: "Preguntas" },
+    open: "Abrir",
+    openSuffix: " en WhatsApp",
+    openAria: "Abrir Optipagos en WhatsApp",
+    language: "Idioma",
+  },
+  hero: {
+    pills: ["Sin instalar nada", "Desde tu WhatsApp"],
+    titleLead: "Tu plata viaja por",
+    titleMark: "WhatsApp",
+    lead: "Envía, recibe y cobra dólares digitales chateando. Sin apps nuevas, sin filas y sin enredos.",
+    cta: "Empezar en WhatsApp",
+    secondary: "Cómo funciona",
+    hint: "solo escribe «hola»",
+    onWhatsApp: "en WhatsApp",
+    chatTagline: "tu billetera en el chat",
+    chat: {
+      send: "enviar 20 a +591 7123 4567",
+      confirm: "Confirma con tu huella",
+      sent: "Listo. Enviaste 20 USDC",
+      balance: "saldo",
+      balanceReply: "Tu saldo es 80 USDC",
+    },
+    idealFor: "Ideal para:",
+    uses: ["Mandar plata a la familia", "Cobrar en tu negocio", "Dividir cuentas"],
+  },
+  ticker: {
+    label: "Rápido, simple, seguro y tuyo",
+    words: [
+      "Rápido",
+      "Simple",
+      "Seguro",
+      "Tuyo",
+      "Sin instalar nada",
+      "Sin filas",
+      "Sin letra chica",
+      "Desde tu WhatsApp",
+    ],
+  },
+  how: {
+    eyebrow: "en tres pasos",
+    title: "Así de fácil",
+    steps: [
+      {
+        title: "Escribe «hola»",
+        text: "Abre WhatsApp y saluda a Optipagos. Te responde al toque con los pasos.",
+      },
+      {
+        title: "Crea tu billetera",
+        text: "Un toque con tu huella o tu rostro y listo. Sin contraseñas que recordar.",
+      },
+      {
+        title: "Mueve tu plata",
+        text: "Envía a otros números, cobra con un QR y revisa tu saldo cuando quieras.",
+      },
+    ],
+  },
+  features: {
+    eyebrow: "qué puedes hacer",
+    title: "Todo desde el chat",
+    lead: "Escribe como le escribirías a un amigo. Estos son algunos mensajes que Optipagos entiende.",
+    items: [
+      {
+        title: "Enviar",
+        text: "Manda dinero a otro número de WhatsApp en segundos, a cualquier hora.",
+        examples: ["enviar 10 a +591 7123 4567"],
+      },
+      {
+        title: "Cobrar",
+        text: "Crea un QR con el monto y compártelo. Te avisamos apenas te paguen.",
+        examples: ["cobrar 25 por almuerzo"],
+      },
+      {
+        title: "Recibir",
+        text: "Tu QR personal, siempre a mano, para que te envíen cuando quieran.",
+        examples: ["recibir"],
+      },
+      {
+        title: "Tu saldo",
+        text: "Mira cuánto tienes y todos tus movimientos, sin salir del chat.",
+        examples: ["saldo", "movimientos"],
+      },
+    ],
+  },
+  safety: {
+    eyebrow: "tranquilo",
+    title: "Solo tú mueves tu dinero",
+    points: [
+      {
+        title: "Tu huella es la llave",
+        text: "Cada envío se confirma con tu huella o tu rostro. Sin ti, no sale nada.",
+      },
+      {
+        title: "Nadie más la abre",
+        text: "Tu billetera es tuya de verdad: ni siquiera nosotros podemos mover tu dinero.",
+      },
+      {
+        title: "Te la llevas cuando quieras",
+        text: "Si un día quieres irte, te llevas tu billetera completa. Sin letra chica.",
+      },
+    ],
+  },
+  faq: {
+    eyebrow: "por si acaso",
+    title: "Preguntas de siempre",
+    questions: [
+      {
+        q: "¿Qué son los dólares digitales?",
+        a: "Son dólares en formato digital (se llaman USDC): cada uno vale un dólar. Los guardas en tu billetera y los envías al instante, a cualquier hora.",
+      },
+      {
+        q: "¿Tengo que instalar algo?",
+        a: "No. Todo pasa en tu WhatsApp de siempre. Solo abrirás un enlace para confirmar con tu huella o tu rostro cuando crees tu billetera o envíes dinero.",
+      },
+      {
+        q: "¿Cuánto cuesta?",
+        a: "Crear tu billetera es gratis y enviar dinero no tiene comisión.",
+      },
+      {
+        q: "¿Cómo le envío a alguien?",
+        a: "Escribe, por ejemplo, «enviar 10 a +591 7123 4567». Te llega el resumen con un enlace, lo confirmas con tu huella y listo. Si esa persona todavía no usa Optipagos, solo tiene que escribirnos «hola».",
+      },
+      {
+        q: "¿Me dan un comprobante?",
+        a: "Sí. Cada vez que envías o recibes dinero te llega el comprobante por WhatsApp, con su imagen para compartir y un enlace para verlo cuando quieras.",
+      },
+      {
+        q: "¿Y si alguien agarra mi teléfono?",
+        a: "Sin tu huella o tu rostro no se puede enviar nada. Los mensajes solos no mueven dinero: cada envío necesita que tú lo confirmes.",
+      },
+      {
+        q: "¿Puedo llevarme mi dinero a otro lado?",
+        a: "Sí. Tu billetera es tuya: escribe «exportar clave» y te la llevas a otra aplicación cuando quieras. Guarda esa clave en un lugar seguro y no la compartas.",
+      },
+    ],
+  },
+  about: {
+    eyebrow: "hecho con cariño por",
+    title: "La gente de Optus",
+    text: "Optipagos es una marca perteneciente a Optus, un equipo boliviano que construye herramientas para que los negocios y las personas hagan más con menos esfuerzo.",
+    visit: "Visitar optus.lat",
+    socialAria: "{company} en {network}",
+  },
+  finalCta: {
+    eyebrow: "un minuto y ya",
+    title: "¿Listo para probar?",
+    text: "Escribe «hola» y crea tu billetera hoy. Si no te convence, no pasa nada.",
+    cta: "Empezar en WhatsApp",
+  },
+  footer: {
+    tagline: "Tu billetera de dólares digitales dentro de WhatsApp. Simple, rápida y solo tuya.",
+    write: "Escríbenos",
+    legalTitle: "Legal y ayuda",
+    privacy: "Política de privacidad",
+    terms: "Términos de servicio",
+    follow: "Síguenos",
+    meetOptus: "Conoce Optus",
+    goToOptus: "Ir a optus.lat",
+    brandLead: "Optipagos es una marca perteneciente a",
+  },
+  legal: {
+    effective: "Vigente desde el {date}",
+    contents: "Contenido",
+    ask: "Preguntar por WhatsApp",
+    seePrivacy: "Ver la política de privacidad",
+    seeTerms: "Ver los términos de servicio",
+  },
+  notFound: {
+    title: "Por aquí no es",
+    text: "No encontramos esta página. Si venías a confirmar algo, abre el enlace desde tu chat de WhatsApp.",
+    back: "Ir al inicio",
+  },
+  common: {
+    backToChat: "Volver a WhatsApp",
+  },
+  signer: {
+    metaTitle: "Confirma con tu huella",
+    metaDescription: "Abre este enlace en tu teléfono para confirmar con tu huella o tu rostro.",
+    opening: "Abriendo…",
+    unavailable: "Enlace no disponible",
+    unavailableText: "Esto no se puede hacer desde aquí. Pide un enlace nuevo por WhatsApp.",
+    unsupported:
+      "Este enlace no se puede usar desde aquí. Ábrelo en tu teléfono con el botón que te enviamos por WhatsApp.",
+    hello: "Hola",
+    helloName: "Hola, {name}",
+    expired: "El enlace venció",
+    progress: {
+      preparing: "Preparando…",
+      registering: "Registrando tu teléfono…",
+      fingerprint: "Confirma con tu huella…",
+      creating: "Creando tu billetera…",
+      confirming: "Confirmando…",
+      sending: "Enviando…",
+      cancelling: "Cancelando…",
+    },
+    wallet: {
+      title: "Crea tu billetera",
+      points: [
+        "Se abre con tu huella o tu rostro. Sin contraseñas.",
+        "Solo tú puedes mover tu dinero. Nadie más.",
+        "Queda lista en menos de un minuto.",
+      ],
+      googleLinked: "Tu cuenta de Google quedó vinculada.",
+      googleFailed: "No pudimos vincular tu cuenta de Google. Inténtalo otra vez.",
+      googleAccount: "Cuenta de Google vinculada:",
+      googleRequired: "Vincula tu cuenta de Google para identificarte y poder recuperar tu acceso.",
+      googleOptional:
+        "Si quieres, vincula tu cuenta de Google para recuperar tu acceso si cambias de número.",
+      googleContinue: "Continuar con Google",
+      continue: "Continuar con mi huella",
+      create: "Crear mi billetera",
+      readyTitle: "¡Billetera lista!",
+      wellDone: "Bien hecho",
+      wellDoneName: "Bien hecho, {name}",
+      readyText: "Ya puedes recibir y enviar dinero. Vuelve a WhatsApp: ahí te esperan los primeros pasos.",
+      expiredBefore: "Escribe",
+      expiredWord: "hola",
+      expiredAfter: "por WhatsApp y te enviamos uno nuevo.",
+    },
+    send: {
+      title: "Confirma tu envío",
+      about: "Vas a enviar",
+      to: "Para",
+      fee: "Comisión",
+      confirm: "Confirmar con mi huella",
+      cancel: "Cancelar envío",
+      cancelledTitle: "Envío cancelado",
+      cancelledText: "No se movió dinero. Todo sigue en tu billetera.",
+      expiredText: "No se movió dinero. Pide el envío otra vez por WhatsApp.",
+      sentTitle: "¡Enviado!",
+      sentEyebrow: "Listo",
+      arrivedBefore: "Ya le llegó a",
+      arrivedAfter: ".",
+      receipt: "Ver comprobante",
+      failedTitle: "No se pudo enviar",
+      failedText: "Tu dinero sigue en tu billetera. Inténtalo otra vez desde WhatsApp.",
+      sendingTitle: "Enviando…",
+      sendingEyebrow: "Ya confirmaste",
+      onItsWayBefore: "Va en camino a",
+      onItsWayAfter: ". Te avisamos por WhatsApp apenas llegue.",
+    },
+    key: {
+      title: "Tu clave",
+      warning: "No la compartas con nadie. Quien tenga esta clave puede usar tu dinero.",
+      copy: "Copiar",
+      copied: "Copiada",
+      keepSafe: "Guárdala en un lugar seguro y cierra esta página.",
+      usedTitle: "Enlace usado",
+      usedText: "Si necesitas ver tu clave otra vez, pídela de nuevo por WhatsApp.",
+      intro:
+        "Vas a ver la clave de tu billetera para llevarla a otra aplicación. Asegúrate de que nadie más esté mirando tu pantalla.",
+      show: "Mostrar mi clave",
+      copyFailed: "No se pudo copiar. Mantén presionada la clave para copiarla.",
+    },
+    errors: {
+      notAllowed: "No pudimos leer tu huella o rostro, o se acabó el tiempo. Inténtalo otra vez.",
+      alreadyRegistered: "Este teléfono ya está registrado en tu cuenta.",
+      security: "Este enlace no se puede abrir aquí. Ábrelo con el botón que te enviamos por WhatsApp.",
+      wrongDevice: "Con este teléfono no se puede abrir tu billetera. Usa el mismo con el que la creaste.",
+      unsupported:
+        "Este teléfono o navegador todavía no es compatible. Prueba con Chrome o Safari actualizados.",
+      expired: "El enlace venció. Pide uno nuevo por WhatsApp.",
+      closed: "Este enlace ya se usó.",
+      notFound: "No encontramos este enlace. Pide uno nuevo por WhatsApp.",
+      passkeyRejected: "No pudimos verificar tu huella o rostro. Inténtalo otra vez.",
+      signatureInvalid: "No pudimos confirmar la operación. Inténtalo otra vez.",
+      insufficientFunds: "No tienes saldo suficiente para este envío.",
+      limitExceeded: "Ese monto supera el límite por envío.",
+      googleRequired: "Primero vincula tu cuenta de Google.",
+      conflict: "Esto ya estaba hecho. Vuelve a WhatsApp para continuar.",
+      railUnavailable:
+        "Ahora mismo no podemos completar el envío. Tu dinero está a salvo; inténtalo en unos minutos.",
+      offline: "Sin conexión. Revisa tu internet e inténtalo de nuevo.",
+      generic: "Algo salió mal. Inténtalo otra vez.",
+    },
+  },
+  receipt: {
+    metaTitle: "Comprobante",
+    status: {
+      confirmed: { title: "Pago completado", eyebrow: "comprobante" },
+      submitted: { title: "Pago en camino", eyebrow: "ya casi" },
+      failed: { title: "Pago no completado", eyebrow: "sin movimiento de dinero" },
+    },
+    from: "De",
+    to: "Para",
+    date: "Fecha",
+    memo: "Concepto",
+    summary: "{amount} {currency} · de {from} para {to} · {date}",
+    imageAlt: "Comprobante {reference}",
+    fileName: "comprobante-{reference}.png",
+    shareText: "{title}: {amount} {currency} de {from} para {to}.",
+    failedText: "Este pago no se completó y no se movió dinero. Puedes intentarlo otra vez desde WhatsApp.",
+    verify: "Verificar este pago",
+    share: "Compartir comprobante",
+    preparing: "Preparando…",
+    saved: "Guardamos la imagen en tus descargas.",
+    shareFailed: "No pudimos preparar la imagen. Inténtalo otra vez.",
+  },
+};
+
+export default es;
+export type Dictionary = typeof es;

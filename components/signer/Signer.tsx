@@ -15,6 +15,8 @@ import Link from "next/link";
 import { Scribble } from "@/components/doodles";
 import { Celebrate } from "@/components/ui/Celebrate";
 import { NotchCard } from "@/components/ui/NotchCard";
+import type { Dictionary } from "@/i18n/dictionaries/es";
+import { fill } from "@/i18n/fill";
 import { ApiError, signerApi } from "@/lib/signer/api";
 import { openKey, sealKey } from "@/lib/signer/envelope";
 import type { ActionView, TypedDataJson } from "@/lib/signer/types";
@@ -35,11 +37,17 @@ export type SignerIcons = Record<
   ReactNode
 >;
 
+type Texts = Dictionary["signer"];
+
 interface SignerProps {
   token: string;
   icons: SignerIcons;
   /** Enlace para volver al chat de Optipagos. */
   chatUrl: string;
+  /** Textos de la página en el idioma de la persona. */
+  t: Texts;
+  /** Texto del botón para volver al chat. */
+  backLabel: string;
 }
 
 type Tone = "cream" | "honey" | "ink";
@@ -47,44 +55,40 @@ type Tone = "cream" | "honey" | "ink";
 // ── Mensajes ─────────────────────────────────────────────────────────────────
 
 /** Traduce cualquier fallo a una frase que le sirva a la persona, sin tecnicismos. */
-function friendly(error: unknown): string {
+function friendly(error: unknown, m: Texts["errors"]): string {
   const e = error as { name?: string; code?: string };
-  if (e.name === "NotAllowedError")
-    return "No pudimos leer tu huella o rostro, o se acabó el tiempo. Inténtalo otra vez.";
-  if (e.name === "InvalidStateError") return "Este teléfono ya está registrado en tu cuenta.";
-  if (e.name === "SecurityError")
-    return "Este enlace no se puede abrir aquí. Ábrelo con el botón que te enviamos por WhatsApp.";
-  if (e.name === "OperationError" || e.name === "WrongDevice")
-    return "Con este teléfono no se puede abrir tu billetera. Usa el mismo con el que la creaste.";
-  if (e.name === "PrfUnsupported")
-    return "Este teléfono o navegador todavía no es compatible. Prueba con Chrome o Safari actualizados.";
+  if (e.name === "NotAllowedError") return m.notAllowed;
+  if (e.name === "InvalidStateError") return m.alreadyRegistered;
+  if (e.name === "SecurityError") return m.security;
+  if (e.name === "OperationError" || e.name === "WrongDevice") return m.wrongDevice;
+  if (e.name === "PrfUnsupported") return m.unsupported;
 
   const code = error instanceof ApiError ? error.code : e.code;
   switch (code) {
     case "ACTION_EXPIRED":
-      return "El enlace venció. Pide uno nuevo por WhatsApp.";
+      return m.expired;
     case "ACTION_CLOSED":
-      return "Este enlace ya se usó.";
+      return m.closed;
     case "NOT_FOUND":
-      return "No encontramos este enlace. Pide uno nuevo por WhatsApp.";
+      return m.notFound;
     case "PASSKEY_REJECTED":
-      return "No pudimos verificar tu huella o rostro. Inténtalo otra vez.";
+      return m.passkeyRejected;
     case "SIGNATURE_INVALID":
-      return "No pudimos confirmar la operación. Inténtalo otra vez.";
+      return m.signatureInvalid;
     case "INSUFFICIENT_FUNDS":
-      return "No tienes saldo suficiente para este envío.";
+      return m.insufficientFunds;
     case "LIMIT_EXCEEDED":
-      return "Ese monto supera el límite por envío.";
+      return m.limitExceeded;
     case "GOOGLE_REQUIRED":
-      return "Primero vincula tu cuenta de Google.";
+      return m.googleRequired;
     case "CONFLICT":
-      return "Esto ya estaba hecho. Vuelve a WhatsApp para continuar.";
+      return m.conflict;
     case "RAIL_UNAVAILABLE":
     case "RAIL_REJECTED":
-      return "Ahora mismo no podemos completar el envío. Tu dinero está a salvo; inténtalo en unos minutos.";
+      return m.railUnavailable;
   }
-  if (error instanceof TypeError) return "Sin conexión. Revisa tu internet e inténtalo de nuevo.";
-  return "Algo salió mal. Inténtalo otra vez.";
+  if (error instanceof TypeError) return m.offline;
+  return m.generic;
 }
 
 /** Convierte los datos EIP-712 (uint256 como texto) al formato de viem. */
@@ -165,17 +169,25 @@ function Notice({
   );
 }
 
-function BackToChat({ href, primary = true }: { href: string; primary?: boolean }) {
+function BackToChat({
+  href,
+  label,
+  primary = true,
+}: {
+  href: string;
+  label: string;
+  primary?: boolean;
+}) {
   return (
     <a href={href} className={`btn btn-block ${primary ? "btn-primary" : ""}`}>
-      Volver a WhatsApp
+      {label}
     </a>
   );
 }
 
 // ── Componente ───────────────────────────────────────────────────────────────
 
-export function Signer({ token, icons, chatUrl }: SignerProps) {
+export function Signer({ token, icons, chatUrl, t, backLabel }: SignerProps) {
   const api = useMemo(() => signerApi(token), [token]);
   const [view, setView] = useState<ActionView | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -194,21 +206,21 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
       setView(next);
       setLoadError(null);
     } catch (error) {
-      if (alive.current) setLoadError(friendly(error));
+      if (alive.current) setLoadError(friendly(error, t.errors));
     }
-  }, [api]);
+  }, [api, t]);
 
   // Primera carga del enlace.
   useEffect(() => {
     alive.current = true;
     api.view().then(
       (first) => alive.current && setView(first),
-      (error: unknown) => alive.current && setLoadError(friendly(error)),
+      (error: unknown) => alive.current && setLoadError(friendly(error, t.errors)),
     );
     return () => {
       alive.current = false;
     };
-  }, [api]);
+  }, [api, t]);
 
   // Mientras el envío viaja, se consulta hasta que termine.
   const sendStatus = view?.send?.status ?? null;
@@ -231,12 +243,12 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
       try {
         await task((text) => alive.current && setBusy(text));
       } catch (error) {
-        if (alive.current) setFeedback(friendly(error));
+        if (alive.current) setFeedback(friendly(error, t.errors));
       } finally {
         if (alive.current) setBusy(null);
       }
     },
-    [],
+    [t],
   );
 
   /** Abre la billetera con la huella: devuelve la cuenta lista para firmar. */
@@ -258,16 +270,16 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   );
 
   const createWallet = (current: ActionView) =>
-    run("Preparando…", async (progress) => {
+    run(t.progress.preparing, async (progress) => {
       if (current.passkeys === 0) {
-        progress("Registrando tu teléfono…");
+        progress(t.progress.registering);
         const registration = await createPasskey(await api.options("register"));
         await api.registerPasskey(registration);
       }
-      progress("Confirma con tu huella…");
+      progress(t.progress.fingerprint);
       const { assertion, prfOutput } = await authenticate(await api.options("authenticate"));
 
-      progress("Creando tu billetera…");
+      progress(t.progress.creating);
       const privateKey = generatePrivateKey();
       const account = privateKeyToAccount(privateKey);
       const keyBytes = hexToBytes(privateKey) as Uint8Array<ArrayBuffer>;
@@ -284,24 +296,24 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
     });
 
   const signTransfer = (current: ActionView) =>
-    run("Confirma con tu huella…", async (progress) => {
+    run(t.progress.fingerprint, async (progress) => {
       const typedData = current.send?.typedData;
       if (!typedData) throw new ApiError("ACTION_CLOSED", "");
       const { account, assertion, key } = await unlock(current);
-      progress("Confirmando…");
+      progress(t.progress.confirming);
       const signature = await account.signTypedData(toViem(typedData));
       key.fill(0);
-      progress("Enviando…");
+      progress(t.progress.sending);
       setView(await api.signTransfer({ assertion, signature }));
     });
 
   const cancel = () =>
-    run("Cancelando…", async () => {
+    run(t.progress.cancelling, async () => {
       setView(await api.cancel());
     });
 
   const revealKey = (current: ActionView) =>
-    run("Confirma con tu huella…", async () => {
+    run(t.progress.fingerprint, async () => {
       const { assertion, key } = await unlock(current);
       const hex = bytesToHex(key);
       key.fill(0);
@@ -315,7 +327,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
       await navigator.clipboard.writeText(secret);
       setCopied(true);
     } catch {
-      setFeedback("No se pudo copiar. Mantén presionada la clave para copiarla.");
+      setFeedback(t.key.copyFailed);
     }
   };
 
@@ -329,16 +341,16 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   ) : null;
   const unsupported = !supported ? (
     <Notice kind="warn" icon={icons.caution}>
-      Este enlace no se puede usar desde aquí. Ábrelo en tu teléfono con el botón que te enviamos
-      por WhatsApp.
+      {t.unsupported}
     </Notice>
   ) : null;
+  const back = (primary = true) => <BackToChat href={chatUrl} label={backLabel} primary={primary} />;
 
   if (loadError) {
     return (
-      <Card icon={icons.clock} chipTone="cream" title="Enlace no disponible">
+      <Card icon={icons.clock} chipTone="cream" title={t.unavailable}>
         <p className="text-lg leading-snug">{loadError}</p>
-        <BackToChat href={chatUrl} />
+        {back()}
       </Card>
     );
   }
@@ -347,7 +359,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-4 py-24" role="status">
         <Scribble className="h-14 w-14" />
-        <p className="hand text-2xl">Abriendo…</p>
+        <p className="hand text-2xl">{t.opening}</p>
       </div>
     );
   }
@@ -355,7 +367,8 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   const name = firstName(view.user.name);
   const who = (
     <>
-      {name ? `Hola, ${name}` : "Hola"} <span className="opacity-70">· {view.user.phone}</span>
+      {name ? fill(t.helloName, { name }) : t.hello}{" "}
+      <span className="opacity-70">· {view.user.phone}</span>
     </>
   );
 
@@ -367,39 +380,37 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
           <Celebrate />
           <Card
             icon={icons.tick}
-            title="¡Billetera lista!"
-            eyebrow={name ? `Bien hecho, ${name}` : "Bien hecho"}
+            title={t.wallet.readyTitle}
+            eyebrow={name ? fill(t.wallet.wellDoneName, { name }) : t.wallet.wellDone}
           >
-            <p className="text-lg leading-snug">
-              Ya puedes recibir y enviar dinero. Vuelve a WhatsApp: ahí te esperan los primeros
-              pasos.
-            </p>
-            <BackToChat href={chatUrl} />
+            <p className="text-lg leading-snug">{t.wallet.readyText}</p>
+            {back()}
           </Card>
         </div>
       );
     }
     if (view.status !== "PENDING") {
       return (
-        <Card icon={icons.clock} chipTone="cream" title="El enlace venció">
+        <Card icon={icons.clock} chipTone="cream" title={t.expired}>
           <p className="text-lg leading-snug">
-            Escribe <strong className="hand text-xl">hola</strong> por WhatsApp y te enviamos uno
-            nuevo.
+            {t.wallet.expiredBefore}{" "}
+            <strong className="hand text-xl">{t.wallet.expiredWord}</strong>{" "}
+            {t.wallet.expiredAfter}
           </p>
-          <BackToChat href={chatUrl} />
+          {back()}
         </Card>
       );
     }
 
     const needsGoogle = view.google.required && !view.google.linked;
     return (
-      <Card icon={icons.wallet} title="Crea tu billetera" eyebrow={who}>
+      <Card icon={icons.wallet} title={t.wallet.title} eyebrow={who}>
         <ul className="flex flex-col gap-3">
           {(
             [
-              [icons.fingerprint, "Se abre con tu huella o tu rostro. Sin contraseñas."],
-              [icons.lock, "Solo tú puedes mover tu dinero. Nadie más."],
-              [icons.zap, "Queda lista en menos de un minuto."],
+              [icons.fingerprint, t.wallet.points[0]],
+              [icons.lock, t.wallet.points[1]],
+              [icons.zap, t.wallet.points[2]],
             ] as const
           ).map(([icon, text]) => (
             <li key={text} className="flex items-center gap-3">
@@ -413,11 +424,11 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
 
         {google === "linked" ? (
           <Notice kind="ok" icon={icons.tick}>
-            Tu cuenta de Google quedó vinculada.
+            {t.wallet.googleLinked}
           </Notice>
         ) : google && google !== "cancelled" ? (
           <Notice kind="error" icon={icons.caution}>
-            No pudimos vincular tu cuenta de Google. Inténtalo otra vez.
+            {t.wallet.googleFailed}
           </Notice>
         ) : null}
 
@@ -425,17 +436,15 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
           <div className="doodle-box tone-shell flat flex flex-col gap-3 p-4">
             {view.google.linked ? (
               <p className="leading-snug">
-                Cuenta de Google vinculada: <strong>{view.google.linked}</strong>
+                {t.wallet.googleAccount} <strong>{view.google.linked}</strong>
               </p>
             ) : (
               <>
                 <p className="leading-snug">
-                  {needsGoogle
-                    ? "Vincula tu cuenta de Google para identificarte y poder recuperar tu acceso."
-                    : "Si quieres, vincula tu cuenta de Google para recuperar tu acceso si cambias de número."}
+                  {needsGoogle ? t.wallet.googleRequired : t.wallet.googleOptional}
                 </p>
                 <a href={api.googleUrl()} className="btn btn-sm">
-                  Continuar con Google
+                  {t.wallet.googleContinue}
                 </a>
               </>
             )}
@@ -451,7 +460,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
             onClick={() => void createWallet(view)}
           >
             {busy ? spinner : null}
-            {busy ?? (view.passkeys > 0 ? "Continuar con mi huella" : "Crear mi billetera")}
+            {busy ?? (view.passkeys > 0 ? t.wallet.continue : t.wallet.create)}
           </button>
         )}
         {problem}
@@ -472,21 +481,21 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
 
     if (view.status === "PENDING") {
       return (
-        <Card icon={icons.send} title="Confirma tu envío" eyebrow={who}>
+        <Card icon={icons.send} title={t.send.title} eyebrow={who}>
           <div>
-            <p className="hand text-xl opacity-80">Vas a enviar</p>
+            <p className="hand text-xl opacity-80">{t.send.about}</p>
             {amount}
           </div>
           <dl className="doodle-box tone-shell flat flex flex-col gap-2 p-4 text-[0.98rem]">
             <div className="flex items-baseline justify-between gap-4">
-              <dt className="opacity-70">Para</dt>
+              <dt className="opacity-70">{t.send.to}</dt>
               <dd className="text-right font-bold [overflow-wrap:anywhere]">
                 {send.summary.recipient}
               </dd>
             </div>
             <hr className="dash-rule" />
             <div className="flex items-baseline justify-between gap-4">
-              <dt className="opacity-70">Comisión</dt>
+              <dt className="opacity-70">{t.send.fee}</dt>
               <dd className="text-right font-bold">{send.summary.fee}</dd>
             </div>
           </dl>
@@ -499,7 +508,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
               onClick={() => void signTransfer(view)}
             >
               {busy ? spinner : <span className="h-6 w-6 [&>svg]:h-full [&>svg]:w-full">{icons.fingerprint}</span>}
-              {busy ?? "Confirmar con mi huella"}
+              {busy ?? t.send.confirm}
             </button>
           ) : null}
           <button
@@ -508,7 +517,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
             disabled={busy !== null}
             onClick={() => void cancel()}
           >
-            Cancelar envío
+            {t.send.cancel}
           </button>
           {problem}
         </Card>
@@ -517,19 +526,17 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
 
     if (view.status === "CANCELLED") {
       return (
-        <Card icon={icons.cross} chipTone="cream" title="Envío cancelado">
-          <p className="text-lg leading-snug">No se movió dinero. Todo sigue en tu billetera.</p>
-          <BackToChat href={chatUrl} />
+        <Card icon={icons.cross} chipTone="cream" title={t.send.cancelledTitle}>
+          <p className="text-lg leading-snug">{t.send.cancelledText}</p>
+          {back()}
         </Card>
       );
     }
     if (view.status === "EXPIRED") {
       return (
-        <Card icon={icons.clock} chipTone="cream" title="El enlace venció">
-          <p className="text-lg leading-snug">
-            No se movió dinero. Pide el envío otra vez por WhatsApp.
-          </p>
-          <BackToChat href={chatUrl} />
+        <Card icon={icons.clock} chipTone="cream" title={t.expired}>
+          <p className="text-lg leading-snug">{t.send.expiredText}</p>
+          {back()}
         </Card>
       );
     }
@@ -537,40 +544,42 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
       return (
         <div className="relative">
           <Celebrate />
-          <Card icon={icons.tick} title="¡Enviado!" eyebrow="Listo">
+          <Card icon={icons.tick} title={t.send.sentTitle} eyebrow={t.send.sentEyebrow}>
             <div>
               {amount}
-              <p className="mt-1 text-lg leading-snug">Ya le llegó a {recipient}.</p>
+              <p className="mt-1 text-lg leading-snug">
+                {t.send.arrivedBefore} {recipient}
+                {t.send.arrivedAfter}
+              </p>
             </div>
             {send.transferId ? (
               <Link href={`/c/${send.transferId}`} className="btn btn-primary btn-block">
-                Ver comprobante
+                {t.send.receipt}
               </Link>
             ) : null}
-            <BackToChat href={chatUrl} primary={!send.transferId} />
+            {back(!send.transferId)}
           </Card>
         </div>
       );
     }
     if (send.status === "FAILED" || view.status === "FAILED") {
       return (
-        <Card icon={icons.caution} chipTone="cream" title="No se pudo enviar">
-          <p className="text-lg leading-snug">
-            Tu dinero sigue en tu billetera. Inténtalo otra vez desde WhatsApp.
-          </p>
-          <BackToChat href={chatUrl} />
+        <Card icon={icons.caution} chipTone="cream" title={t.send.failedTitle}>
+          <p className="text-lg leading-snug">{t.send.failedText}</p>
+          {back()}
         </Card>
       );
     }
     return (
-      <Card icon={<Scribble />} title="Enviando…" eyebrow="Ya confirmaste">
+      <Card icon={<Scribble />} title={t.send.sendingTitle} eyebrow={t.send.sendingEyebrow}>
         <div>
           {amount}
           <p className="mt-1 text-lg leading-snug">
-            Va en camino a {recipient}. Te avisamos por WhatsApp apenas llegue.
+            {t.send.onItsWayBefore} {recipient}
+            {t.send.onItsWayAfter}
           </p>
         </div>
-        <BackToChat href={chatUrl} primary={false} />
+        {back(false)}
       </Card>
     );
   }
@@ -579,39 +588,32 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   if (view.type === "EXPORT_KEY") {
     if (secret) {
       return (
-        <Card icon={icons.key} title="Tu clave">
+        <Card icon={icons.key} title={t.key.title}>
           <Notice kind="warn" icon={icons.caution}>
-            No la compartas con nadie. Quien tenga esta clave puede usar tu dinero.
+            {t.key.warning}
           </Notice>
           <code className="doodle-box tone-shell flat block select-all p-4 font-mono text-sm leading-relaxed [overflow-wrap:anywhere]">
             {secret}
           </code>
           <button type="button" className="btn btn-block" onClick={() => void copySecret()}>
-            {copied ? "Copiada" : "Copiar"}
+            {copied ? t.key.copied : t.key.copy}
           </button>
-          <p className="hand text-center text-lg opacity-80">
-            Guárdala en un lugar seguro y cierra esta página.
-          </p>
+          <p className="hand text-center text-lg opacity-80">{t.key.keepSafe}</p>
           {problem}
         </Card>
       );
     }
     if (view.status !== "PENDING") {
       return (
-        <Card icon={icons.key} chipTone="cream" title="Enlace usado">
-          <p className="text-lg leading-snug">
-            Si necesitas ver tu clave otra vez, pídela de nuevo por WhatsApp.
-          </p>
-          <BackToChat href={chatUrl} />
+        <Card icon={icons.key} chipTone="cream" title={t.key.usedTitle}>
+          <p className="text-lg leading-snug">{t.key.usedText}</p>
+          {back()}
         </Card>
       );
     }
     return (
-      <Card icon={icons.key} title="Tu clave" eyebrow={who}>
-        <p className="text-lg leading-snug">
-          Vas a ver la clave de tu billetera para llevarla a otra aplicación. Asegúrate de que
-          nadie más esté mirando tu pantalla.
-        </p>
+      <Card icon={icons.key} title={t.key.title} eyebrow={who}>
+        <p className="text-lg leading-snug">{t.key.intro}</p>
         {unsupported}
         {supported ? (
           <button
@@ -621,7 +623,7 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
             onClick={() => void revealKey(view)}
           >
             {busy ? spinner : null}
-            {busy ?? "Mostrar mi clave"}
+            {busy ?? t.key.show}
           </button>
         ) : null}
         {problem}
@@ -630,11 +632,9 @@ export function Signer({ token, icons, chatUrl }: SignerProps) {
   }
 
   return (
-    <Card icon={icons.caution} chipTone="cream" title="Enlace no disponible">
-      <p className="text-lg leading-snug">
-        Esto no se puede hacer desde aquí. Pide un enlace nuevo por WhatsApp.
-      </p>
-      <BackToChat href={chatUrl} />
+    <Card icon={icons.caution} chipTone="cream" title={t.unavailable}>
+      <p className="text-lg leading-snug">{t.unavailableText}</p>
+      {back()}
     </Card>
   );
 }
