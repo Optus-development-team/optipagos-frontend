@@ -887,3 +887,37 @@ body {
     transform: scaleX(1);
   }
 }
+
+/* En la capa de componentes: así las utilidades (hidden, sm:inline-flex…) mandan sobre él. */
+@layer components {
+  /* Selector de idioma de la cabecera: dos pastillas dibujadas a mano. */
+  .lang-switch {
+    display: inline-flex;
+    gap: 0.25rem;
+    font-size: 1.05rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .lang-switch a {
+    display: grid;
+    place-items: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.4rem;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .lang-switch a:hover {
+    border-color: currentColor;
+  }
+
+  .lang-switch a[aria-current] {
+    border-color: currentColor;
+    background: var(--color-honey, #f2c96b);
+  }
+}

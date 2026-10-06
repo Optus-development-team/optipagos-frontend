@@ -2,28 +2,16 @@ import { Burst, Heart, Swirl } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { Reveal } from "@/components/ui/Reveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const points: Array<{ icon: DoodleIconName; title: string; text: string }> = [
-  {
-    icon: "fingerprint",
-    title: "Tu huella es la llave",
-    text: "Cada envío se confirma con tu huella o tu rostro. Sin ti, no sale nada.",
-  },
-  {
-    icon: "lock",
-    title: "Nadie más la abre",
-    text: "Tu billetera es tuya de verdad: ni siquiera nosotros podemos mover tu dinero.",
-  },
-  {
-    icon: "key",
-    title: "Te la llevas cuando quieras",
-    text: "Si un día quieres irte, te llevas tu billetera completa. Sin letra chica.",
-  },
-];
+// Icono de cada punto; los textos vienen del diccionario, en el mismo orden.
+const icons: DoodleIconName[] = ["fingerprint", "lock", "key"];
 
-export function Safety() {
+export function Safety({ t, id }: { t: Dictionary["safety"]; id: string }) {
+  const points = t.points.map((point, index) => ({ ...point, icon: icons[index] }));
+
   return (
-    <section id="seguridad" className="scroll-mt-8">
+    <section id={id} className="scroll-mt-8">
       <Reveal effect="pop">
       <NotchCard
         corner="tl"
@@ -40,8 +28,8 @@ export function Safety() {
           <Heart className="absolute bottom-6 right-10 hidden h-7 w-7 rotate-12 animate-hop text-honey md:block" />
 
           <div className="pl-[88px] sm:pl-[72px]">
-            <p className="hand text-2xl text-honey">tranquilo</p>
-            <h2 className="display text-5xl sm:text-7xl">Solo tú mueves tu dinero</h2>
+            <p className="hand text-2xl text-honey">{t.eyebrow}</p>
+            <h2 className="display text-5xl sm:text-7xl">{t.title}</h2>
           </div>
 
           <ul className="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">

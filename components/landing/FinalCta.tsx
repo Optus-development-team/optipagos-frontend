@@ -3,9 +3,10 @@ import { OptipagosMark } from "@/components/brand/marks";
 import { Cloud, Sparkle, Star } from "@/components/doodles";
 import { NotchCard } from "@/components/ui/NotchCard";
 import { Reveal } from "@/components/ui/Reveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 
-export function FinalCta() {
+export function FinalCta({ t, openAria }: { t: Dictionary["finalCta"]; openAria: string }) {
   return (
     <section>
       <Reveal effect="pop">
@@ -17,7 +18,7 @@ export function FinalCta() {
           <a
             href={site.whatsappUrl()}
             className="chip-tile tone-ink boil"
-            aria-label="Abrir Optipagos en WhatsApp"
+            aria-label={openAria}
           >
             <MdArrowOutward className="h-9 w-9" aria-hidden="true" />
           </a>
@@ -26,14 +27,14 @@ export function FinalCta() {
         <div className="relative grid items-center gap-8 px-6 pb-12 pt-9 sm:px-12 md:grid-cols-[1fr_auto]">
           <Cloud className="absolute right-8 top-5 hidden h-16 w-16 animate-drift text-ink-400 md:block" />
           <div>
-            <p className="hand text-2xl text-ink-600">un minuto y ya</p>
-            <h2 className="display text-6xl sm:text-8xl">¿Listo para probar?</h2>
+            <p className="hand text-2xl text-ink-600">{t.eyebrow}</p>
+            <h2 className="display text-6xl sm:text-8xl">{t.title}</h2>
             <p className="mt-4 max-w-xl text-xl leading-snug">
-              Escribe «hola» y crea tu billetera hoy. Si no te convence, no pasa nada.
+              {t.text}
             </p>
             <a href={site.whatsappUrl()} className="btn btn-primary mt-7">
               <MdWhatsapp className="h-6 w-6" aria-hidden="true" />
-              Empezar en WhatsApp
+              {t.cta}
             </a>
           </div>
           <div className="relative mx-auto mr-0 hidden pr-16 md:block">

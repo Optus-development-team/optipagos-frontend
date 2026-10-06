@@ -9,13 +9,15 @@ interface ShareReceiptProps {
   fileName: string;
   text: string;
   shareIcon: ReactNode;
+  /** Textos del botón y de los avisos, en el idioma de la persona. */
+  labels: { share: string; preparing: string; saved: string; failed: string };
 }
 
 /**
  * Comparte el comprobante como imagen (hoja de compartir del teléfono: WhatsApp, correo…).
  * Donde el navegador no puede compartir archivos, lo descarga.
  */
-export function ShareReceipt({ imageUrl, fileName, text, shareIcon }: ShareReceiptProps) {
+export function ShareReceipt({ imageUrl, fileName, text, shareIcon, labels }: ShareReceiptProps) {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
 
@@ -33,12 +35,12 @@ export function ShareReceipt({ imageUrl, fileName, text, shareIcon }: ShareRecei
         const link = Object.assign(document.createElement("a"), { href: url, download: fileName });
         link.click();
         URL.revokeObjectURL(url);
-        setNote("Guardamos la imagen en tus descargas.");
+        setNote(labels.saved);
       }
     } catch (error) {
       // Cerrar la hoja de compartir no es un error.
       if ((error as { name?: string }).name !== "AbortError") {
-        setNote("No pudimos preparar la imagen. Inténtalo otra vez.");
+        setNote(labels.failed);
       }
     } finally {
       setBusy(false);
@@ -58,7 +60,7 @@ export function ShareReceipt({ imageUrl, fileName, text, shareIcon }: ShareRecei
         ) : (
           <span className="h-6 w-6 [&>svg]:h-full [&>svg]:w-full">{shareIcon}</span>
         )}
-        {busy ? "Preparando…" : "Compartir comprobante"}
+        {busy ? labels.preparing : labels.share}
       </button>
       {note ? (
         <p className="hand text-center text-lg opacity-80" role="status">

@@ -6,22 +6,25 @@ import { Logo } from "@/components/brand/Logo";
 import { Sparkle, Squiggle, Star } from "@/components/doodles";
 import { DoodleIcon } from "@/components/icons";
 import { Signer, type SignerIcons } from "@/components/signer/Signer";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getRequestLocale } from "@/i18n/request";
 import { site } from "@/lib/site";
 
-const description = "Abre este enlace en tu teléfono para confirmar con tu huella o tu rostro.";
-
-export const metadata: Metadata = {
-  title: "Confirma con tu huella",
-  description,
-  robots: { index: false, follow: false },
-  // Vista previa del enlace cuando llega por chat: nunca incluye datos de la operación.
-  openGraph: {
-    title: "Confirma con tu huella · Optipagos",
-    description,
-    images: [{ url: "/media/whatsapp/confirmar-envio.png", width: 1200, height: 630 }],
-  },
-  twitter: { card: "summary_large_image", images: ["/media/whatsapp/confirmar-envio.png"] },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { signer } = await getDictionary(await getRequestLocale());
+  return {
+    title: signer.metaTitle,
+    description: signer.metaDescription,
+    robots: { index: false, follow: false },
+    // Vista previa del enlace cuando llega por chat: nunca incluye datos de la operación.
+    openGraph: {
+      title: `${signer.metaTitle} · ${site.name}`,
+      description: signer.metaDescription,
+      images: [{ url: "/media/whatsapp/confirmar-envio.png", width: 1200, height: 630 }],
+    },
+    twitter: { card: "summary_large_image", images: ["/media/whatsapp/confirmar-envio.png"] },
+  };
+}
 
 // Los iconos doodle se dibujan aquí, en el servidor, y viajan ya listos al componente cliente.
 const icons: SignerIcons = {
@@ -42,6 +45,7 @@ export default async function SignerPage({ params }: { params: Promise<{ token: 
   await connection();
   const { token } = await params;
   if (!/^[A-Za-z0-9_-]{16,128}$/.test(token)) notFound();
+  const dict = await getDictionary(await getRequestLocale());
 
   return (
     <div className="relative mx-auto flex w-full max-w-md flex-1 flex-col px-5 pb-8 pt-6">
@@ -54,10 +58,16 @@ export default async function SignerPage({ params }: { params: Promise<{ token: 
       </header>
 
       <main className="flex flex-1 flex-col justify-center py-8">
-        <Signer token={token} icons={icons} chatUrl={site.chatUrl()} />
+        <Signer
+          token={token}
+          icons={icons}
+          chatUrl={site.chatUrl()}
+          t={dict.signer}
+          backLabel={dict.common.backToChat}
+        />
       </main>
 
-      <BrandFooter compact />
+      <BrandFooter lead={dict.footer.brandLead} compact />
     </div>
   );
 }

@@ -1,34 +1,23 @@
 import { CurlyArrow, Squiggle } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
 import { Reveal } from "@/components/ui/Reveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const steps: Array<{ icon: DoodleIconName; title: string; text: string; tilt: string }> = [
-  {
-    icon: "message",
-    title: "Escribe «hola»",
-    text: "Abre WhatsApp y saluda a Optipagos. Te responde al toque con los pasos.",
-    tilt: "-rotate-1",
-  },
-  {
-    icon: "fingerprint",
-    title: "Crea tu billetera",
-    text: "Un toque con tu huella o tu rostro y listo. Sin contraseñas que recordar.",
-    tilt: "rotate-1",
-  },
-  {
-    icon: "send",
-    title: "Mueve tu plata",
-    text: "Envía a otros números, cobra con un QR y revisa tu saldo cuando quieras.",
-    tilt: "-rotate-1",
-  },
+// Icono e inclinación de cada paso; los textos vienen del diccionario, en el mismo orden.
+const looks: Array<{ icon: DoodleIconName; tilt: string }> = [
+  { icon: "message", tilt: "-rotate-1" },
+  { icon: "fingerprint", tilt: "rotate-1" },
+  { icon: "send", tilt: "-rotate-1" },
 ];
 
-export function HowItWorks() {
+export function HowItWorks({ t, id }: { t: Dictionary["how"]; id: string }) {
+  const steps = t.steps.map((step, index) => ({ ...step, ...looks[index] }));
+
   return (
-    <section id="como-funciona" className="scroll-mt-8">
+    <section id={id} className="scroll-mt-8">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <p className="hand text-2xl text-ink-600">en tres pasos</p>
-        <h2 className="display text-6xl sm:text-7xl">Así de fácil</h2>
+        <p className="hand text-2xl text-ink-600">{t.eyebrow}</p>
+        <h2 className="display text-6xl sm:text-7xl">{t.title}</h2>
         <Squiggle className="draw mx-auto mt-3 h-5 w-32 text-honey" />
       </Reveal>
 

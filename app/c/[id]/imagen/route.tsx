@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getReceipt } from "@/lib/backend";
+import es from "@/i18n/dictionaries/es";
 import { receiptDate, receiptTitle } from "@/lib/receipt/format";
 import { OPTIPAGOS_MARK } from "@/components/brand/paths";
 
@@ -60,7 +61,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   if (receipt === undefined) return new Response("Comprobante no disponible", { status: 502 });
   if (!receipt) return new Response("Comprobante no encontrado", { status: 404 });
 
-  const { title } = receiptTitle(receipt);
+  // La imagen la envía el bot por WhatsApp, que conversa en español.
+  const { title } = receiptTitle(receipt, es.receipt.status);
   const done = receipt.status === "CONFIRMED";
   const failed = receipt.status === "FAILED";
   const badge = done ? MOSS : failed ? CLAY : INK;

@@ -15,8 +15,8 @@ expone la API.
 
 | Ruta | Qué es |
 | --- | --- |
-| `/` | Página principal: qué es, cómo funciona, seguridad, preguntas y quién está detrás. |
-| `/privacidad` · `/terminos` | Política de privacidad y términos de servicio. |
+| `/` · `/en` | Página principal: qué es, cómo funciona, seguridad, preguntas y quién está detrás. |
+| `/privacidad` · `/terminos` (`/en/privacy` · `/en/terms`) | Política de privacidad y términos de servicio. |
 | `/w/<token>` | Confirmación que el bot envía por WhatsApp: crear la billetera, confirmar un envío o ver la clave, siempre con la huella o el rostro del teléfono. |
 | `/c/<id>` | Comprobante de un movimiento, con botón para compartirlo como imagen. |
 | `/c/<id>/imagen` | La imagen del comprobante (PNG 1200 × 630), generada aquí con `next/og`. |
@@ -125,9 +125,37 @@ npm run cards
 `GET /api/v1/receipts/<id>`. WhatsApp la toma de esa URL pública como imagen del mensaje "Envío completado" o
 "Recibiste dinero" (por eso esta ruta debe ser accesible desde internet), y desde la página `/c/<id>` cualquiera puede compartirlo o descargarlo.
 
+## Idiomas
+
+El sitio está en **español** (por defecto) e **inglés**.
+
+| Página | Español | Inglés |
+| --- | --- | --- |
+| Portada | `/` | `/en` |
+| Privacidad | `/privacidad` | `/en/privacy` |
+| Términos | `/terminos` | `/en/terms` |
+
+- **El sitio** (portada y páginas legales) vive en `app/[lang]/…` y se genera de forma estática
+  para cada idioma. `proxy.ts` sirve el español sin prefijo, redirige la primera visita según el
+  idioma del navegador y recuerda la elección en la cookie `lang`. El selector de idioma está en
+  la cabecera (en el pie, en pantallas angostas).
+- **Los enlaces personales** (`/w/<token>` y `/c/<id>`) no cambian de dirección, así que el bot
+  sigue enviando los mismos enlaces: toman el idioma elegido en el sitio o, si no hay, el del
+  navegador (`i18n/request.ts`). Viven en `app/(app)/…`, con su propio layout raíz.
+- **Lo que envía el bot** (tarjetas de `/media/whatsapp` y la imagen `/c/<id>/imagen`) sigue en
+  español, igual que el chat. Los mensajes que la persona le escribe al bot («hola», «enviar 10
+  a…») se muestran igual en los dos idiomas.
+- Los textos están en `i18n/dictionaries/es.ts` y `en.ts`; el tipo `Dictionary` sale del español,
+  así que TypeScript avisa si a la traducción le falta una clave. Los textos legales, que llevan
+  formato, están en `content/legal/`.
+- Para añadir un idioma: súmalo a `locales` y `localeTags` en `i18n/config.ts`, crea su
+  diccionario y su versión de `content/legal/*`, regístralo en `i18n/dictionaries.ts` y contempla
+  su prefijo en `proxy.ts`.
+
 ## SEO y vista previa de enlaces
 
-- Metadatos completos en `app/layout.tsx` (Open Graph, tarjeta grande de X/Twitter, robots).
+- Metadatos completos por idioma en `lib/metadata.ts` (Open Graph, tarjeta grande de X/Twitter,
+  robots), con `canonical` y `hreflang` en cada página (`lib/seo.ts`).
 - `sitemap.xml`, `robots.txt` y `manifest.webmanifest` generados desde `app/`.
 - Datos estructurados (Organization, WebSite y FAQPage) en la página principal.
 - Los enlaces personales (`/w/` y `/c/`) llevan `noindex`, pero sí muestran vista previa al
@@ -138,9 +166,11 @@ npm run cards
 `/w/<token>` es el único lugar donde la clave de la billetera existe sin cifrar: en la memoria
 del navegador y durante lo que dura una firma. Por eso `proxy.ts` la sirve con una CSP estricta
 con nonce, sin terceros, sin caché y con `Referrer-Policy: no-referrer`. La lógica está en
-`lib/signer/` (passkeys con PRF, sobre cifrado de la clave) y `components/signer/Signer.tsx`.
+`lib/signer/` (passkeys con PRF, sobre cifrado de la clave) y `components/signer/Signer.tsx`;
+los textos le llegan ya traducidos desde el servidor, sin cargar nada adicional.
 
 ## Textos legales
 
-`/privacidad` y `/terminos` describen lo que el producto hace hoy. Son un punto de partida
-razonable, no un dictamen: conviene que los revise un abogado antes de publicarlos.
+`/privacidad` y `/terminos` (y sus versiones en inglés) describen lo que el producto hace hoy.
+Son un punto de partida razonable, no un dictamen: conviene que los revise un abogado antes de
+publicarlos. El texto está en `content/legal/`.
