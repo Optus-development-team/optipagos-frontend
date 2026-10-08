@@ -1,5 +1,13 @@
 # Cambios
 
+## 0.3.1 · 8 de octubre de 2026
+
+- **Vista previa del enlace**: la portada y las páginas legales vuelven a mostrar su imagen al
+  compartir el enlace en WhatsApp y otras apps. Desde 0.3.0 salían sin `og:image`: los
+  metadatos se definen en `app/[lang]/` y `app/(app)/`, un nivel por debajo de
+  `app/opengraph-image.png`, y Next descartaba la imagen del archivo. Ahora se declara en
+  `lib/metadata.ts`, con su texto alternativo en cada idioma.
+
 ## 0.3.0 · 6 de octubre de 2026
 
 - **Idiomas**: el sitio está en español e inglés. La portada y las páginas legales tienen su

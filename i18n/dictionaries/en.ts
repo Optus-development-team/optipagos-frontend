@@ -9,6 +9,8 @@ const en: Dictionary = {
     tagline: "Your money travels over WhatsApp",
     description:
       "Send, receive and collect digital dollars by chatting on WhatsApp. Nothing to install, and protected by your fingerprint.",
+    imageAlt:
+      "Optipagos: your money travels over WhatsApp. Send, receive and collect digital dollars by chatting.",
     keywords: [
       "Optipagos",
       "WhatsApp wallet",

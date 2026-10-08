@@ -3,6 +3,19 @@ import { localeTags, locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 
+/**
+ * Tarjeta de vista previa del enlace; la captura `npm run cards`. Va declarada aquí porque
+ * `openGraph` y `twitter` se definen en los layouts raíz, un nivel por debajo de
+ * app/opengraph-image.png: Next reemplaza el objeto entero y la imagen del archivo se pierde.
+ */
+const previewImage = (file: string, alt: string) => ({
+  url: `/${file}`,
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt,
+});
+
 /** Metadatos comunes a todas las páginas, en el idioma indicado. */
 export function baseMetadata(locale: Locale, dict: Dictionary): Metadata {
   const title = `${site.name} · ${dict.meta.tagline}`;
@@ -16,7 +29,6 @@ export function baseMetadata(locale: Locale, dict: Dictionary): Metadata {
     creator: site.optus.name,
     publisher: site.optus.name,
     category: "finance",
-    // La tarjeta de vista previa (app/opengraph-image.png) la captura `npm run cards`.
     openGraph: {
       type: "website",
       locale: localeTags[locale].og,
@@ -24,6 +36,7 @@ export function baseMetadata(locale: Locale, dict: Dictionary): Metadata {
       siteName: site.name,
       title,
       description: dict.meta.description,
+      images: [previewImage("opengraph-image.png", dict.meta.imageAlt)],
     },
     twitter: {
       card: "summary_large_image",
@@ -31,6 +44,7 @@ export function baseMetadata(locale: Locale, dict: Dictionary): Metadata {
       description: dict.meta.description,
       site: "@OptusAut",
       creator: "@OptusAut",
+      images: [previewImage("twitter-image.png", dict.meta.imageAlt)],
     },
     robots: {
       index: true,

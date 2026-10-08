@@ -10,6 +10,8 @@ const es = {
     tagline: "Tu plata viaja por WhatsApp",
     description:
       "Envía, recibe y cobra dólares digitales chateando por WhatsApp. Sin instalar nada y protegido con tu huella.",
+    imageAlt:
+      "Optipagos: tu plata viaja por WhatsApp. Envía, recibe y cobra dólares digitales chateando.",
     keywords: [
       "Optipagos",
       "billetera en WhatsApp",
