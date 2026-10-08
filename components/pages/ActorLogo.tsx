@@ -14,12 +14,12 @@ export function ActorLogo({ name, className = "h-8 w-8" }: { name: ActorLogoName
     default:
       return (
         <Image
-          src={`/logos/${name}.svg`}
+          src={`/logos/${name}.${name === "tilcai" ? "png" : "svg"}`}
           alt=""
           width={64}
           height={64}
           unoptimized
-          className={`${className} object-contain`}
+          className={`${className} object-contain ${name === "tilcai" ? "rounded-md" : ""}`}
         />
       );
   }

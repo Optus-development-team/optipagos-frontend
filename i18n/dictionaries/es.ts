@@ -157,6 +157,27 @@ const es = {
       },
     ],
   },
+  buy: {
+    id: "comprar-dolares",
+    eyebrow: "con bolivianos",
+    title: "Compra dólares digitales con Bs",
+    text: "Pasa de bolivianos a dólares digitales pagando un QR Simple desde la app de tu banco. Sin filas y sin cambiar de aplicación.",
+    steps: [
+      {
+        title: "Elige cuánto",
+        text: "Dile a Optipagos cuántos bolivianos (Bs) quieres cambiar y te mostramos cuántos dólares digitales recibirás.",
+      },
+      {
+        title: "Paga el QR Simple",
+        text: "Te enviamos un QR Simple por el chat. Lo pagas desde la app de tu banco, como cualquier otro QR.",
+      },
+      {
+        title: "Recibe tus dólares",
+        text: "Apenas se confirma tu pago, los dólares digitales aparecen en tu billetera.",
+      },
+    ],
+    note: "Esta opción todavía no está disponible: la estamos preparando junto a un aliado financiero.",
+  },
   safety: {
     eyebrow: "tranquilo",
     title: "Solo tú mueves tu dinero",

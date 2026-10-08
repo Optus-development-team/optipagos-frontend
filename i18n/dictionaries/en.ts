@@ -156,6 +156,27 @@ const en: Dictionary = {
       },
     ],
   },
+  buy: {
+    id: "buy-dollars",
+    eyebrow: "with bolivianos",
+    title: "Buy digital dollars with Bs",
+    text: "Turn bolivianos into digital dollars by paying a QR Simple from your bank's app. No lines and no switching apps.",
+    steps: [
+      {
+        title: "Pick an amount",
+        text: "Tell Optipagos how many bolivianos (Bs) you want to exchange and we show you how many digital dollars you'll get.",
+      },
+      {
+        title: "Pay the QR Simple",
+        text: "We send you a QR Simple in the chat. You pay it from your bank's app, like any other QR.",
+      },
+      {
+        title: "Get your dollars",
+        text: "As soon as your payment is confirmed, the digital dollars show up in your wallet.",
+      },
+    ],
+    note: "This option isn't available yet: we're preparing it with a financial partner.",
+  },
   safety: {
     eyebrow: "relax",
     title: "Only you move your money",

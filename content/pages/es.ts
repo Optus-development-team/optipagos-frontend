@@ -199,6 +199,11 @@ const pages: InfoPages = {
             ],
           },
           {
+            title: "Compras entre asistentes",
+            text: "Tilcai conecta a los asistentes de personas y negocios para consultar, reservar y comprar con condiciones claras, permisos limitados y pagos en Stellar. Es un proyecto en desarrollo.",
+            links: [{ name: "Tilcai", url: "https://tilcai.vercel.app/es", logo: "tilcai" }],
+          },
+          {
             title: "Seguridad con huella y rostro",
             text: "La tecnología de tu teléfono confirma que cada pago lo autoriza su dueño, y así se acaban las estafas.",
           },

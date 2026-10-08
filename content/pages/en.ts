@@ -195,6 +195,11 @@ const pages: InfoPages = {
             ],
           },
           {
+            title: "Shopping between assistants",
+            text: "Tilcai connects the assistants of people and businesses to look up, book and buy with clear terms, limited permissions and payments on Stellar. It is a project in development.",
+            links: [{ name: "Tilcai", url: "https://tilcai.vercel.app/en", logo: "tilcai" }],
+          },
+          {
             title: "Fingerprint and face security",
             text: "Your phone's own technology confirms that every payment is authorised by its owner, so scams end.",
           },

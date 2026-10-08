@@ -84,3 +84,15 @@ Deploy de `7728622` en Ready, pero el envío de prueba al sitio real falló: los
 - /actores: tarjetas con logo y enlace (se abren en otra pestaña) a WhatsApp Business, Meta, Avalanche, Stellar, Aave y Blend. Logos de Avalanche, Aave y Blend en `public/logos/` (descargados de sus fuentes públicas); WhatsApp, Meta y Stellar vienen de react-icons.
 - Limpieza: se quita `docs/.beta-google-sheets.gs.swp` (archivo temporal de vim que se coló en un commit anterior).
 - Verificación: tsc, eslint y build sin errores; en el build local aparecen los 5 enlaces, los logos responden 200 y no quedan las palabras técnicas en las páginas.
+
+## 2026-10-08T18:17:00+00:00 · saulchoque
+
+**Prompt**
+
+> genial, tambien agrega a tilcai en la parte de aliados (https://tilcai.vercel.app/es) (https://avatars.githubusercontent.com/u/332320859?s=200&v=4) asi tambien agrega a la pagina principal la compra de dolares digitales con Bolivianos (Bs) mediante QRSimple, revisa y realiza push despues de implementar todo
+
+**Salida del agente**
+
+- Aliados: tarjeta «Compras entre asistentes» / «Shopping between assistants» en /actores con el logo de Tilcai (`public/logos/tilcai.png`, tomado del avatar indicado) y enlace a tilcai.vercel.app (`/es` o `/en` según el idioma). El texto se basa en la descripción de su sitio («proyecto en desarrollo»).
+- Portada: sección `#comprar-dolares` (`components/landing/BuyDollars.tsx`) en tres pasos (elige cuánto en Bs, paga el QR Simple desde el banco, recibe los dólares digitales), en español e inglés. Va marcada «Pronto» con la nota de que aún no está disponible: la rampa en bolivianos sigue en exploración en el backend (docs/scrum OP-35, requiere un socio regulado).
+- Verificación: tsc, eslint y build sin errores; la sección y la tarjeta aparecen en el build local y el logo responde 200.
