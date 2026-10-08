@@ -175,7 +175,9 @@ const en: Dictionary = {
         text: "As soon as your payment is confirmed, the digital dollars show up in your wallet.",
       },
     ],
-    note: "This option isn't available yet: we're preparing it with a financial partner.",
+    badge: "Beta only",
+    note: "Available only to people in the closed beta.",
+    cta: "I want in",
   },
   safety: {
     eyebrow: "relax",

@@ -176,7 +176,9 @@ const es = {
         text: "Apenas se confirma tu pago, los dólares digitales aparecen en tu billetera.",
       },
     ],
-    note: "Esta opción todavía no está disponible: la estamos preparando junto a un aliado financiero.",
+    badge: "Solo en la beta",
+    note: "Disponible solo para quienes están en la beta cerrada.",
+    cta: "Quiero entrar a la beta",
   },
   safety: {
     eyebrow: "tranquilo",

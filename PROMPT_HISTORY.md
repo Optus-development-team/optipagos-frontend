@@ -96,3 +96,13 @@ Deploy de `7728622` en Ready, pero el envío de prueba al sitio real falló: los
 - Aliados: tarjeta «Compras entre asistentes» / «Shopping between assistants» en /actores con el logo de Tilcai (`public/logos/tilcai.png`, tomado del avatar indicado) y enlace a tilcai.vercel.app (`/es` o `/en` según el idioma). El texto se basa en la descripción de su sitio («proyecto en desarrollo»).
 - Portada: sección `#comprar-dolares` (`components/landing/BuyDollars.tsx`) en tres pasos (elige cuánto en Bs, paga el QR Simple desde el banco, recibe los dólares digitales), en español e inglés. Va marcada «Pronto» con la nota de que aún no está disponible: la rampa en bolivianos sigue en exploración en el backend (docs/scrum OP-35, requiere un socio regulado).
 - Verificación: tsc, eslint y build sin errores; la sección y la tarjeta aparecen en el build local y el logo responde 200.
+
+## 2026-10-08T18:36:13+00:00 · saulchoque
+
+**Prompt**
+
+> edita la seccion de compra de dolares para no mencionar que no esta disponible, sino que solo esta disponible en la beta, tambien agregale animacion estatica
+
+**Salida del agente**
+
+Sección `#comprar-dolares`: se quita «Pronto» y la nota de que no está disponible; ahora lleva la etiqueta «Solo en la beta» / «Beta only», la nota «Disponible solo para quienes están en la beta cerrada» y un botón a `#beta`. «Animación estática» se interpretó como movimiento continuo que no depende del scroll: iconos que flotan, destellos y estrella que titilan, etiqueta que se mece. tsc, eslint y build sin errores.

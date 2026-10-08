@@ -40,7 +40,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-5 sm:gap-28">
           <HowItWorks t={dict.how} id={nav.how.id} />
           <Features t={dict.features} id={nav.features.id} />
-          <BuyDollars t={dict.buy} soon={dict.pageLabels.soon} />
+          <BuyDollars t={dict.buy} betaId={dict.beta.id} />
           <Safety t={dict.safety} id={nav.safety.id} />
           <Faq t={dict.faq} id={nav.faq.id} />
           <BetaSignup t={dict.beta} />
