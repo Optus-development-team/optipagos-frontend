@@ -5,8 +5,9 @@
 - **Demo temprana**: la portada deja claro que Optipagos aún no está en producción (franja
   superior, etiqueta en la portada, nueva pregunta en «Preguntas» y llamada final).
 - **Beta cerrada**: sección `#beta` con formulario de registro (acción del servidor en
-  `app/actions/beta.ts`, con validación y campo trampa para robots). Envía los datos a
-  `POST /api/v1/beta/signups` del backend, que **todavía no existe**: hasta entonces el
+  `app/actions/beta.ts`, con validación y campo trampa para robots). Guarda cada registro en
+  una hoja de Google Sheets mediante un Apps Script (`BETA_SHEET_URL`, `BETA_SHEET_SECRET`;
+  pasos en `docs/beta-google-sheets.md`), sin depender del backend. Sin esas variables el
   formulario muestra un error al enviar.
 - **Páginas nuevas**, adaptadas al lenguaje comercial desde el documento del programa Incuba
   Unión Tecnológico 3.0: `/personas`, `/expansion`, `/gtm`, `/actores` y `/recaudacion`
