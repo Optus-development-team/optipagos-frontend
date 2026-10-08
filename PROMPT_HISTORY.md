@@ -60,3 +60,13 @@ Sí, con Google Sheets mediante un Apps Script publicado como aplicación web. `
 **Salida del agente**
 
 Comprobó que el Apps Script responde y rechaza claves falsas (`forbidden`). Guardó `BETA_SHEET_URL` y `BETA_SHEET_SECRET` como variables sensibles en Vercel (Production y Preview). Commit y push a `main` con la integración del formulario a Google Sheets; verificación del deploy y del envío en la entrada siguiente si queda algo pendiente.
+
+## 2026-10-08T17:44:35+00:00 · saulchoque (seguimiento)
+
+**Prompt**
+
+> (mismo pedido anterior: push a main y verificar el funcionamiento)
+
+**Salida del agente**
+
+Deploy de `7728622` en Ready, pero el envío de prueba al sitio real falló: los logs de Vercel mostraron un `TimeoutError` a los 10 s (el Apps Script tarda ~5 s en frío). Con el mismo payload desde local responde `{"ok":true}`, así que el script y la clave están bien. Corrección: el tiempo de espera de la acción pasa a 25 s. Se vuelve a desplegar y probar.

@@ -57,7 +57,7 @@ export async function joinBeta(_previous: BetaState, data: FormData): Promise<Be
       }),
       redirect: "follow",
       cache: "no-store",
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(25000), // Apps Script tarda varios segundos en arrancar en frío,
     });
     const result = (await res.json()) as { ok?: boolean };
     if (!res.ok || !result.ok) throw new Error(`HTTP ${res.status}`);
