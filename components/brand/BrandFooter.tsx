@@ -8,7 +8,7 @@ export function BrandFooter({ lead, compact = false }: { lead: string; compact?:
     >
       <OptusMark className={compact ? "h-7 w-auto" : "h-10 w-auto"} />
       <p className="opacity-80">
-        {lead} <strong>Optus</strong>.
+        {lead} <strong className="optus-word">Optus</strong>.
       </p>
     </footer>
   );

@@ -1,10 +1,21 @@
 import type { DoodleIconName } from "@/components/icons";
 
+/** Logos de aliados que se muestran en las tarjetas (ver components/pages/ActorLogo.tsx). */
+export type ActorLogoName = "whatsapp" | "meta" | "avalanche" | "stellar" | "aave" | "blend";
+
+export interface InfoLink {
+  name: string;
+  url: string;
+  logo: ActorLogoName;
+}
+
 export interface InfoItem {
   title: string;
   text: string;
   /** Idea que aún no está disponible (se marca como «pronto»). */
   soon?: boolean;
+  /** Aliados con su logo y enlace a su sitio. */
+  links?: InfoLink[];
 }
 
 export interface InfoSection {

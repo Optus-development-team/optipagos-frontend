@@ -1,4 +1,5 @@
 import { MdArrowOutward } from "react-icons/md";
+import { Brandify } from "@/components/brand/Brandify";
 import { OptusMark } from "@/components/brand/marks";
 import { Burst, Swirl } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
@@ -20,9 +21,11 @@ export function AboutOptus({ t }: { t: Dictionary["about"] }) {
 
           <div>
             <p className="hand text-2xl text-ink-600">{t.eyebrow}</p>
-            <h2 className="display text-5xl sm:text-6xl">{t.title}</h2>
+            <h2 className="display text-5xl sm:text-6xl">
+              <Brandify>{t.title}</Brandify>
+            </h2>
             <p className="mt-3 max-w-xl text-lg leading-snug">
-              {t.text}
+              <Brandify>{t.text}</Brandify>
             </p>
             <ul className="mt-5 flex flex-wrap items-center gap-3">
               {site.optus.social.map((network) => (
@@ -48,7 +51,7 @@ export function AboutOptus({ t }: { t: Dictionary["about"] }) {
             rel="noopener noreferrer"
             className="btn btn-honey justify-self-start md:justify-self-end"
           >
-            {t.visit}
+            <Brandify>{t.visit}</Brandify>
             <MdArrowOutward className="h-5 w-5" aria-hidden="true" />
           </a>
         </div>

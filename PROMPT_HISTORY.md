@@ -70,3 +70,17 @@ Comprobó que el Apps Script responde y rechaza claves falsas (`forbidden`). Gua
 **Salida del agente**
 
 Deploy de `7728622` en Ready, pero el envío de prueba al sitio real falló: los logs de Vercel mostraron un `TimeoutError` a los 10 s (el Apps Script tarda ~5 s en frío). Con el mismo payload desde local responde `{"ok":true}`, así que el script y la clave están bien. Corrección: el tiempo de espera de la acción pasa a 25 s. Se vuelve a desplegar y probar.
+
+## 2026-10-08T17:55:43+00:00 · saulchoque
+
+**Prompt**
+
+> genial, ahora modifica la web para evitar el uso de palabras tecnicas como produccion, empresa, etc, asi como modificar los usos de las palabras optus para mostrarse con la tipografia Varela round (extraela de /proyectos/optus/optus-main-frontend/assets/fonts/Varela_Round), asi mismo en el stack tecnologico (/actores) agrega los logos de los distintos actores asi como enlaces a los mismos
+
+**Salida del agente**
+
+- Lenguaje: «producción» pasa a «abierto a todos»; «empresa», «fintech», «KYC/AML», «rampas», «biométrica», «cashback», «micro-comisión» y similares se reemplazaron por palabras de uso diario en español e inglés (páginas y diccionarios). Los textos legales no se tocaron.
+- Tipografía: Varela Round copiada a `assets/fonts/VarelaRound/` y cargada con `next/font/local`; el componente `Brandify` y la clase `.optus-word` pintan «Optus» y «optus.lat» con ella (portada, páginas, pie).
+- /actores: tarjetas con logo y enlace (se abren en otra pestaña) a WhatsApp Business, Meta, Avalanche, Stellar, Aave y Blend. Logos de Avalanche, Aave y Blend en `public/logos/` (descargados de sus fuentes públicas); WhatsApp, Meta y Stellar vienen de react-icons.
+- Limpieza: se quita `docs/.beta-google-sheets.gs.swp` (archivo temporal de vim que se coló en un commit anterior).
+- Verificación: tsc, eslint y build sin errores; en el build local aparecen los 5 enlaces, los logos responden 200 y no quedan las palabras técnicas en las páginas.

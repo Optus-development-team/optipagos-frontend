@@ -58,7 +58,7 @@ const es = {
   },
   demo: {
     badge: "Demo temprana",
-    text: "Optipagos todavía no está en producción: es una demo temprana con un grupo pequeño.",
+    text: "Optipagos todavía no está abierto a todos: es una demo temprana con un grupo pequeño.",
     cta: "Unirme a la beta cerrada",
   },
   beta: {
@@ -97,6 +97,7 @@ const es = {
   },
   pageLabels: {
     soon: "Pronto",
+    opensNew: "se abre en otra pestaña",
   },
   ticker: {
     label: "Rápido, simple, seguro y tuyo",
@@ -187,7 +188,7 @@ const es = {
         a: "No. Todo pasa en tu WhatsApp de siempre. Solo abrirás un enlace para confirmar con tu huella o tu rostro cuando crees tu billetera o envíes dinero.",
       },
       {
-        q: "¿Ya está en producción?",
+        q: "¿Ya está abierto a todos?",
         a: "Todavía no. Optipagos está en demo temprana: lo probamos con un grupo pequeño y algunas cosas pueden cambiar. Si quieres ser de los primeros, únete a la beta cerrada.",
       },
       {

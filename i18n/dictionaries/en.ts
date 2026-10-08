@@ -57,7 +57,7 @@ const en: Dictionary = {
   },
   demo: {
     badge: "Early demo",
-    text: "Optipagos is not in production yet: it's an early demo with a small group.",
+    text: "Optipagos is not open to everyone yet: it's an early demo with a small group.",
     cta: "Join the closed beta",
   },
   beta: {
@@ -96,6 +96,7 @@ const en: Dictionary = {
   },
   pageLabels: {
     soon: "Soon",
+    opensNew: "opens in a new tab",
   },
   ticker: {
     label: "Fast, simple, secure and yours",
@@ -186,7 +187,7 @@ const en: Dictionary = {
         a: "No. Everything happens in your usual WhatsApp. You will only open a link to confirm with your fingerprint or your face when you create your wallet or send money.",
       },
       {
-        q: "Is it in production yet?",
+        q: "Is it open to everyone yet?",
         a: "Not yet. Optipagos is an early demo: we're testing it with a small group and some things may change. If you want to be among the first, join the closed beta.",
       },
       {

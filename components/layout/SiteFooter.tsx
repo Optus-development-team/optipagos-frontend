@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
+import { Brandify } from "@/components/brand/Brandify";
 import { Logo } from "@/components/brand/Logo";
 import { OptusMark } from "@/components/brand/marks";
 import { Squiggle } from "@/components/doodles";
@@ -109,7 +110,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
             rel="noopener noreferrer"
             className="link mt-5 inline-flex items-center gap-1"
           >
-            {footer.meetOptus}
+            <Brandify>{footer.meetOptus}</Brandify>
             <MdArrowOutward className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
@@ -127,13 +128,13 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
         >
           <OptusMark className="h-9 w-auto" />
           <span className="opacity-80">
-            {footer.brandLead} <strong>Optus</strong>.
+            {footer.brandLead} <strong className="optus-word">Optus</strong>.
           </span>
         </a>
         <div className="flex items-center gap-4">
           <LangSwitch locale={locale} label={nav.language} />
           <p className="hand text-base opacity-60">
-            © {new Date().getFullYear()} Optus · {site.optus.location}
+            © {new Date().getFullYear()} <span className="optus-word">Optus</span> · {site.optus.location}
           </p>
         </div>
       </div>

@@ -46,6 +46,7 @@
   --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
   --font-logo: var(--font-baumans), var(--font-dm-sans), sans-serif;
   --font-hand: var(--font-patrick), "Comic Sans MS", cursive;
+  --font-optus: var(--font-varela), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
   --animate-wiggle: wiggle 2.8s ease-in-out infinite;
   --animate-float: float 5s ease-in-out infinite;
@@ -394,6 +395,12 @@ body {
   }
   .btn-block {
     width: 100%;
+  }
+
+  /* El nombre «Optus» siempre va en Varela Round */
+  .optus-word {
+    font-family: var(--font-optus);
+    letter-spacing: 0.01em;
   }
 
   /* Campos de formulario */

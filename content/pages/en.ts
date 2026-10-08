@@ -61,7 +61,7 @@ const pages: InfoPages = {
           },
           {
             title: "“I want to protect my money”",
-            text: "They want to keep their money in digital dollars, but high fees, waiting times and exchange spreads hold them back.",
+            text: "They want to keep their money in digital dollars, but high fees, waiting times and exchange-rate gaps hold them back.",
           },
         ],
       },
@@ -78,7 +78,7 @@ const pages: InfoPages = {
     eyebrow: "where we're headed",
     title: "From Bolivia to the whole region",
     description:
-      "What Optipagos needs to reach another country: local partners to move in and out of local currency, compliance with each place's rules, and a chat adapted to its people.",
+      "What Optipagos needs to reach another country: local partners to move in and out of local currency, following each place's rules, and a chat adapted to its people.",
     lead: "We started in Bolivia, but the idea works wherever there's WhatsApp and a wish to move dollars without hassle. Reaching a new country takes three things.",
     sections: [
       {
@@ -86,11 +86,11 @@ const pages: InfoPages = {
         items: [
           {
             title: "1. Local money in and out",
-            text: "Partnerships with fintechs, payment processors or financial institutions in the country to turn local currency into digital dollars (USDC) and back, with no friction.",
+            text: "Partnerships with payment apps, collection services or banks in the country to swap local currency for digital dollars (USDC) and back, with no hassle.",
           },
           {
-            title: "2. Rules and licences",
-            text: "We adapt the legal framework and identity and anti-money-laundering checks (KYC/AML) to each jurisdiction, always alongside licensed local partners.",
+            title: "2. Rules and permits",
+            text: "We follow each country's laws, including the checks that confirm who each person is and prevent money laundering, always alongside local partners licensed to operate.",
           },
           {
             title: "3. A chat that sounds local",
@@ -105,7 +105,7 @@ const pages: InfoPages = {
     ],
     cta: {
       title: "Have a contact in another country?",
-      text: "If you're a fintech, a payment processor or a community and want to open Optipagos in your country, write to us.",
+      text: "If you run a payment app, a collection service or a community and want to open Optipagos in your country, write to us.",
     },
   },
 
@@ -127,7 +127,7 @@ const pages: InfoPages = {
           },
           {
             title: "Businesses already selling on WhatsApp",
-            text: "We onboard micro-businesses and professionals with a QR payment confirmed biometrically. Their customers pay through it, and every customer is a new user.",
+            text: "We sign up small businesses and professionals with a QR payment their customer confirms with a fingerprint or face. Their customers pay through it, and every customer is a new user.",
           },
           {
             title: "Communities that protect their money",
@@ -166,31 +166,41 @@ const pages: InfoPages = {
     eyebrow: "who we build it with",
     title: "One team, several partners",
     description:
-      "Optipagos' partners: Meta's WhatsApp Business, digital dollar providers, biometric security and local financial on/off ramps.",
+      "Optipagos' partners: Meta's WhatsApp Business, digital dollar providers, fingerprint and face security, and partners to put money in and take it out.",
     lead: "Moving money by chat without hassle takes several pieces. These are the ones that make Optipagos possible.",
     sections: [
       {
         title: "Today's problem",
-        text: "Traditional intermediaries and complicated platforms add fees and technical hurdles for anyone who just wants to protect their money. That's where we come in.",
+        text: "Traditional intermediaries and complicated apps add fees and hurdles for anyone who just wants to protect their money. That's where we come in.",
       },
       {
         title: "Who makes the solution possible",
         items: [
           {
-            title: "Meta · WhatsApp Business",
-            text: "The front door: the chat you already use, nothing to download.",
+            title: "Your usual chat",
+            text: "WhatsApp Business, by Meta, is the front door: the chat you already use, nothing to download.",
+            links: [
+              { name: "WhatsApp Business", url: "https://business.whatsapp.com/", logo: "whatsapp" },
+              { name: "Meta", url: "https://about.meta.com/", logo: "meta" },
+            ],
           },
           {
             title: "Digital dollars",
-            text: "USDC providers and networks such as Avalanche, Stellar, AAVE and BLEND to move and protect money instantly.",
+            text: "Digital-dollar (USDC) networks and services to move and protect your money instantly.",
+            links: [
+              { name: "Avalanche", url: "https://www.avax.network/", logo: "avalanche" },
+              { name: "Stellar", url: "https://stellar.org/", logo: "stellar" },
+              { name: "Aave", url: "https://aave.com/", logo: "aave" },
+              { name: "Blend", url: "https://blend.capital/", logo: "blend" },
+            ],
           },
           {
-            title: "Biometric security",
-            text: "Fingerprint and face technology so every operation is confirmed by its owner and scams end.",
+            title: "Fingerprint and face security",
+            text: "Your phone's own technology confirms that every payment is authorised by its owner, so scams end.",
           },
           {
-            title: "Local financial ramps",
-            text: "Partners that let you put local currency in and take it out of your wallet.",
+            title: "Putting money in and taking it out",
+            text: "Local partners that let you put local currency in your wallet and take it out whenever you like.",
           },
         ],
       },
@@ -201,7 +211,7 @@ const pages: InfoPages = {
     ],
     cta: {
       title: "Want to be a partner?",
-      text: "If your company fits one of these pieces, let's talk.",
+      text: "If your business fits one of these pieces, let's talk.",
     },
   },
 
@@ -247,17 +257,17 @@ const pages: InfoPages = {
           },
           {
             title: "Digital pasanaku",
-            text: "Automated savings circles among friends and family, with a micro-fee for the service.",
+            text: "Automated savings circles among friends and family, with a very small fee for the service.",
             soon: true,
           },
           {
             title: "Payments for shops",
-            text: "Processing your business's payments with a micro-fee, with the option to give part back as cashback to your customer.",
+            text: "Processing your business's payments with a very small fee, and the option to give part back to your customer.",
             soon: true,
           },
           {
             title: "A record to access credit",
-            text: "We're exploring ways for people without access to banking to show their payment history and get microloans. It's an idea under study.",
+            text: "We're exploring ways for people without access to banking to show their payment history and get small loans. It's an idea under study.",
             soon: true,
           },
         ],

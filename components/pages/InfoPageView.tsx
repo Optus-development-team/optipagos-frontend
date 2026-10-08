@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Brandify } from "@/components/brand/Brandify";
+import { ActorLogo } from "@/components/pages/ActorLogo";
 import { Squiggle, Sparkle } from "@/components/doodles";
 import { DoodleIcon } from "@/components/icons";
 import { NotchCard } from "@/components/ui/NotchCard";
@@ -48,15 +50,41 @@ export function InfoPageView({
 
         {page.sections.map((section) => (
           <Reveal key={section.title} as="section">
-            <h2 className="display text-4xl sm:text-5xl">{section.title}</h2>
-            {section.text && <p className="mt-3 max-w-2xl text-lg leading-snug">{section.text}</p>}
+            <h2 className="display text-4xl sm:text-5xl">
+              <Brandify>{section.title}</Brandify>
+            </h2>
+            {section.text && (
+              <p className="mt-3 max-w-2xl text-lg leading-snug">
+                <Brandify>{section.text}</Brandify>
+              </p>
+            )}
             {section.items && (
               <ul className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {section.items.map((item) => (
                   <li key={item.title} className="doodle-box flex flex-col px-5 pb-6 pt-5">
                     {item.soon && <span className="pill honey mb-3 self-start">{dict.pageLabels.soon}</span>}
                     <h3 className="display text-3xl">{item.title}</h3>
-                    <p className="mt-2 text-lg leading-snug">{item.text}</p>
+                    <p className="mt-2 text-lg leading-snug">
+                      <Brandify>{item.text}</Brandify>
+                    </p>
+                    {item.links && (
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {item.links.map((link) => (
+                          <li key={link.name}>
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="pill hover:bg-honey"
+                              aria-label={`${link.name} (${dict.pageLabels.opensNew})`}
+                            >
+                              <ActorLogo name={link.logo} className="h-5 w-5" />
+                              {link.name}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -65,7 +65,7 @@ const pages: InfoPages = {
           },
           {
             title: "«Quiero cuidar mi plata»",
-            text: "Quieren resguardar su dinero en dólares digitales, pero las comisiones altas, las esperas y los diferenciales los frenan.",
+            text: "Quieren resguardar su dinero en dólares digitales, pero las comisiones altas, las esperas y las diferencias en el tipo de cambio los frenan.",
           },
         ],
       },
@@ -82,7 +82,7 @@ const pages: InfoPages = {
     eyebrow: "hacia dónde vamos",
     title: "De Bolivia a toda la región",
     description:
-      "Qué necesita Optipagos para llegar a otro país: socios locales para entrar y salir de moneda local, cumplimiento de las normas de cada lugar y un chat adaptado a su gente.",
+      "Qué necesita Optipagos para llegar a otro país: socios locales para entrar y salir de moneda local, respeto a las normas de cada lugar y un chat adaptado a su gente.",
     lead: "Nacimos en Bolivia, pero la idea sirve donde haya WhatsApp y ganas de mover dólares sin complicaciones. Para llegar a un país nuevo hacen falta tres cosas.",
     sections: [
       {
@@ -90,11 +90,11 @@ const pages: InfoPages = {
         items: [
           {
             title: "1. Entrada y salida de dinero local",
-            text: "Alianzas con fintechs, procesadores de pago o entidades financieras del país para convertir moneda local en dólares digitales (USDC) y volver, sin fricción.",
+            text: "Alianzas con apps de pago, servicios de cobro o bancos del país para cambiar moneda local por dólares digitales (USDC) y volver, sin trabas.",
           },
           {
-            title: "2. Reglas y licencias",
-            text: "Adaptamos el marco legal y los controles de identidad y prevención de lavado de dinero (KYC/AML) a cada jurisdicción, siempre junto a socios locales con licencia.",
+            title: "2. Reglas y permisos",
+            text: "Cumplimos las leyes de cada país, incluidos los controles para saber quién es cada persona y evitar el lavado de dinero, siempre junto a socios locales con permiso para operar.",
           },
           {
             title: "3. Un chat que habla como allá",
@@ -109,7 +109,7 @@ const pages: InfoPages = {
     ],
     cta: {
       title: "¿Tienes un contacto en otro país?",
-      text: "Si eres una fintech, un procesador de pagos o una comunidad y quieres abrir Optipagos en tu país, escríbenos.",
+      text: "Si tienes una app de pagos, un servicio de cobro o una comunidad y quieres abrir Optipagos en tu país, escríbenos.",
     },
   },
 
@@ -131,7 +131,7 @@ const pages: InfoPages = {
           },
           {
             title: "Negocios que ya venden por WhatsApp",
-            text: "Sumamos microempresas y profesionales con un cobro por QR con confirmación biométrica. Sus clientes pagan por ahí, y cada cliente es un nuevo usuario.",
+            text: "Sumamos pequeños negocios y profesionales con un cobro por QR que el cliente confirma con su huella o rostro. Sus clientes pagan por ahí, y cada cliente es un nuevo usuario.",
           },
           {
             title: "Comunidades que cuidan su dinero",
@@ -170,31 +170,41 @@ const pages: InfoPages = {
     eyebrow: "con quién lo construimos",
     title: "Un equipo, varios aliados",
     description:
-      "Los aliados de Optipagos: WhatsApp Business de Meta, proveedores de dólares digitales, seguridad biométrica y rampas financieras locales.",
+      "Los aliados de Optipagos: WhatsApp Business de Meta, proveedores de dólares digitales, seguridad con huella y rostro y aliados para poner y sacar dinero.",
     lead: "Mover plata por chat sin enredos requiere varias piezas. Estas son las que hacen posible Optipagos.",
     sections: [
       {
         title: "El problema de hoy",
-        text: "Los intermediarios tradicionales y las plataformas complicadas ponen comisiones y trabas técnicas a quien solo quiere cuidar su dinero. Ahí entramos.",
+        text: "Los intermediarios tradicionales y las aplicaciones complicadas ponen comisiones y trabas a quien solo quiere cuidar su dinero. Ahí entramos.",
       },
       {
         title: "Quiénes hacen posible la solución",
         items: [
           {
-            title: "Meta · WhatsApp Business",
-            text: "Es la puerta de entrada: el chat que ya usas, sin descargar nada.",
+            title: "Tu chat de siempre",
+            text: "WhatsApp Business, de Meta, es la puerta de entrada: el chat que ya usas, sin descargar nada.",
+            links: [
+              { name: "WhatsApp Business", url: "https://business.whatsapp.com/", logo: "whatsapp" },
+              { name: "Meta", url: "https://about.meta.com/", logo: "meta" },
+            ],
           },
           {
             title: "Dólares digitales",
-            text: "Proveedores y redes de USDC como Avalanche, Stellar, AAVE y BLEND para mover y resguardar dinero al instante.",
+            text: "Redes y servicios de dólares digitales (USDC) para mover y resguardar tu dinero al instante.",
+            links: [
+              { name: "Avalanche", url: "https://www.avax.network/", logo: "avalanche" },
+              { name: "Stellar", url: "https://stellar.org/", logo: "stellar" },
+              { name: "Aave", url: "https://aave.com/", logo: "aave" },
+              { name: "Blend", url: "https://blend.capital/", logo: "blend" },
+            ],
           },
           {
-            title: "Seguridad biométrica",
-            text: "Tecnología de huella y rostro para que cada operación la confirme su dueño y se acaben las estafas.",
+            title: "Seguridad con huella y rostro",
+            text: "La tecnología de tu teléfono confirma que cada pago lo autoriza su dueño, y así se acaban las estafas.",
           },
           {
-            title: "Rampas financieras locales",
-            text: "Aliados que permiten poner y sacar moneda local de tu billetera.",
+            title: "Poner y sacar dinero",
+            text: "Aliados locales que te permiten poner moneda local en tu billetera y sacarla cuando quieras.",
           },
         ],
       },
@@ -205,7 +215,7 @@ const pages: InfoPages = {
     ],
     cta: {
       title: "¿Quieres ser aliado?",
-      text: "Si tu empresa encaja en alguna de estas piezas, conversemos.",
+      text: "Si tu negocio encaja en alguna de estas piezas, conversemos.",
     },
   },
 
@@ -251,17 +261,17 @@ const pages: InfoPages = {
           },
           {
             title: "Pasanaku digital",
-            text: "Rondas de ahorro entre amigos y familia automatizadas, con una micro-comisión por el servicio.",
+            text: "Rondas de ahorro entre amigos y familia automatizadas, con una comisión muy pequeña por el servicio.",
             soon: true,
           },
           {
             title: "Cobros para comercios",
-            text: "Procesar los cobros de tu negocio con una micro-comisión, con la posibilidad de devolver parte como cashback a tu cliente.",
+            text: "Procesar los cobros de tu negocio con una comisión muy pequeña, y la posibilidad de devolver una parte a tu cliente.",
             soon: true,
           },
           {
             title: "Historial para acceder a crédito",
-            text: "Exploramos que quienes hoy no tienen acceso a la banca puedan demostrar su historial de pagos y conseguir microcréditos. Es una idea en estudio.",
+            text: "Exploramos que quienes hoy no tienen acceso a la banca puedan demostrar su historial de pagos y conseguir pequeños préstamos. Es una idea en estudio.",
             soon: true,
           },
         ],
