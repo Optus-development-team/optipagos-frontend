@@ -2,10 +2,15 @@ import type { MetadataRoute } from "next";
 import { href, locales, localeTags, type RouteKey } from "@/i18n/config";
 import { absoluteUrl } from "@/lib/site";
 
-const routes: { route: RouteKey; changeFrequency: "weekly" | "yearly"; priority: number }[] = [
+const routes: { route: RouteKey; changeFrequency: "weekly" | "monthly" | "yearly"; priority: number }[] = [
   { route: "home", changeFrequency: "weekly", priority: 1 },
   { route: "privacy", changeFrequency: "yearly", priority: 0.3 },
   { route: "terms", changeFrequency: "yearly", priority: 0.3 },
+  { route: "people", changeFrequency: "monthly", priority: 0.7 },
+  { route: "revenue", changeFrequency: "monthly", priority: 0.6 },
+  { route: "gtm", changeFrequency: "monthly", priority: 0.6 },
+  { route: "players", changeFrequency: "monthly", priority: 0.5 },
+  { route: "expansion", changeFrequency: "monthly", priority: 0.5 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

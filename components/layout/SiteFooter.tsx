@@ -4,6 +4,7 @@ import { Logo } from "@/components/brand/Logo";
 import { OptusMark } from "@/components/brand/marks";
 import { Squiggle } from "@/components/doodles";
 import { DoodleIcon, type DoodleIconName } from "@/components/icons";
+import { infoKeys, infoPages } from "@/content/pages";
 import { href, type Locale } from "@/i18n/config";
 import { fill, type Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
@@ -13,7 +14,7 @@ import { LangSwitch } from "./LangSwitch";
 export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const { nav, footer } = dict;
   const home = href("home", locale);
-  const product = [nav.how, nav.features, nav.safety, nav.faq];
+  const product = [nav.how, nav.features, nav.safety, nav.faq, nav.beta];
   const legal = [
     { href: href("privacy", locale), label: footer.privacy },
     { href: href("terms", locale), label: footer.terms },
@@ -23,7 +24,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
     <footer className="mx-auto w-full max-w-6xl px-5 pb-10">
       <Squiggle className="draw mx-auto mb-10 h-5 w-40 text-ink-300" />
 
-      <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+      <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
         <div>
           <Link href={home} aria-label={nav.home}>
             <Logo />
@@ -44,6 +45,19 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
               <li key={item.id}>
                 <Link href={`${home}#${item.id}`} className="hover:underline hover:decoration-wavy">
                   {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label={dict.explore.title}>
+          <h2 className="display text-2xl">{dict.explore.title}</h2>
+          <ul className="mt-3 flex flex-col gap-2">
+            {infoKeys.map((key) => (
+              <li key={key}>
+                <Link href={href(key, locale)} className="hover:underline hover:decoration-wavy">
+                  {infoPages[locale][key].label}
                 </Link>
               </li>
             ))}

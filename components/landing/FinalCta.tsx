@@ -6,7 +6,15 @@ import { Reveal } from "@/components/ui/Reveal";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { site } from "@/lib/site";
 
-export function FinalCta({ t, openAria }: { t: Dictionary["finalCta"]; openAria: string }) {
+export function FinalCta({
+  t,
+  openAria,
+  betaId,
+}: {
+  t: Dictionary["finalCta"];
+  openAria: string;
+  betaId: string;
+}) {
   return (
     <section>
       <Reveal effect="pop">
@@ -32,10 +40,15 @@ export function FinalCta({ t, openAria }: { t: Dictionary["finalCta"]; openAria:
             <p className="mt-4 max-w-xl text-xl leading-snug">
               {t.text}
             </p>
-            <a href={site.whatsappUrl()} className="btn btn-primary mt-7">
-              <MdWhatsapp className="h-6 w-6" aria-hidden="true" />
-              {t.cta}
-            </a>
+            <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <a href={site.whatsappUrl()} className="btn btn-primary">
+                <MdWhatsapp className="h-6 w-6" aria-hidden="true" />
+                {t.cta}
+              </a>
+              <a href={`#${betaId}`} className="btn btn-ghost">
+                {t.beta}
+              </a>
+            </div>
           </div>
           <div className="relative mx-auto mr-0 hidden pr-16 md:block">
             <OptipagosMark className="h-52 w-52 animate-float" />

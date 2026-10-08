@@ -1,5 +1,20 @@
 # Cambios
 
+## 0.4.0 · 8 de octubre de 2026
+
+- **Demo temprana**: la portada deja claro que Optipagos aún no está en producción (franja
+  superior, etiqueta en la portada, nueva pregunta en «Preguntas» y llamada final).
+- **Beta cerrada**: sección `#beta` con formulario de registro (acción del servidor en
+  `app/actions/beta.ts`, con validación y campo trampa para robots). Envía los datos a
+  `POST /api/v1/beta/signups` del backend, que **todavía no existe**: hasta entonces el
+  formulario muestra un error al enviar.
+- **Páginas nuevas**, adaptadas al lenguaje comercial desde el documento del programa Incuba
+  Unión Tecnológico 3.0: `/personas`, `/expansion`, `/gtm`, `/actores` y `/recaudacion`
+  (en inglés `/en/people`, `/en/expansion`, `/en/gtm`, `/en/players`, `/en/revenue`).
+  Textos en `content/pages/`, enlazadas desde el pie y el sitemap.
+- **Historial de prompts**: `PROMPT_HISTORY.md` registra cada prompt y su salida, por usuario
+  y hora; la regla está en `AGENTS.md`.
+
 ## 0.3.1 · 8 de octubre de 2026
 
 - **Vista previa del enlace**: la portada y las páginas legales vuelven a mostrar su imagen al

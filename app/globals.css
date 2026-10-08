@@ -396,6 +396,29 @@ body {
     width: 100%;
   }
 
+  /* Campos de formulario */
+  .field {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.6rem 0.9rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 14px 12px 15px 11px / 12px 15px 11px 14px;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 1.1rem;
+  }
+  .field::placeholder {
+    color: var(--color-ink-400);
+  }
+  .field:focus-visible {
+    outline: 3px solid var(--color-ink-500);
+    outline-offset: 2px;
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-clay);
+  }
+
   /* Enlace con subrayado de rotulador */
   .link {
     font-weight: 600;

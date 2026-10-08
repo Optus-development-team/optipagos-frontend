@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AboutOptus } from "@/components/landing/AboutOptus";
+import { BetaSignup } from "@/components/landing/BetaSignup";
 import { Faq, faqJsonLd } from "@/components/landing/Faq";
 import { Features } from "@/components/landing/Features";
 import { FinalCta } from "@/components/landing/FinalCta";
@@ -40,8 +41,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           <Features t={dict.features} id={nav.features.id} />
           <Safety t={dict.safety} id={nav.safety.id} />
           <Faq t={dict.faq} id={nav.faq.id} />
+          <BetaSignup t={dict.beta} />
           <AboutOptus t={dict.about} />
-          <FinalCta t={dict.finalCta} openAria={nav.openAria} />
+          <FinalCta t={dict.finalCta} openAria={nav.openAria} betaId={nav.beta.id} />
         </div>
       </main>
     </PageTransition>

@@ -9,7 +9,7 @@ import { LangSwitch } from "./LangSwitch";
 /** Cabecera del sitio. Vive en el layout: no se mueve al cambiar de página. */
 export function SiteHeader({ locale, nav }: { locale: Locale; nav: Dictionary["nav"] }) {
   const home = href("home", locale);
-  const links = [nav.how, nav.features, nav.safety, nav.faq];
+  const links = [nav.how, nav.features, nav.safety, nav.beta];
 
   return (
     <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-5">

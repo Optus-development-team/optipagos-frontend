@@ -4,6 +4,9 @@
  *   español (por defecto)   /            /privacidad       /terminos
  *   inglés                  /en          /en/privacy       /en/terms
  *
+ * Igual con personas, expansion, gtm, actores y recaudacion (en inglés: people, expansion,
+ * gtm, players, revenue).
+ *
  * Las páginas del sitio viven en app/[lang]/… y proxy.ts traduce entre ambas. Las páginas
  * de los enlaces personales (/w/:token, /c/:id) no cambian de dirección: toman el idioma
  * guardado o el del navegador (ver i18n/request.ts).
@@ -19,11 +22,26 @@ export const isLocale = (value: string | undefined): value is Locale =>
 export const LOCALE_COOKIE = "lang";
 
 /** Segmento interno (bajo app/[lang]) de cada página. */
-const segments = { home: "", privacy: "/privacy", terms: "/terms" } as const;
+const segments = {
+  home: "",
+  privacy: "/privacy",
+  terms: "/terms",
+  people: "/people",
+  expansion: "/expansion",
+  gtm: "/gtm",
+  players: "/players",
+  revenue: "/revenue",
+} as const;
 export type RouteKey = keyof typeof segments;
 
 /** Direcciones en español que no coinciden con el segmento interno. */
-const spanishPaths: Record<string, string> = { "/privacy": "/privacidad", "/terms": "/terminos" };
+const spanishPaths: Record<string, string> = {
+  "/privacy": "/privacidad",
+  "/terms": "/terminos",
+  "/people": "/personas",
+  "/players": "/actores",
+  "/revenue": "/recaudacion",
+};
 const internalPaths: Record<string, string> = Object.fromEntries(
   Object.entries(spanishPaths).map(([internal, spanish]) => [spanish, internal]),
 );

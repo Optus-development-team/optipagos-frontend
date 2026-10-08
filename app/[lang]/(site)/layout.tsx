@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { DemoBanner } from "@/components/layout/DemoBanner";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { isLocale } from "@/i18n/config";
@@ -12,6 +13,7 @@ export default async function SiteLayout({ children, params }: LayoutProps<"/[la
 
   return (
     <>
+      <DemoBanner locale={lang} t={dict.demo} betaId={dict.beta.id} />
       <SiteHeader locale={lang} nav={dict.nav} />
       {children}
       <SiteFooter locale={lang} dict={dict} />
