@@ -169,6 +169,17 @@ con nonce, sin terceros, sin caché y con `Referrer-Policy: no-referrer`. La ló
 `lib/signer/` (passkeys con PRF, sobre cifrado de la clave) y `components/signer/Signer.tsx`;
 los textos le llegan ya traducidos desde el servidor, sin cargar nada adicional.
 
+El backend dice, para cada enlace, de qué tipo es la billetera (`custody`) y en qué entorno
+actúa (`environment`: el número de la demo es testnet y el de producción, mainnet):
+
+| `custody` | Qué hace la página |
+| --- | --- |
+| `PASSKEY_PRF` | Lo de arriba: genera la clave, la cifra con la salida PRF de la passkey y firma con ella. |
+| `TILCAI_SCA` | Nada de claves. La billetera es una cuenta de contrato cuya dueña es la passkey: al crearla basta la huella, y al enviar la huella firma el reto del servidor, que es el propio envío. Esa aserción es la firma que comprueba la red. |
+
+`npm run e2e:firma` recorre la página en un navegador real con un autenticador virtual (ver la
+cabecera de `scripts/e2e-firma.mjs`); sirve para los dos tipos.
+
 ## Textos legales
 
 `/privacidad` y `/terminos` (y sus versiones en inglés) describen lo que el producto hace hoy.

@@ -1,5 +1,19 @@
 # Cambios
 
+## 0.5.0 · 9 de octubre de 2026
+
+- **Billeteras de contrato** (`custody: "TILCAI_SCA"` en la respuesta de optipagos-backend
+  0.7): la página `/w/<token>` crea la billetera y confirma envíos solo con la huella. No
+  genera, descifra ni guarda ninguna clave: la dueña de la cuenta es la passkey del teléfono
+  (se pide P-256, la única que la red sabe comprobar) y la huella sobre el reto del servidor
+  —que es el propio envío— es la firma. Las billeteras de clave propia (`PASSKEY_PRF`) siguen
+  igual; la página elige según lo que diga el backend para ese enlace.
+- La página de «ver mi clave» explica que una billetera de contrato no tiene clave que mostrar,
+  y hay un mensaje propio para la billetera que aún se está activando.
+- `npm run e2e:firma`: prueba la página en un Chromium real con un autenticador virtual contra
+  un backend de pruebas (crear la billetera, recibir, enviar y devolver, en Fuji). Comprueba lo
+  que una passkey simulada no puede: que lo que produce el navegador lo acepta la red.
+
 ## 0.4.0 · 8 de octubre de 2026
 
 - **Demo temprana**: la portada deja claro que Optipagos aún no está en producción (franja

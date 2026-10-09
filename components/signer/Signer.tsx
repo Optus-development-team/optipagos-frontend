@@ -20,15 +20,19 @@ import { fill } from "@/i18n/fill";
 import { ApiError, signerApi } from "@/lib/signer/api";
 import { openKey, sealKey } from "@/lib/signer/envelope";
 import type { ActionView, TypedDataJson } from "@/lib/signer/types";
-import { authenticate, createPasskey, webAuthnAvailable } from "@/lib/signer/webauthn";
+import { assert, authenticate, createPasskey, webAuthnAvailable } from "@/lib/signer/webauthn";
 
 /**
  * Página de confirmación de Optipagos (/w/:token): crear la billetera, confirmar un envío o
  * mostrar la clave.
  *
- * Aquí —y solo aquí— existe la clave de la billetera sin cifrar: en la memoria del navegador
- * del usuario y durante lo que dura una firma. El servidor recibe únicamente la aserción del
- * dispositivo, la dirección, el sobre cifrado y las firmas.
+ * Hay dos clases de billetera (`custody` en la respuesta del servidor):
+ *
+ *  - Clave propia (PASSKEY_PRF). Aquí —y solo aquí— existe la clave sin cifrar: en la memoria
+ *    del navegador y durante lo que dura una firma. El servidor recibe únicamente la aserción
+ *    del dispositivo, la dirección, el sobre cifrado y las firmas.
+ *  - Cuenta de contrato (TILCAI_SCA). No hay clave: la dueña de la cuenta es la passkey del
+ *    teléfono y la huella sobre el reto del servidor es la firma que comprueba la red.
  */
 
 /** Iconos doodle que el servidor entrega ya dibujados (ver app/w/[token]/page.tsx). */
@@ -83,6 +87,8 @@ function friendly(error: unknown, m: Texts["errors"]): string {
       return m.googleRequired;
     case "CONFLICT":
       return m.conflict;
+    case "WALLET_ACTIVATING":
+      return m.walletActivating;
     case "RAIL_UNAVAILABLE":
     case "RAIL_REJECTED":
       return m.railUnavailable;
@@ -271,12 +277,24 @@ export function Signer({ token, icons, chatUrl, t, backLabel }: SignerProps) {
 
   const createWallet = (current: ActionView) =>
     run(t.progress.preparing, async (progress) => {
+      const contract = current.custody === "TILCAI_SCA";
       if (current.passkeys === 0) {
         progress(t.progress.registering);
-        const registration = await createPasskey(await api.options("register"));
+        const registration = await createPasskey(await api.options("register"), {
+          es256Only: contract,
+        });
         await api.registerPasskey(registration);
       }
       progress(t.progress.fingerprint);
+      if (contract) {
+        // Cuenta de contrato: basta la huella. El servidor pide la cuenta con la llave pública
+        // del teléfono; aquí no se genera ni se guarda ninguna clave.
+        const assertion = await assert(await api.options("authenticate"));
+        progress(t.progress.creating);
+        await api.createWallet({ assertion });
+        await refresh();
+        return;
+      }
       const { assertion, prfOutput } = await authenticate(await api.options("authenticate"));
 
       progress(t.progress.creating);
@@ -299,6 +317,13 @@ export function Signer({ token, icons, chatUrl, t, backLabel }: SignerProps) {
     run(t.progress.fingerprint, async (progress) => {
       const typedData = current.send?.typedData;
       if (!typedData) throw new ApiError("ACTION_CLOSED", "");
+      if (current.custody === "TILCAI_SCA") {
+        // El reto que entrega el servidor es este envío: la huella lo firma y eso es todo.
+        const assertion = await assert(await api.options("authenticate"));
+        progress(t.progress.sending);
+        setView(await api.signTransfer({ assertion }));
+        return;
+      }
       const { account, assertion, key } = await unlock(current);
       progress(t.progress.confirming);
       const signature = await account.signTypedData(toViem(typedData));
@@ -600,6 +625,15 @@ export function Signer({ token, icons, chatUrl, t, backLabel }: SignerProps) {
           </button>
           <p className="hand text-center text-lg opacity-80">{t.key.keepSafe}</p>
           {problem}
+        </Card>
+      );
+    }
+    if (view.custody === "TILCAI_SCA") {
+      // Una cuenta de contrato no tiene clave privada: no hay nada que mostrar.
+      return (
+        <Card icon={icons.key} chipTone="cream" title={t.key.noKeyTitle}>
+          <p className="text-lg leading-snug">{t.key.noKeyText}</p>
+          {back()}
         </Card>
       );
     }

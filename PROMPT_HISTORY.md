@@ -106,3 +106,30 @@ Deploy de `7728622` en Ready, pero el envío de prueba al sitio real falló: los
 **Salida del agente**
 
 Sección `#comprar-dolares`: se quita «Pronto» y la nota de que no está disponible; ahora lleva la etiqueta «Solo en la beta» / «Beta only», la nota «Disponible solo para quienes están en la beta cerrada» y un botón a `#beta`. «Animación estática» se interpretó como movimiento continuo que no depende del scroll: iconos que flotan, destellos y estrella que titilan, etiqueta que se mece. tsc, eslint y build sin errores.
+
+## 2026-10-09T12:52:25+00:00 · saulchoque
+
+**Prompt**
+
+> Implementa el uso de cuentas SCA de avalanche para optipagos y asi mismo implementa en la db y el backend de optipagos direfencia entre tesnet y mainnet (el numero de demo (testnet) es el con el id '1044392765419850', y el de produccion (mainnet) es el con el id '964536136746615') realiza pruebas, corrige errores y crea una nueva rama y una pr
+
+**Salida del agente**
+
+Parte de este repositorio (rama `feat/sca-entornos`; el grueso está en optipagos-backend y tilcai-infrastructure):
+
+- `/w/<token>` admite billeteras de contrato (`custody: "TILCAI_SCA"`): crea la billetera y confirma envíos solo con la huella, sin generar ni descifrar ninguna clave. `lib/signer/webauthn.ts` gana `assert()` (aserción sin PRF) y `createPasskey(…, { es256Only })`; `components/signer/Signer.tsx` elige el camino según `custody`; `lib/signer/types.ts` añade `environment`, `custody` y el estado de la cuenta. Las billeteras de clave propia no cambian.
+- Textos nuevos en español e inglés: billetera activándose y «sin clave» en la página de exportar.
+- `scripts/e2e-firma.mjs` (`npm run e2e:firma`): prueba la página en Chromium con un autenticador virtual contra un backend de pruebas.
+- Verificado en Fuji con instancias de prueba (backend en :3299, este sitio en :3312): con `TILCAI_SCA` y con `PASSKEY_PRF`, crear la billetera, recibir 0.05 USDC, enviar 0.02 y devolver 0.03, sin errores de JavaScript; la firma producida por el navegador la aceptó la red. `tsc` y `eslint` sin errores.
+- La diferencia testnet/mainnet vive en el backend; aquí la página solo recibe `environment` y el explorador de ese entorno.
+- No se leyó documentación de Next para este cambio: no toca ninguna API de Next (solo un componente cliente, `lib/` y los diccionarios).
+
+## 2026-10-09T12:52:25+00:00 · saulchoque
+
+**Prompt**
+
+> Las cuentas sca provienen de tilcai como esta previsto, si existen errores o faltan implementar cosas realiza las modificaciones que necesites en tilcai en una nueva rama (no toques el docker de tilcai)
+
+**Salida del agente**
+
+Sin cambios propios en este repositorio: confirma que las cuentas las emite TilcAI, que es como quedó hecho (ver la entrada anterior). La página no habla con TilcAI; es el backend quien pide la cuenta con la clave pública de la passkey.

@@ -354,6 +354,9 @@ const es = {
         "Vas a ver la clave de tu billetera para llevarla a otra aplicación. Asegúrate de que nadie más esté mirando tu pantalla.",
       show: "Mostrar mi clave",
       copyFailed: "No se pudo copiar. Mantén presionada la clave para copiarla.",
+      noKeyTitle: "Sin clave",
+      noKeyText:
+        "Tu billetera no guarda ninguna clave: solo la huella o el rostro de tu teléfono puede autorizar envíos, así que no hay nada que exportar.",
     },
     errors: {
       notAllowed: "No pudimos leer tu huella o rostro, o se acabó el tiempo. Inténtalo otra vez.",
@@ -371,6 +374,8 @@ const es = {
       limitExceeded: "Ese monto supera el límite por envío.",
       googleRequired: "Primero vincula tu cuenta de Google.",
       conflict: "Esto ya estaba hecho. Vuelve a WhatsApp para continuar.",
+      walletActivating:
+        "Tu billetera se está terminando de activar. Ya puedes recibir dinero; para enviar, inténtalo de nuevo en un minuto.",
       railUnavailable:
         "Ahora mismo no podemos completar el envío. Tu dinero está a salvo; inténtalo en unos minutos.",
       offline: "Sin conexión. Revisa tu internet e inténtalo de nuevo.",

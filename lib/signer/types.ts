@@ -6,6 +6,8 @@ export interface TypedDataJson {
   message: Record<string, string>;
 }
 
+export type WalletCustody = "PASSKEY_PRF" | "TILCAI_SCA";
+
 /** Respuesta de GET /api/v1/actions/:token. */
 export interface ActionView {
   id: string;
@@ -13,7 +15,16 @@ export interface ActionView {
   status: "PENDING" | "COMPLETED" | "CANCELLED" | "EXPIRED" | "FAILED";
   expiresAt: string;
   user: { name: string | null; phone: string };
-  wallet: { address: string } | null;
+  /** Entorno del enlace: `testnet` (número de la demo) o `mainnet` (número de producción). */
+  environment: "testnet" | "mainnet";
+  /**
+   * Cómo firma la billetera (o cómo se creará).
+   *  - PASSKEY_PRF: una clave propia que este navegador descifra con la huella.
+   *  - TILCAI_SCA: una cuenta de contrato cuya dueña es la passkey; no hay clave: la huella
+   *    sobre el reto del servidor es la firma.
+   */
+  custody: WalletCustody;
+  wallet: { address: string; custody: WalletCustody; state: "DEPLOYING" | "ACTIVE" } | null;
   passkeys: number;
   google: { enabled: boolean; required: boolean; linked: string | null };
   explorerUrl: string;

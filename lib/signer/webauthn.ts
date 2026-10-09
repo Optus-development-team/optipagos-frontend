@@ -36,8 +36,12 @@ export const webAuthnAvailable = (): boolean =>
   typeof window.PublicKeyCredential !== 'undefined' &&
   Boolean(navigator.credentials);
 
-/** Crea la passkey del dispositivo pidiendo la extensión PRF. */
-export async function createPasskey(options: ServerOptions) {
+/**
+ * Crea la passkey del dispositivo pidiendo la extensión PRF. Con `es256Only` solo se acepta
+ * una llave P-256: es la única que puede ser dueña de una cuenta de contrato, porque la red
+ * comprueba sus firmas.
+ */
+export async function createPasskey(options: ServerOptions, { es256Only = false } = {}) {
   const credential = (await navigator.credentials.create({
     publicKey: {
       challenge: fromBase64Url(options.challenge),
@@ -47,10 +51,12 @@ export async function createPasskey(options: ServerOptions) {
         name: options.user.name,
         displayName: options.user.displayName,
       },
-      pubKeyCredParams: [
-        { type: 'public-key', alg: -7 },
-        { type: 'public-key', alg: -257 },
-      ],
+      pubKeyCredParams: es256Only
+        ? [{ type: 'public-key', alg: -7 }]
+        : [
+            { type: 'public-key', alg: -7 },
+            { type: 'public-key', alg: -257 },
+          ],
       authenticatorSelection: { userVerification: 'required', residentKey: 'preferred' },
       excludeCredentials: descriptors(options.credentials),
       attestation: 'none',
@@ -64,6 +70,11 @@ export async function createPasskey(options: ServerOptions) {
     throw Object.assign(new Error('El navegador no entregó la llave del dispositivo.'), {
       name: 'PrfUnsupported',
     });
+  if (es256Only && response.getPublicKeyAlgorithm() !== -7) {
+    throw Object.assign(new Error('Este dispositivo no puede proteger la billetera.'), {
+      name: 'PrfUnsupported',
+    });
+  }
   const extensions = credential.getClientExtensionResults() as PrfResults;
   return {
     credentialId: toBase64Url(credential.rawId),
@@ -114,5 +125,30 @@ export async function authenticate(
       signature: toBase64Url(response.signature),
     },
     prfOutput,
+  };
+}
+
+/**
+ * Pone la huella sobre el reto del servidor, sin PRF. Es lo que hace una billetera de contrato:
+ * no hay clave que abrir. Al crear la billetera el reto solo identifica a la persona; al
+ * confirmar un envío el reto es el propio envío, y esta aserción es la firma que comprueba la red.
+ */
+export async function assert(options: ServerOptions): Promise<AssertionPayload> {
+  const credential = (await navigator.credentials.get({
+    publicKey: {
+      challenge: fromBase64Url(options.challenge),
+      rpId: window.location.hostname,
+      allowCredentials: descriptors(options.credentials),
+      // La cuenta exige verificación del usuario (huella, rostro o PIN) en cada firma.
+      userVerification: 'required',
+      timeout: options.timeoutMs,
+    },
+  })) as PublicKeyCredential;
+  const response = credential.response as AuthenticatorAssertionResponse;
+  return {
+    credentialId: toBase64Url(credential.rawId),
+    clientDataJSON: toBase64Url(response.clientDataJSON),
+    authenticatorData: toBase64Url(response.authenticatorData),
+    signature: toBase64Url(response.signature),
   };
 }
