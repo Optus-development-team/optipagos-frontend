@@ -133,3 +133,13 @@ Parte de este repositorio (rama `feat/sca-entornos`; el grueso está en optipago
 **Salida del agente**
 
 Sin cambios propios en este repositorio: confirma que las cuentas las emite TilcAI, que es como quedó hecho (ver la entrada anterior). La página no habla con TilcAI; es el backend quien pide la cuenta con la clave pública de la passkey.
+
+## 2026-10-09T15:57:31+00:00 · saulchoque
+
+**Prompt**
+
+> Genial, mergea a Main, prueba, corrige y haz push
+
+**Salida del agente**
+
+`feat/sca-entornos` fusionada en `main` y subida (PR #4). Sobre el resultado de la fusión, `tsc` y `eslint` sin errores; no hubo nada que corregir. El backend 0.7 que esta página necesita quedó fusionado y desplegado el mismo día; con la configuración actual las billeteras nuevas siguen siendo de clave propia, así que la página se comporta como antes hasta que el backend active `WALLET_CUSTODY=TILCAI_SCA`.
