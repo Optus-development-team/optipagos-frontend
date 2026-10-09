@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "cards": "node scripts/capture-cards.mjs",
+    "e2e:firma": "node scripts/e2e-firma.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

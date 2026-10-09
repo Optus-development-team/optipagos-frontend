@@ -353,6 +353,9 @@ const en: Dictionary = {
         "You are about to see your wallet's key so you can take it to another app. Make sure nobody else is looking at your screen.",
       show: "Show my key",
       copyFailed: "It couldn't be copied. Press and hold the key to copy it.",
+      noKeyTitle: "No key",
+      noKeyText:
+        "Your wallet doesn't keep any key: only your phone's fingerprint or face can authorize transfers, so there is nothing to export.",
     },
     errors: {
       notAllowed: "We couldn't read your fingerprint or face, or time ran out. Please try again.",
@@ -369,6 +372,8 @@ const en: Dictionary = {
       limitExceeded: "That amount is over the per-transfer limit.",
       googleRequired: "Link your Google account first.",
       conflict: "This was already done. Go back to WhatsApp to continue.",
+      walletActivating:
+        "Your wallet is still being activated. You can already receive money; to send, try again in a minute.",
       railUnavailable:
         "We can't complete the transfer right now. Your money is safe; try again in a few minutes.",
       offline: "No connection. Check your internet and try again.",
