@@ -8,16 +8,19 @@
     "start": "next start",
     "lint": "eslint",
     "cards": "node scripts/capture-cards.mjs",
+    "pitch:pdf": "node scripts/pitch-pdf.mjs",
     "e2e:firma": "node scripts/e2e-firma.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "animejs": "^4.5.0",
     "doodle-icons": "^1.1.0",
     "next": "16.3.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-icons": "^5.7.0",
     "server-only": "^0.0.1",
+    "three": "^0.186.1",
     "viem": "^2.57.3"
   },
   "devDependencies": {
@@ -25,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "playwright": "^1.63.0",

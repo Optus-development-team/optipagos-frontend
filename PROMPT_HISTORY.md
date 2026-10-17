@@ -143,3 +143,36 @@ Sin cambios propios en este repositorio: confirma que las cuentas las emite Tilc
 **Salida del agente**
 
 `feat/sca-entornos` fusionada en `main` y subida (PR #4). Sobre el resultado de la fusión, `tsc` y `eslint` sin errores; no hubo nada que corregir. El backend 0.7 que esta página necesita quedó fusionado y desplegado el mismo día; con la configuración actual las billeteras nuevas siguen siendo de clave propia, así que la página se comporta como antes hasta que el backend active `WALLET_CUSTODY=TILCAI_SCA`.
+
+## 2026-10-17T18:49:58-04:00 · Yon
+
+**Prompt**
+
+> Estamos realizando la elaboracion de un pitch para optipagos que necesita tener los elementos descritos en las imagenes adjuntas.
+>
+> * usa la información del google doc 'Programa Incuba Unión Tecnológico 3 - LINK SPACE' y la de la web (todas las subrutas)
+>
+> * Tenemos algunas diapositivas con el material visual de optipagos en el proyecto canva 'PITCH DECK MATERIAL OPTIPAGOS'  y en la pagina landing de optipagos (proyecto de nextjs) (guiate mas en las webs optipagos y optus)
+> * Tenemos la idea de realizar la presentacion mediante una pagina animada en una  ruta de optipagos.optus.lat (usando threejs y animejs) para reemplazar a las diapositivas limitadas (pasando al siguiente punto presionando una tecla del teclado) pero tenemos la limitante que debemos de enviar una diapositiva tradicional en pdf asi que necesitamos tener una copia de la presentación en pdf
+> * el estilo que seguiremos sera uno de tipo doodles y draw my life (en lugar de una mano dibujando sera un tenteculo, el tentaculo del logo de optipagos)
+> * subiremos dos videos de demo de una persona comprando usdc y enviandoselos al otro (los dos videos son simultaneos) agrega los videos en modelos 3d de telefonos (uno android y el otro iphone) para reproducirse simultaneamente, tambien uno para el proceso de registro (incluyelos en el pitch de forma que la exposicion no se pare para mostrar la demo sino que sea algo de fondo) (los videos se encuentran en 'optipagos-frontend/assets/videos/')
+> * La presentacion debera de durar 3 minutos asi que ten en cuenta esto
+> * El texto de las diapositivas variara en futuras iteraciones asi que ten en cuenta esto
+>
+> Adjuntos: 1.png («Utiliza lenguaje visual»), 2.png («Comienza con algo que llame la atención»), 3.png («Recuerda»), 4.png («Comunica los detalles concretos»), 5.png («Véndete a ti y a tu equipo»).
+>
+> Mensaje durante el trabajo: «logos de incubaunion 'optipagos-frontend/assets/lMK2L-logos-incubaunion-3-0/'»
+
+**Salida del agente**
+
+Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
+
+- **Contenido** en `content/pitch/es.ts` (tipos en `content/pitch/types.ts`), separado del motor para poder cambiar el texto sin tocar código: `*resaltado*` y `[[dato por confirmar]]`. Sigue las secciones del Canva (problema, solución, propuesta de valor, mercado, modelo, tracción, competencia, crecimiento, inversión, equipo) y los cinco consejos de las imágenes: abre con una pregunta retórica, usa analogías («como mandar un audio», «una casa de cambio que vive en tu chat»), detalles concretos, logros y equipo. Datos del Google Doc y de las páginas `/personas`, `/expansion`, `/gtm`, `/actores` y `/recaudacion`; logros y fotos del equipo de optus.lat; cifras de mercado públicas con su fuente (DataReportal 2026; BCB: activos virtuales 1.er semestre 2025 y remesas enero–julio 2025).
+- **Pendiente de confirmar** (sale marcado en la diapositiva): el monto de inversión, los porcentajes de uso de fondos y la meta de usuarios del plan de crecimiento. No se inventaron.
+- **Motor** en `components/pitch/`: plantillas (`Slide.tsx`), dibujo y escritura con anime.js (`draw.ts`), el tentáculo del logo con su rotulador (`tentacle.ts`), garabatos (`art.ts`), teléfonos 3D en three.js con sombreado de caricatura y contorno de tinta (`phones.ts`), y `Deck.tsx` (teclado, reloj, notas con N, ventana del presentador `/pitch/notas` con P sincronizada por BroadcastChannel, modo automático con A, `?static` para el PDF).
+- **Videos**: `public/pitch/video/` (registro, envío desde el iPhone, recepción en el Android), recodificados a 540 px, 30 cps, sin audio; se corrigió el SAR 90:233 de los del iPhone. El Android va 2,5 s detrás del iPhone (medido con el reloj de la barra de estado) y se mantienen sincronizados. Corren de fondo en las diapositivas 3 a 6.
+- **PDF**: `npm run pitch:pdf` → `public/pitch/optipagos-pitch.pdf` (12 páginas, 1920 × 1080, 4,4 MB), capturado del mismo pitch con Google Chrome.
+- Otros: `proxy.ts` deja pasar `/pitch` sin enrutado por idioma; logos de la incubadora en `public/pitch/logos/`, QR de WhatsApp en `public/pitch/qr-whatsapp.svg`; dependencias `three`, `animejs` y `@types/three`; README y CHANGELOG (0.6.0).
+- Verificado: `tsc`, `eslint` y `next build` sin errores; recorrido completo con teclado y ventana de notas en Chrome sin errores de consola; capturas de todas las diapositivas revisadas.
+- Leí `node_modules/next/dist/docs` (carga diferida y `ssr: false`); la página usa `PageProps<"/pitch">` y `searchParams` asíncronos como el resto del proyecto.
+- Sin commit. Los originales de `assets/videos/` (≈130 MB) y `assets/lMK2L-logos-incubaunion-3-0/` quedan sin seguimiento.

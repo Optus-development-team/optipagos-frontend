@@ -22,6 +22,7 @@ expone la API.
 | `/c/<id>/imagen` | La imagen del comprobante (PNG 1200 × 630), generada aquí con `next/og`. |
 | `/media/whatsapp/<nombre>.png` | Tarjetas de marca para los mensajes del bot (se leen de `assets/whatsapp`). |
 | `/tarjetas/<nombre>` | Lienzo de esas tarjetas; solo sirve para capturarlas. |
+| `/pitch` · `/pitch/notas` | Pitch animado de 3 minutos y la ventana del presentador (ver [Pitch](#pitch)). |
 | `/sitemap.xml` · `/robots.txt` · `/manifest.webmanifest` | SEO. |
 | `/api/v1/{actions,auth,webhooks,receipts}/*` | No viven aquí: se reenvían a `optipagos-backend`. |
 
@@ -40,6 +41,7 @@ Producción (o para probar con el teléfono): `npm run build && npm start`.
 | `npm run dev` · `build` · `start` | Desarrollo, compilación y servidor de producción |
 | `npm run lint` · `npm run typecheck` | ESLint · `tsc --noEmit` |
 | `npm run cards` | Captura las tarjetas de WhatsApp y la vista previa del sitio |
+| `npm run pitch:pdf` | Exporta el pitch a `public/pitch/optipagos-pitch.pdf` |
 
 ### Variables
 
@@ -124,6 +126,48 @@ npm run cards
 **Comprobantes**: `/c/<id>/imagen` dibuja el comprobante con los datos de
 `GET /api/v1/receipts/<id>`. WhatsApp la toma de esa URL pública como imagen del mensaje "Envío completado" o
 "Recibiste dinero" (por eso esta ruta debe ser accesible desde internet), y desde la página `/c/<id>` cualquiera puede compartirlo o descargarlo.
+
+## Pitch
+
+`/pitch` es el pitch de Optipagos para Incuba Unión Tecnológico 3.0: 12 diapositivas, 3 minutos,
+dibujadas en vivo al estilo *draw my life* por el tentáculo del logo, con dos teléfonos 3D
+(three.js) que reproducen la demo de fondo mientras se sigue hablando.
+
+- **El texto** está en `content/pitch/es.ts` (forma en `content/pitch/types.ts`): título,
+  ítems, nota a mano, guion del presentador y segundos de cada diapositiva (suman 180).
+  `*palabras*` se resaltan con rotulador y `[[dato]]` sale con borde punteado y la etiqueta
+  «por confirmar» hasta que se reemplace. Cambiar el texto no requiere tocar el motor.
+- **El motor** está en `components/pitch/`: `Slide.tsx` (plantillas: `cover`, `cards`,
+  `steps`, `checklist`, `stats`, `compare`, `roadmap`, `funds`, `team`, `closing`), `draw.ts`
+  (anime.js: trazos que se dibujan y letras que se escriben, siguiendo el orden de los
+  `data-anim`), `tentacle.ts` (el tentáculo con su rotulador), `phones.ts` (los teléfonos) y
+  `art.ts` (los garabatos, como trazos de 100 × 100).
+- **Los videos** de la demo (`public/pitch/video/`) salen de `assets/videos/` recodificados
+  a 540 px de ancho, 30 cuadros y sin audio. Los del iPhone vienen con píxeles no cuadrados
+  (1290 × 1080, SAR 90:233) y se corrigen al recodificar. El del Android corre 2,5 s detrás
+  del del iPhone (`androidOffset`) y el pitch los mantiene sincronizados. Tramo y velocidad
+  de cada uno en `videos` de `content/pitch/es.ts`.
+
+```bash
+ffmpeg -i assets/videos/fabricio.mp4 -an -vf "scale=540:1170,setsar=1,fps=30,format=yuv420p" \
+  -c:v libx264 -preset slow -crf 30 -g 30 -movflags +faststart public/pitch/video/envio-iphone.mp4
+```
+
+| Tecla | Qué hace |
+| --- | --- |
+| → · espacio · Av Pág · Enter · clic | Siguiente diapositiva |
+| ← · Re Pág · Retroceso | Anterior (aparece ya dibujada) |
+| F | Pantalla completa |
+| N | Guion y tiempos sobre el pitch |
+| P | Abre `/pitch/notas` en otra ventana: guion, tiempos y controles, sincronizados |
+| A | Avanza sola con los segundos del guion (para ensayar; también `/pitch?auto`) |
+| T | Reinicia el reloj · R redibuja la diapositiva · H oculta la barra de tiempo |
+
+**PDF**: `npm run pitch:pdf` (con el sitio en marcha; `PITCH_BASE_URL` si no es
+`http://localhost:3000`) abre cada diapositiva con `/pitch?static&s=<n>`, ya dibujada y con los
+teléfonos en el cuadro `poster` de esa diapositiva, y junta las capturas en
+`public/pitch/optipagos-pitch.pdf`. Usa Google Chrome (el Chromium de Playwright no reproduce
+H.264); `CHROME_PATH` para otro.
 
 ## Idiomas
 

@@ -123,6 +123,7 @@ function remember(response: NextResponse, locale: Locale) {
 
 export const config = {
   // Todo menos los internos de Next, la API, las imágenes y tarjetas del bot, los comprobantes
-  // (/c/…), el icono generado y los archivos con extensión (iconos, robots.txt, imágenes…).
-  matcher: ["/((?!_next/|api/|media/|c/|tarjetas/|apple-icon|.*\\.[a-zA-Z0-9]+$).*)"],
+  // (/c/…), el pitch (/pitch), el icono generado y los archivos con extensión (iconos,
+  // robots.txt, imágenes…).
+  matcher: ["/((?!_next/|api/|media/|c/|tarjetas/|pitch|apple-icon|.*\\.[a-zA-Z0-9]+$).*)"],
 };

@@ -1,5 +1,16 @@
 # Cambios
 
+## 0.6.0 · 17 de octubre de 2026
+
+- **Pitch animado** en `/pitch` para Incuba Unión Tecnológico 3.0: 12 diapositivas en 3
+  minutos que el tentáculo del logo dibuja y escribe en vivo (anime.js), con un iPhone y un
+  Android en 3D (three.js) que reproducen la demo de fondo: el registro y, sincronizados, la
+  compra de USDC con QR Simple y el envío de un teléfono al otro. Teclado y control remoto de
+  presentación, guion con tiempos (tecla N), ventana del presentador `/pitch/notas` (tecla P)
+  y modo automático para ensayar. El texto vive en `content/pitch/es.ts`.
+- `npm run pitch:pdf` exporta el mismo pitch a `public/pitch/optipagos-pitch.pdf`.
+- Dependencias nuevas: `three` y `animejs`.
+
 ## 0.5.0 · 9 de octubre de 2026
 
 - **Billeteras de contrato** (`custody: "TILCAI_SCA"` en la respuesta de optipagos-backend
