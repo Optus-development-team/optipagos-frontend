@@ -129,7 +129,7 @@ npm run cards
 
 ## Pitch
 
-`/pitch` es el pitch de Optipagos para Incuba Unión Tecnológico 3.0: 12 diapositivas, 3 minutos,
+`/pitch` es el pitch de Optipagos para Incuba Unión Tecnológico 3.0: 13 diapositivas, 3 minutos,
 dibujadas en vivo al estilo *draw my life* por el tentáculo del logo, con dos teléfonos 3D
 (three.js) que reproducen la demo de fondo mientras se sigue hablando.
 

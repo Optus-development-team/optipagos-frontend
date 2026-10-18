@@ -1,5 +1,19 @@
 # Cambios
 
+## 0.6.1 · 17 de octubre de 2026
+
+- **Pitch, segunda versión** (13 diapositivas, siguen sumando 180 s): nuevo gancho con la
+  llamada a la abuela que quiere comprar dólares; nueva diapositiva «la oportunidad» después de
+  la solución; mercado centrado en quien quiere ahorrar en dólares, con las operaciones cripto
+  separadas entre plataformas y pagos desde el banco (QR y transferencias); modelo de negocio
+  con comisiones pagadas por nosotros al inicio, parte del interés en DeFi o pasanaku e
+  historial crediticio para bancos; tracción con el pivote, encuestas, interés de una entidad
+  financiera y la validación con el CEO de Tu Cuate; Meru y rostro en la competencia; La Paz y
+  el aliado para mover bolivianos en el crecimiento; «subcampeones» en el equipo, que baja a
+  10 s.
+- Logo de Link Space entre los aliados (`public/pitch/logos/link-space.png`, con el texto en
+  tinta para el papel claro).
+
 ## 0.6.0 · 17 de octubre de 2026
 
 - **Pitch animado** en `/pitch` para Incuba Unión Tecnológico 3.0: 12 diapositivas en 3

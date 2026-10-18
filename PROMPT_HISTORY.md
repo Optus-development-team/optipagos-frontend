@@ -176,3 +176,60 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
 - Verificado: `tsc`, `eslint` y `next build` sin errores; recorrido completo con teclado y ventana de notas en Chrome sin errores de consola; capturas de todas las diapositivas revisadas.
 - Leí `node_modules/next/dist/docs` (carga diferida y `ssr: false`); la página usa `PageProps<"/pitch">` y `searchParams` asíncronos como el resto del proyecto.
 - Sin commit. Los originales de `assets/videos/` (≈130 MB) y `assets/lMK2L-logos-incubaunion-3-0/` quedan sin seguimiento.
+
+## 2026-10-17T21:18:02-04:00 · Yon
+
+**Prompt**
+
+> Usando las siguientes notas realiza las ediciones necesarias:
+> (recuerda que el tiempo de exposicion es de 3 minutos)
+> - Diapo 1: Cambiar el gancho (no mencionar pagos falsos) (al inicio finjir que estoy hablando con mi abuela porque ella queria comprar dolares porque el tc esta subiendo y ella no sabe como, luego finjir que no sabia que deje mi mic abierto y mencionar que existen mas personas como ella)
+> - Diapo 2: no es solo san francisco, sino ciudad de la paz
+> - Diapo 5: o personas que ya quieren ahorrar pero no saben como (desglosar operaciones con criptos y con qrsimple)
+> - Diapo 6: Cambiar pones por metes, especificar que sacamos un porcentaje del interes acumulado en defi (pasanaku o defi puro), generar historial crediticio para negocios y personas anturales para vender a bancos
+> - Diapo 7: No mencionar que se puso en marcha, sino hacia donde se "pivoteo", mencionar las personas anotadas para la demo, personas encuestadas en vivo, personas encuestadas en forms y validacion y pre pitching con gente como el ceo de tu cuate ('[nombre del CEO]')
+> - Diapo 8: Agregar meru, agregar rostro/datos biometricos
+> - Diapo 9: Cambiar ciudad de la paz, reemplazar freelancers por gente que quiere ahorrar y mover dolares, aliado para mover Bolivianos, no solo recibirlos
+> - Diapo 10: pendiente
+> - Diapo 11: Subcampeones
+>
+> (notas adicionales:)
+> - nosotros pagamos las comisiones al inicio para atraer clientes
+> - un banco demostro interes en usar la solución (bdp) (hacerlo mas vago, no mencionar añ banco directamente)
+> - defir mas claramente la oportunidad de negocio (nueva diapositiva después de solucion)
+> - si se necesita reestructurar tiempos, reducir de la diapositiva de equipo
+>
+> * agregar el logo de linkspace
+>
+> (adjunto: 6.png, logo de Link Space)
+>
+> deploya cuando termines
+
+**Salida del agente**
+
+- `content/pitch/es.ts`: 13 diapositivas, siguen sumando 180 s (gancho 20, problema 15,
+  solución 15, oportunidad 15, valor 13, mercado 16, modelo 16, tracción 17, competencia 12,
+  crecimiento 12, inversión 11, equipo 10, cierre 8).
+  - Gancho: «Mi abuela quiere comprar dólares… y no es la única», con la llamada fingida y el
+    micrófono «abierto» en el guion; ya no habla de pagos falsos. El cierre retoma a la abuela.
+  - Problema: la ciudad de La Paz en vez de San Francisco.
+  - Nueva «la oportunidad» (tras la solución, con el registro aún de fondo): el dólar escasea,
+    desde 2024 el BCB permite los activos virtuales (R.D. 082/2024), la cripto asusta.
+  - Mercado: quien ya quiere ahorrar en dólares y no sabe cómo; cifras separadas en cripto por
+    plataformas (USD 294 M, 1.er sem. 2025) y operaciones cripto pagadas desde el banco con QR y
+    transferencias (Bs 611 M, 10.193 operaciones, jul. 2024 – may. 2025, ASFI vía BCB CP24/2025),
+    más remesas. Sale la cifra de usuarios de internet.
+  - Modelo (ahora lista): gratis con comisiones pagadas por nosotros al inicio, 0,5–1 % al meter
+    o sacar, parte del interés en DeFi o pasanaku, historial crediticio para bancos.
+  - Tracción: pivote hacia ahorrar y mover dólares desde el chat; encuestados en vivo y en
+    formulario como [[N]] (por confirmar), 20 anotados, «1 entidad financiera» sin nombrarla, y
+    la validación con el CEO de Tu Cuate (nombre en la diapositiva).
+  - Competencia: «Binance, Airtm, Meru» y la columna «Huella o rostro en cada pago».
+  - Crecimiento: ciudad de La Paz, gente que quiere ahorrar y mover dólares, aliado para mover
+    bolivianos y no solo recibirlos. Inversión sin cambios (pendiente). Equipo: «subcampeones».
+  - Videos: registro a 2,1× (cubre solución + oportunidad) y envío a 3,2× (valor + mercado +
+    modelo).
+- `public/pitch/logos/link-space.png`: logo del adjunto con el texto blanco pasado a tinta.
+- PDF regenerado (13 páginas). Verificado: `tsc`, `eslint`, suma de 180 s, capturas de las 13
+  diapositivas y recorrido en vivo con el teclado hasta 13/13 sin errores de consola.
+- Pendiente: cifras de encuestados, monto, % de fondos y meta de usuarios.
