@@ -317,3 +317,17 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
   de Tu Cuate con ✓. Cada cifra lleva su fuente. Guion actualizado.
 - Quitados 71 % (beta) y 14 % (entrevistas), que no salían de la encuesta.
 - PDF regenerado; `tsc` y `eslint` limpios.
+
+## 2026-10-17T23:50:20-04:00 · Yon
+
+**Prompt**
+
+> agrega 20 de 28 interesados en unirse a la beta (en porcentajes)
+
+**Salida del agente**
+
+- Diapositiva 8 (`content/pitch/es.ts`): nueva cifra «71 % quiere unirse a la beta»
+  (fuente «encuesta, 20 de 28»). Con cinco columnas no cabía, así que la validación del CEO de
+  Tu Cuate pasó a la nota manuscrita junto con la entidad financiera. Guion con «siete de cada
+  diez quiere entrar a la beta».
+- PDF regenerado; `tsc` y `eslint` limpios.

@@ -218,20 +218,21 @@ const deck: PitchDeck = {
           source: "encuesta, 28 respuestas",
         },
         {
+          doodle: "check",
+          value: "71 %",
+          title: "quiere unirse a la beta",
+          source: "encuesta, 20 de 28",
+        },
+        {
           doodle: "megaphone",
           value: "100 %",
           title: "de los entrevistados no lo usó por miedo",
           source: "entrevistas en vivo",
         },
-        {
-          doodle: "heart",
-          value: "✓",
-          title: "validado en pre-pitch con Renán Huayta, CEO de Tu Cuate",
-        },
       ],
-      note: "y una entidad financiera ya mostró interés en usar Optipagos",
+      note: "validado por Renán Huayta, CEO de Tu Cuate, y una entidad financiera ya mostró interés",
       script:
-        "Con Optimypes vimos que la gente le temía a los activos digitales: plataformas muy complicadas. Nueve de cada diez encuestados no se anima, y seis de cada diez sale de WhatsApp para cobrar. Por eso nació Optipagos. El CEO de Tu Cuate nos validó… y una entidad financiera ya quiere usarnos.",
+        "Con Optimypes vimos que la gente le temía a los activos digitales: plataformas muy complicadas. Nueve de cada diez encuestados no se anima, y seis de cada diez sale de WhatsApp para cobrar. Siete de cada diez quiere entrar a la beta. Por eso nació Optipagos. El CEO de Tu Cuate nos validó… y una entidad financiera ya quiere usarnos.",
     },
     {
       id: "competencia",
