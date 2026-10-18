@@ -103,6 +103,11 @@ const layouts: Record<PitchSlide["layout"], (slide: PitchSlide, deck: PitchDeck)
         <p className="closing-url" data-anim="write">
           <Rich text={deck.url} />
         </p>
+        {deck.email && (
+          <p className="closing-email" data-anim="write">
+            <Rich text={deck.email} />
+          </p>
+        )}
       </div>
       <figure className="closing-qr" data-anim="pop">
         {/* eslint-disable-next-line @next/next/no-img-element -- lienzo fijo, sin optimizar */}

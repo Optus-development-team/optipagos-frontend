@@ -106,6 +106,8 @@ export interface PitchDeck {
   url: string;
   /** Enlace del QR de cierre. */
   whatsappUrl: string;
+  /** Correo de contacto, al pie del cierre. */
+  email?: string;
   /** Logos de la incubadora y aliados (en la portada y el cierre). */
   sponsors: { name: string; logo?: string }[];
   videos: PitchVideos;

@@ -387,6 +387,12 @@
   font-weight: 700;
   letter-spacing: 0.04em;
 }
+.closing-email {
+  margin-top: 10px;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-ink-600);
+}
 .closing-qr {
   position: absolute;
   top: 150px;

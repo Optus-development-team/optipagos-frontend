@@ -233,3 +233,36 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
 - PDF regenerado (13 páginas). Verificado: `tsc`, `eslint`, suma de 180 s, capturas de las 13
   diapositivas y recorrido en vivo con el teclado hasta 13/13 sin errores de consola.
 - Pendiente: cifras de encuestados, monto, % de fondos y meta de usuarios.
+
+## 2026-10-17T21:54:45-04:00 · Yon
+
+**Prompt**
+
+> agrega estos datos a la diapositiva:
+>
+> * 28 respuestas a google forms
+> * 20 personas interesadas en participar en la beta
+> * 4 personas entrevistadas en vivo
+> * 1 validacion con el ceo de tu cuate
+>
+> Para la informacion de financiamiento usa la info del notion
+> agrega el correo ventas@optus.lat al final
+> corrige los roles del equipo para que no se muestren solo como desarrolladores, sino como ctos, cfos , marketing y ceo (fabricio), elijge tu
+> Crea una version final del pitch en pdf para subir a la competencia.
+>
+> (adjunto: OPTUS_MODELO_CORREGIDO.xlsx, «este es el modelo corregido»)
+
+**Salida del agente**
+
+- Tracción: 28 respuestas al formulario, 4 entrevistas en vivo, 20 interesados en la beta y 1
+  validación con el CEO de Tu Cuate; la entidad financiera interesada pasa a la nota.
+- Financiamiento (dossier de Notion, página 11, y el Excel corregido): Bs 19.293 para 12 meses
+  = máximo déficit de caja (Bs 16.078) + colchón de 20 %. Uso: capital de trabajo 60 %
+  (Bs 11.546), formalización 23 % (Bs 4.532), colchón 17 % (Bs 3.215). Aviso: Notion aclara que
+  ese Excel modela a Optus como suscripción, no la comisión de Optipagos.
+- Crecimiento: meta de 800 usuarios activos (equilibrio estimado en Notion, 11.4).
+- Equipo: Fabricio CEO, Saúl CTO, Erick CFO, Franco CMO; título «Un equipo boliviano que
+  construye rápido».
+- Cierre: ventas@optus.lat (nuevo campo `email` en `PitchDeck`, `.closing-email`).
+- PDF final regenerado (13 páginas, sin datos «por confirmar»); `tsc` y `eslint` limpios,
+  180 s en total.

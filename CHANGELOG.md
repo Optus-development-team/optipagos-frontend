@@ -11,6 +11,12 @@
   financiera y la validación con el CEO de Tu Cuate; Meru y rostro en la competencia; La Paz y
   el aliado para mover bolivianos en el crecimiento; «subcampeones» en el equipo, que baja a
   10 s.
+- Versión final del pitch: tracción con datos reales (28 respuestas al formulario, 4
+  entrevistas en vivo, 20 interesados en la beta, validación con el CEO de Tu Cuate);
+  financiamiento de Bs 19.293 para 12 meses según el modelo financiero de Optus (capital de
+  trabajo 60 %, formalización 23 %, colchón 17 %); roles del equipo (CEO, CTO, CFO, CMO);
+  meta de 800 usuarios activos (equilibrio del dossier); `ventas@optus.lat` en el cierre
+  (campo `email` del deck). Ya no queda ningún dato «por confirmar».
 - Logo de Link Space entre los aliados (`public/pitch/logos/link-space.png`, con el texto en
   tinta para el papel claro).
 

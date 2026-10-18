@@ -16,6 +16,7 @@ const deck: PitchDeck = {
   title: "Optipagos · Pitch",
   url: "optipagos.optus.lat",
   whatsappUrl: "https://wa.me/59177379190?text=hola",
+  email: "ventas@optus.lat",
   sponsors: [
     { name: "Incuba Unión 3.0", logo: "/pitch/logos/incuba-union.png" },
     { name: "Banco Unión", logo: "/pitch/logos/banco-union.png" },
@@ -204,14 +205,18 @@ const deck: PitchDeck = {
       title: "Pivoteamos hacia *lo que la gente pidió*",
       lead: "Ahorrar y mover dólares desde el chat, sin saber nada de cripto.",
       items: [
-        { doodle: "megaphone", value: "[[N]]", title: "personas encuestadas en vivo, en la calle" },
-        { doodle: "laptop", value: "[[N]]", title: "respuestas en nuestro formulario en línea" },
-        { doodle: "users", value: "20", title: "personas anotadas para probar la demo" },
-        { doodle: "bank", value: "1", title: "entidad financiera interesada en usar Optipagos" },
+        { doodle: "laptop", value: "28", title: "respuestas a nuestro formulario de Google" },
+        { doodle: "megaphone", value: "4", title: "personas entrevistadas en vivo" },
+        { doodle: "users", value: "20", title: "personas interesadas en entrar a la beta" },
+        {
+          doodle: "check",
+          value: "1",
+          title: "validación y pre-pitch con Renán Fernando Huayta Aguirre, CEO de Tu Cuate",
+        },
       ],
-      note: "validamos y ensayamos el pitch con Renán Fernando Huayta Aguirre, CEO de Tu Cuate",
+      note: "y una entidad financiera ya mostró interés en usar Optipagos",
       script:
-        "Escuchamos y pivoteamos hacia lo que la gente pidió: ahorrar y mover dólares desde el chat. Encuestamos a [N] personas en la calle y [N] en línea, veinte se anotaron para la demo, una entidad financiera quiere usarnos, y lo validamos con Renán Huayta, CEO de Tu Cuate.",
+        "Pivoteamos hacia lo que la gente pidió: ahorrar y mover dólares desde el chat. Veintiocho respuestas en el formulario, cuatro entrevistas en vivo, veinte personas para la beta, la validación del CEO de Tu Cuate… y una entidad financiera ya quiere usarnos.",
     },
     {
       id: "competencia",
@@ -241,7 +246,7 @@ const deck: PitchDeck = {
         {
           value: "Próximo",
           title: "Ciudad de La Paz",
-          text: "Gente que quiere ahorrar y mover dólares: meta de [[N]] usuarios.",
+          text: "Gente que quiere ahorrar y mover dólares: meta de 800 usuarios activos.",
         },
         { value: "Luego", title: "Aliado local", text: "Para mover bolivianos, no solo recibirlos." },
         { value: "Después", title: "Otro país", text: "Con socios locales y permisos en regla." },
@@ -254,31 +259,32 @@ const deck: PitchDeck = {
       section: "inversión y uso de fondos",
       layout: "funds",
       seconds: 11,
-      title: "Buscamos *[[monto]]* para 12 meses",
+      // Modelo financiero de Optus (OPTUS_MODELO_CORREGIDO.xlsx, resumido en el dossier de
+      // Notion): máximo déficit de caja en 12 meses (Bs 16.078) más un colchón de 20 %.
+      title: "Buscamos *Bs 19.293* para 12 meses",
       items: [
-        { title: "Aliados y permisos para meter y sacar dinero", share: 35, value: "[[35 %]]" },
-        { title: "Seguridad y producto", share: 25, value: "[[25 %]]" },
-        { title: "Sumar comercios en la calle", share: 25, value: "[[25 %]]" },
-        { title: "Operación y soporte", share: 15, value: "[[15 %]]" },
+        { title: "Capital de trabajo: equipo, WhatsApp y anuncios mientras crecen las comisiones", share: 60, value: "60 %" },
+        { title: "Formalización: SEPREC, SENAPI y arranque", share: 23, value: "23 %" },
+        { title: "Colchón de seguridad", share: 17, value: "17 %" },
       ],
       script:
-        "Buscamos [monto] para los próximos doce meses: aliados y permisos para meter y sacar dinero, seguridad, y salir a la calle a sumar comercios.",
+        "Buscamos diecinueve mil trescientos bolivianos para doce meses: sostener al equipo, WhatsApp y anuncios mientras crecen las comisiones, formalizar la empresa y un colchón de seguridad.",
     },
     {
       id: "equipo",
       section: "equipo",
       layout: "team",
       seconds: 10,
-      title: "Cuatro devs bolivianos que *construyen rápido*",
+      title: "Un equipo boliviano que *construye rápido*",
       items: [
-        { photo: "/pitch/equipo/franco.jpg", title: "Franco Ayala", text: "APIs e integraciones", value: "20–25 h/semana" },
-        { photo: "/pitch/equipo/erick.jpg", title: "Erick Poma", text: "Backend e infraestructura", value: "20–25 h/semana" },
-        { photo: "/pitch/equipo/fabricio.jpg", title: "Fabricio Echeverría", text: "Producto y diseño", value: "20–25 h/semana" },
-        { photo: "/pitch/equipo/saul.jpg", title: "Saúl Choquehuanca", text: "Backend y blockchain", value: "20–25 h/semana" },
+        { photo: "/pitch/equipo/fabricio.jpg", title: "Fabricio Echeverría", text: "*CEO* · producto y diseño", value: "20–25 h/semana" },
+        { photo: "/pitch/equipo/saul.jpg", title: "Saúl Choquehuanca", text: "*CTO* · backend y blockchain", value: "20–25 h/semana" },
+        { photo: "/pitch/equipo/erick.jpg", title: "Erick Poma", text: "*CFO* · finanzas e infraestructura", value: "20–25 h/semana" },
+        { photo: "/pitch/equipo/franco.jpg", title: "Franco Ayala", text: "*CMO* · marketing y alianzas", value: "20–25 h/semana" },
       ],
       note: "subcampeones mundiales en pagos con Avalanche · ganadores INNOVA San Andrés 6.0",
       script:
-        "Somos cuatro devs bolivianos: Franco, Erick, Fabri y yo, Saúl. Subcampeones mundiales del hackathon de pagos de Avalanche. Construimos rápido, y de cero.",
+        "Fabri, nuestro CEO; yo, Saúl, CTO; Erick, finanzas; y Franco, marketing. Subcampeones mundiales del hackathon de pagos de Avalanche. Construimos rápido, y de cero.",
     },
     {
       id: "cierre",
@@ -289,7 +295,7 @@ const deck: PitchDeck = {
       lead: "Escribe «hola» y pruébalo hoy",
       art: ["heart", "sparkle"],
       script:
-        "Para que tu abuela, y tú, cuiden su plata en dólares: Optipagos. Escríbannos «hola» y pruébenlo hoy. ¡Gracias!",
+        "Para que tu abuela, y tú, cuiden su plata en dólares: Optipagos. Escríbannos «hola», o a ventas@optus.lat. ¡Gracias!",
     },
   ],
 };
