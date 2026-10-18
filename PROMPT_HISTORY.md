@@ -331,3 +331,15 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
   Tu Cuate pasó a la nota manuscrita junto con la entidad financiera. Guion con «siete de cada
   diez quiere entrar a la beta».
 - PDF regenerado; `tsc` y `eslint` limpios.
+
+## 2026-10-17T23:51:00-04:00 · Yon
+
+**Prompt**
+
+> no incluyas numeros totales, solo porcentajes
+
+**Salida del agente**
+
+- Diapositiva 8 (`content/pitch/es.ts`): las fuentes de las cifras pasan de «encuesta, 28
+  respuestas» y «encuesta, 20 de 28» a solo «encuesta»; quedan únicamente los porcentajes.
+- PDF regenerado.

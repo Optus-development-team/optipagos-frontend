@@ -209,19 +209,19 @@ const deck: PitchDeck = {
           doodle: "users",
           value: "89 %",
           title: "no se anima al dólar digital por miedo o apps difíciles",
-          source: "encuesta, 28 respuestas",
+          source: "encuesta",
         },
         {
           doodle: "laptop",
           value: "61 %",
           title: "sale de WhatsApp a la app del banco para cobrar",
-          source: "encuesta, 28 respuestas",
+          source: "encuesta",
         },
         {
           doodle: "check",
           value: "71 %",
           title: "quiere unirse a la beta",
-          source: "encuesta, 20 de 28",
+          source: "encuesta",
         },
         {
           doodle: "megaphone",
