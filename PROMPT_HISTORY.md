@@ -266,3 +266,36 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
 - Cierre: ventas@optus.lat (nuevo campo `email` en `PitchDeck`, `.closing-email`).
 - PDF final regenerado (13 páginas, sin datos «por confirmar»); `tsc` y `eslint` limpios,
   180 s en total.
+
+## 2026-10-17T23:25:51-04:00 · Yon
+
+**Prompt**
+
+> dame un comando ssh para copiar el pdf a mi pc local
+
+**Salida del agente**
+
+- Comando `scp` para ejecutar desde la PC local (por la red local o por Tailscale) con la ruta
+  de `public/pitch/optipagos-pitch.pdf`, y como alternativa la descarga desde
+  https://optipagos.optus.lat/pitch/optipagos-pitch.pdf. Sin cambios en el repo.
+
+## 2026-10-17T23:25:51-04:00 · Yon
+
+**Prompt**
+
+> genial, ahora realiza las siguientes correcciones:
+>
+> * modifica la diapositiva 7 para no mencionar defi ni terminos tecnicos dificiles, sino otros mas amigables y sencillos
+> * modifica la diapositiva 8 para no mostrar numeros, sino porcentajes. reduce el nombre de renan a solo nombre y apellido. y modifica la narrativa para mencionar que en la solucion anterior (optimypes) la gente le tenia miedo a los activos digitales por la complejidad de las plataformas y que por eso cambiamos a optipagos
+
+**Salida del agente**
+
+- Diapositiva 7 (`content/pitch/es.ts`, modelo): sin «DeFi», «interés» ni «historial
+  crediticio». Ahora: «Una parte de lo que gana tu ahorro» (ahorrando solo o en un pasanaku
+  digital) y «Tu buen historial vale» (con permiso, mostramos a los bancos que pagas bien para
+  que te presten). Guion actualizado.
+- Diapositiva 8 (tracción): título «De Optimypes a Optipagos» y entrada con el miedo a los
+  activos digitales por lo complicado de las plataformas. Porcentajes sobre las 28 respuestas:
+  71 % quiere entrar a la beta (20/28) y 14 % entrevistados en vivo (4/28); la validación con
+  el CEO de Tu Cuate se muestra con ✓ y solo nombre y apellido. Guion actualizado.
+- PDF regenerado (13 páginas); `tsc` limpio; 180 s sin cambios.

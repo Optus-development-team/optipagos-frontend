@@ -17,6 +17,8 @@
   trabajo 60 %, formalización 23 %, colchón 17 %); roles del equipo (CEO, CTO, CFO, CMO);
   meta de 800 usuarios activos (equilibrio del dossier); `ventas@optus.lat` en el cierre
   (campo `email` del deck). Ya no queda ningún dato «por confirmar».
+- Modelo de negocio sin términos técnicos (sin DeFi ni «historial crediticio») y tracción
+  contada como el paso de Optimypes a Optipagos, con porcentajes en lugar de cifras.
 - Logo de Link Space entre los aliados (`public/pitch/logos/link-space.png`, con el texto en
   tinta para el papel claro).
 
