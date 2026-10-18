@@ -299,3 +299,21 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
   71 % quiere entrar a la beta (20/28) y 14 % entrevistados en vivo (4/28); la validación con
   el CEO de Tu Cuate se muestra con ✓ y solo nombre y apellido. Guion actualizado.
 - PDF regenerado (13 páginas); `tsc` limpio; 180 s sin cambios.
+
+## 2026-10-17T23:46:00-04:00 · Yon
+
+**Prompt**
+
+> esos porcentajes estan raros, usa este google sheets 'Encuesta Validación Mercado - OPTIPAGOS (Respuestas)' usando tu mcp de google sheets y el doc 'CONVERSACIONES OPTIPAGOS' de google docs
+
+**Salida del agente**
+
+- Leídas las 28 respuestas de la hoja y las 3 conversaciones del doc (sin copiar datos
+  personales al repo).
+- Diapositiva 8 (`content/pitch/es.ts`) con porcentajes de esas fuentes:
+  89 % no se anima al dólar digital por miedo (estafa o error, 20/28) o por apps complicadas
+  (5/28); 61 % sale de WhatsApp a la app del banco para cobrar o pagar (17/28); 100 % de los
+  entrevistados por llamada (3/3) no lo usó por miedo o desconfianza; validación con el CEO
+  de Tu Cuate con ✓. Cada cifra lleva su fuente. Guion actualizado.
+- Quitados 71 % (beta) y 14 % (entrevistas), que no salían de la encuesta.
+- PDF regenerado; `tsc` y `eslint` limpios.

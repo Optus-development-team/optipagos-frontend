@@ -205,8 +205,24 @@ const deck: PitchDeck = {
       title: "De Optimypes a *Optipagos*",
       lead: "Con Optimypes, la gente le tenía miedo a los activos digitales: las plataformas eran muy complicadas. Por eso cambiamos.",
       items: [
-        { doodle: "users", value: "71 %", title: "de los encuestados quiere entrar a la beta" },
-        { doodle: "megaphone", value: "14 %", title: "de los encuestados, entrevistados en vivo" },
+        {
+          doodle: "users",
+          value: "89 %",
+          title: "no se anima al dólar digital por miedo o apps difíciles",
+          source: "encuesta, 28 respuestas",
+        },
+        {
+          doodle: "laptop",
+          value: "61 %",
+          title: "sale de WhatsApp a la app del banco para cobrar",
+          source: "encuesta, 28 respuestas",
+        },
+        {
+          doodle: "megaphone",
+          value: "100 %",
+          title: "de los entrevistados no lo usó por miedo",
+          source: "entrevistas en vivo",
+        },
         {
           doodle: "heart",
           value: "✓",
@@ -215,7 +231,7 @@ const deck: PitchDeck = {
       ],
       note: "y una entidad financiera ya mostró interés en usar Optipagos",
       script:
-        "Antes éramos Optimypes, pero la gente le tenía miedo a los activos digitales: las plataformas eran muy complicadas. Por eso cambiamos a Optipagos. Siete de cada diez encuestados quieren la beta, el CEO de Tu Cuate nos validó… y una entidad financiera ya quiere usarnos.",
+        "Con Optimypes vimos que la gente le temía a los activos digitales: plataformas muy complicadas. Nueve de cada diez encuestados no se anima, y seis de cada diez sale de WhatsApp para cobrar. Por eso nació Optipagos. El CEO de Tu Cuate nos validó… y una entidad financiera ya quiere usarnos.",
     },
     {
       id: "competencia",
