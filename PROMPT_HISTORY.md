@@ -343,3 +343,20 @@ Pitch animado en `/pitch` (12 diapositivas, 180 s de guion) y su copia en PDF.
 - Diapositiva 8 (`content/pitch/es.ts`): las fuentes de las cifras pasan de «encuesta, 28
   respuestas» y «encuesta, 20 de 28» a solo «encuesta»; quedan únicamente los porcentajes.
 - PDF regenerado.
+
+## 2026-10-18T01:58:05+00:00 · saulchoque
+
+**Prompt**
+
+> usa el mcp de canva para generar una diapositiva de mercado usando la linea visual de optipagos
+>
+> (mensaje posterior) apuraaa
+
+**Salida del agente**
+
+Sin cambios de código en este repositorio. Diapositiva de mercado creada en Canva (diseño `DAHYUasztgY`, 1920 x 1080): https://www.canva.com/d/XaVPsxC7HZgW24M. No existe un kit de marca de Optipagos en Canva, así que la línea visual se aplicó a mano: fondo Eggshell `#F0EAD6`, tarjetas con esquina recortada y ficha amarilla `#F0C96A`, textos e iconos en Indigo Dye `#00416A`, logo subido desde `https://optipagos.optus.lat/icon.svg`, sin emojis.
+
+Cifras con fuente citada en la propia diapositiva: 8,77 M de personas con internet en Bolivia, el 70,2 % de la población (DataReportal, Digital 2025) y US$ 14.800 M en activos digitales entre julio de 2024 y junio de 2025, octavo país de América Latina (Chainalysis, según Decrypt). La brecha entre el dólar oficial y el paralelo se atribuye a prensa especializada. El pie dice que el estudio de mercado propio (TAM, SAM, SOM) está por definir, porque el proyecto no lo tiene.
+
+Pendiente: el editor de Canva no permite elegir la tipografía, así que los textos usan la fuente por defecto y no Bebas Neue, Patrick Hand ni DM Sans; hay que cambiarlas dentro de Canva. Tampoco se pudo agregar el fondo punteado ni el filtro de trazo tembloroso. El primer candidato generado ignoró el estilo (fondo blanco, serif verde) y se reconstruyó con el editor.
+
